@@ -1,0 +1,38 @@
+[
+  {
+    "place_id": 329724071,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 17438082,
+    "boundingbox": [
+      "40.1111298",
+      "40.120483",
+      "-85.657527",
+      "-85.657499"
+    ],
+    "lat": "40.115843",
+    "lon": "-85.657507",
+    "display_name": "South Nursery Road, Eastern Heights, Anderson, Madison County, Indiana, 46012, United States",
+    "class": "highway",
+    "type": "tertiary",
+    "importance": 0.62001
+  },
+  {
+    "place_id": 329723750,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 361985433,
+    "boundingbox": [
+      "40.105834",
+      "40.107902",
+      "-85.657493",
+      "-85.657483"
+    ],
+    "lat": "40.1078205",
+    "lon": "-85.6574926",
+    "display_name": "South Nursery Road, Eastern Heights, Anderson, Madison County, Indiana, 46012, United States",
+    "class": "highway",
+    "type": "residential",
+    "importance": 0.62001
+  }
+]
