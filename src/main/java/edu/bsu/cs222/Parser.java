@@ -11,4 +11,8 @@ public class Parser {
     public JSONArray makeJSONArray(InputStream inputStream, String keyword) throws IOException {
         return JsonPath.read(inputStream, "$.." + keyword);
     }
+
+    public String parseToString(JSONArray jsonArray) {
+        return jsonArray.getFirst().toString();
+    }
 }
