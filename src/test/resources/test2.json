@@ -1,0 +1,56 @@
+[
+  {
+    "place_id": 329718959,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 17311008,
+    "boundingbox": [
+      "40.189547",
+      "40.1938781",
+      "-85.4102698",
+      "-85.410249"
+    ],
+    "lat": "40.191503",
+    "lon": "-85.4102546",
+    "display_name": "South Talley Avenue, Muncie, Delaware County, Indiana, 47303, United States",
+    "class": "highway",
+    "type": "residential",
+    "importance": 0.40001
+  },
+  {
+    "place_id": 296952345,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 21253778,
+    "boundingbox": [
+      "32.3271465",
+      "32.3341266",
+      "-95.3108252",
+      "-95.3096741"
+    ],
+    "lat": "32.3307334",
+    "lon": "-95.3108104",
+    "display_name": "South Talley Avenue, Tyler, Smith County, Texas, 75701, United States",
+    "class": "highway",
+    "type": "residential",
+    "importance": 0.40001
+  },
+  {
+    "place_id": 295316708,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 21256155,
+    "boundingbox": [
+      "34.742256",
+      "34.743581",
+      "-101.856376",
+      "-101.856345"
+    ],
+    "lat": "34.743581",
+    "lon": "-101.856376",
+    "display_name": "South Talley Avenue, Happy, Swisher County, Texas, United States",
+    "class": "highway",
+    "type": "residential",
+    "importance": 0.40001
+  }
+]
