@@ -8,7 +8,7 @@ public class DistanceCalculatorTest {
     @Test
     public void checkIfDistanceIsAccurate() {
         DistanceCalculator distanceCalculator = new DistanceCalculator();
-        double result = distanceCalculator.calculateDistanceKiloMeters();
-        Assertions.assertEquals(result,);
+        double result = distanceCalculator.calculateDistanceKiloMeters(40.115843,-85.657507,40.191503,-85.4102546);
+        Assertions.assertEquals(result, 22.554, .15);
     }
 }
