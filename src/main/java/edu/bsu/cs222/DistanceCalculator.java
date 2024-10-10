@@ -20,4 +20,8 @@ public class DistanceCalculator {
 
         return Math.sqrt((x * x) + (y * y)) * EARTH_RADIUS;
     }
+
+    protected double kilometersToMiles(double distance) {
+        return distance * .621;
+    }
 }
