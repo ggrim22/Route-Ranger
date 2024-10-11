@@ -1,5 +1,7 @@
 plugins {
     id("java")
+    id("application")
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 group = "org.example"
@@ -19,4 +21,13 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+javafx {
+    version = "22-ea+16"
+    modules("javafx.controls", "javafx.fxml")
+}
+
+application {
+    mainClass.set("edu.bsu.cs222.GUI")
 }
