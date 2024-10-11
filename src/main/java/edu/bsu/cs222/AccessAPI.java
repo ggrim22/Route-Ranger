@@ -13,6 +13,7 @@ public class AccessAPI {
                 "&api_key=67001a89919b8736625306gta626488";
         URL url = URI.create(encodedUrlString).toURL();
         URLConnection connection = url.openConnection();
+        connection.setRequestProperty("User-Agent", "CS222FinalProject/0.1");
         connection.connect();
         return connection;
     }

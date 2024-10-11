@@ -9,8 +9,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
+
 public class GUI extends Application {
     private final Button getDistanceButton = new Button("Get Distance");
     private final TextField inputFirstAddress = new TextField();
@@ -26,6 +28,7 @@ public class GUI extends Application {
     public void start(Stage stage) {
         inputFirstAddress.setPrefWidth(170);
         inputSecondAddress.setPrefWidth(170);
+        configureButton();
         configure(stage);
     }
 
@@ -58,6 +61,29 @@ public class GUI extends Application {
     private void formatHBox(HBox hBox) {
         hBox.setAlignment(Pos.CENTER);
         hBox.setSpacing(50);
+    }
+    private void configureButton() {
+        getDistanceButton.setOnAction(event -> {
+            try {
+                turnAddressesToDistance();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void turnAddressesToDistance() throws IOException {
+        GUIHelper helper = new GUIHelper();
+        DistanceCalculator distanceCalculator = new DistanceCalculator();
+        double lat1 = helper.getDouble("lat", inputFirstAddress.getText());
+        double lon1 = helper.getDouble("lon", inputFirstAddress.getText());
+
+        double lat2 = helper.getDouble("lat", inputSecondAddress.getText());
+        double lon2 = helper.getDouble("lon", inputSecondAddress.getText());
+
+        double distance = distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
+        distanceField.setText(Double.toString(distance));
+
     }
 
 }
