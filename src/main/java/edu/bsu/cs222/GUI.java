@@ -82,7 +82,8 @@ public class GUI extends Application {
         double lon2 = helper.getDouble("lon", inputSecondAddress.getText());
 
         double distance = distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
-        distanceField.setText(Double.toString(distance));
+        double distanceInMiles = distanceCalculator.kilometersToMiles(distance);
+        distanceField.setText(Double.toString(distanceInMiles));
 
     }
 
