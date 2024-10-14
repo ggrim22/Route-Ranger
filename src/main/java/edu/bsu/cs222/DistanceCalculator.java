@@ -18,7 +18,7 @@ public class DistanceCalculator {
         double x = (lon2Rad - lon1Rad) * Math.cos((lat1Rad + lat2Rad) / 2);
         double y = (lat2Rad - lat1Rad);
 
-        return Math.sqrt((x * x) + (y * y)) * EARTH_RADIUS;
+        return Math.round(Math.sqrt((x * x) + (y * y)) * EARTH_RADIUS * 100) / 100.0;
     }
 
     protected double kilometersToMiles(double distance) {
