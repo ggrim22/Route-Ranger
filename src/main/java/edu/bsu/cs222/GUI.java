@@ -22,6 +22,10 @@ public class GUI extends Application {
     private final TextField distanceField = new TextField();
     private final HBox hBox1 = new HBox();
     private final HBox hBox2 = new HBox();
+    private final Label lon1Label = new Label();
+    private final Label lat1Label = new Label();
+    private final Label lon2Label = new Label();
+    private final Label lat2Label = new Label();
 
     @Override
 
@@ -48,8 +52,11 @@ public class GUI extends Application {
                 inputFirstAddress,
                 new Label("Second Address"),
                 inputSecondAddress);
-        hBox2.getChildren().addAll(
-                getDistanceButton
+        hBox2.getChildren().addAll(lat1Label,
+                lon1Label,
+                getDistanceButton,
+                lat2Label,
+                lon2Label
         );
         formatHBox(hBox1);
         formatHBox(hBox2);
@@ -82,6 +89,12 @@ public class GUI extends Application {
 
         double lat2 = helper.getDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.getDouble("lon", inputSecondAddress.getText());
+
+        lat1Label.setText(Double.toString(lat1));
+        lon1Label.setText(Double.toString(lon1));
+        lat2Label.setText(Double.toString(lat2));
+        lon2Label.setText(Double.toString(lon2));
+
 
         double distance = distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
         double distanceInMiles = distanceCalculator.kilometersToMiles(distance);
