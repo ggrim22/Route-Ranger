@@ -84,6 +84,7 @@ public class GUI extends Application {
         DistanceCalculator distanceCalculator = new DistanceCalculator();
         double lat1 = helper.getDouble("lat", inputFirstAddress.getText());
         double lon1 = helper.getDouble("lon", inputFirstAddress.getText());
+
         Thread.sleep(1000);
 
         double lat2 = helper.getDouble("lat", inputSecondAddress.getText());
