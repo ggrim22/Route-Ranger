@@ -21,15 +21,6 @@ public class GUI extends Application {
     private final TextField inputFirstAddress = new TextField();
     private final TextField inputSecondAddress = new TextField();
     private final TextField distanceField = new TextField();
-
-    private final HBox hBox1 = configureHBox(100);
-    private final HBox hBox2 = configureHBox(100);
-    private final HBox hBox3 = configureHBox(100);
-
-    private final VBox label1VBox = configureVBox(150);
-    private final VBox buttonsVBox = configureVBox(100);
-    private final VBox label2VBox = configureVBox(150);
-
     private final Label lon1Label = new Label();
     private final Label lat1Label = new Label();
     private final Label lon2Label = new Label();
@@ -61,6 +52,22 @@ public class GUI extends Application {
     private Pane createRoot() {
         VBox root = configureVBox(500);
         HBox testHBox = configureHBox(50);
+
+        HBox userInputHBox = configureHBox(100);  // Local variable
+        HBox latLonAndButtonsHBox = configureHBox(100);  // Local variable
+        HBox outPutFieldHBox = configureHBox(100);  // Local variable
+
+        VBox label1VBox = configureVBox(150);
+        VBox buttonsVBox = configureVBox(100);
+        VBox label2VBox = configureVBox(150);
+        populateVBox(root, testHBox, userInputHBox, label1VBox, buttonsVBox, label2VBox, latLonAndButtonsHBox, outPutFieldHBox);
+        return root;
+    }
+
+    private void populateVBox(VBox root, HBox testHBox, HBox userInputHBox,
+                              VBox label1VBox, VBox buttonsVBox, VBox label2VBox,
+                              HBox latLonAndButtonsHBox, HBox outPutFieldHBox) {
+
         testHBox.getChildren().addAll(
                 new Label("First Address"),
                 inputFirstAddress
@@ -72,7 +79,7 @@ public class GUI extends Application {
                 inputSecondAddress
         );
 
-        hBox1.getChildren().addAll(
+        userInputHBox.getChildren().addAll(
                 testHBox,
                 testHBox2
         );
@@ -92,15 +99,18 @@ public class GUI extends Application {
                 lon2Label
         );
 
-        hBox2.getChildren().addAll(
+        latLonAndButtonsHBox.getChildren().addAll(
                 label1VBox,
                 buttonsVBox,
                 label2VBox
         );
 
-        hBox3.getChildren().addAll(new Label("Distance"), distanceField);
-        root.getChildren().addAll(hBox1, hBox2, hBox3);
-        return root;
+        outPutFieldHBox.getChildren().addAll(
+                new Label("Distance"), distanceField
+        );
+
+
+        root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox);
     }
 
     private void configureButton() {
