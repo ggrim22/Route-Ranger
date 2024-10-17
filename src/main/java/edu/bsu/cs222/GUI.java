@@ -15,18 +15,24 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class GUI extends Application {
-    private final Button getDistanceButton = new Button("Get Distance");
-    private final TextField inputFirstAddress = new TextField();
 
+    private final Button getDistanceButton = new Button("Get Distance");
+
+    private final TextField inputFirstAddress = new TextField();
     private final TextField inputSecondAddress = new TextField();
     private final TextField distanceField = new TextField();
-    private final HBox hBox1 = new HBox();
-    private final HBox hBox2 = new HBox();
+
+    private final HBox hBox1 = hBoxMaker(100);
+    private final HBox hBox2 = hBoxMaker(100);
+    private final HBox hBox3 = hBoxMaker(100);
+
     private final Label lon1Label = new Label();
     private final Label lat1Label = new Label();
     private final Label lon2Label = new Label();
     private final Label lat2Label = new Label();
+
     private final ComboBox<String> unitOfMeasureSelector = new ComboBox<>();
+
     private static boolean milesFlag = false;
 
     @Override
@@ -64,7 +70,6 @@ public class GUI extends Application {
         );
         formatHBox(hBox1);
         formatHBox(hBox2);
-        HBox hBox3 = new HBox();
         hBox3.getChildren().addAll(new Label("Distance"), distanceField);
         root.getChildren().addAll(hBox1, hBox2, hBox3);
         return root;
@@ -122,6 +127,15 @@ public class GUI extends Application {
         distance = distanceCalculator.roundDistanceTwoDecimal(distance);
         distanceField.setText(Double.toString(distance));
 
+    }
+
+    private HBox hBoxMaker(int height){
+
+        HBox hBox = new HBox();
+        hBox.setPrefHeight(height);
+        hBox.setAlignment(Pos.CENTER);
+
+        return hBox;
     }
 
 }
