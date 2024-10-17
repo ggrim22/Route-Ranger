@@ -21,10 +21,10 @@ public class GUI extends Application {
     private final TextField inputFirstAddress = new TextField();
     private final TextField inputSecondAddress = new TextField();
     private final TextField distanceField = new TextField();
-    private final Label lon1Label = new Label();
-    private final Label lat1Label = new Label();
-    private final Label lon2Label = new Label();
-    private final Label lat2Label = new Label();
+    private final Label lonLabelAddress1 = new Label();
+    private final Label latLabelAddress1 = new Label();
+    private final Label lonLabelAddress2 = new Label();
+    private final Label latLabelAddress2 = new Label();
 
     private final ComboBox<String> unitOfMeasureSelector = new ComboBox<>();
 
@@ -51,22 +51,22 @@ public class GUI extends Application {
 
     private Pane createRoot() {
         VBox root = configureVBox(500);
-        HBox testHBox = configureHBox(50);
 
-        HBox userInputHBox = configureHBox(100);  // Local variable
-        HBox latLonAndButtonsHBox = configureHBox(100);  // Local variable
-        HBox outPutFieldHBox = configureHBox(100);  // Local variable
-
-        VBox label1VBox = configureVBox(150);
-        VBox buttonsVBox = configureVBox(100);
-        VBox label2VBox = configureVBox(150);
-        populateVBox(root, testHBox, userInputHBox, label1VBox, buttonsVBox, label2VBox, latLonAndButtonsHBox, outPutFieldHBox);
+        populateVBox(root);
         return root;
     }
 
-    private void populateVBox(VBox root, HBox testHBox, HBox userInputHBox,
-                              VBox label1VBox, VBox buttonsVBox, VBox label2VBox,
-                              HBox latLonAndButtonsHBox, HBox outPutFieldHBox) {
+    private void populateVBox(VBox root) {
+        HBox testHBox = configureHBox(50);
+        HBox userInputHBox = configureHBox(50);
+
+        VBox locationLabel1 = configureVBox(150);
+        VBox distanceAndUnitVbox = configureVBox(100);
+        VBox locationLabel2 = configureVBox(150);
+
+        HBox latLonAndButtonsHBox = configureHBox(100);
+
+        HBox outPutFieldHBox = configureHBox(50);
 
         testHBox.getChildren().addAll(
                 new Label("First Address"),
@@ -84,31 +84,30 @@ public class GUI extends Application {
                 testHBox2
         );
 
-        label1VBox.getChildren().addAll(
-                lat1Label,
-                lon1Label
+        locationLabel1.getChildren().addAll(
+                latLabelAddress1,
+                lonLabelAddress1
         );
 
-        buttonsVBox.getChildren().addAll(
+        distanceAndUnitVbox.getChildren().addAll(
                 unitOfMeasureSelector,
                 getDistanceButton
         );
 
-        label2VBox.getChildren().addAll(
-                lat2Label,
-                lon2Label
+        locationLabel2.getChildren().addAll(
+                latLabelAddress2,
+                lonLabelAddress2
         );
 
         latLonAndButtonsHBox.getChildren().addAll(
-                label1VBox,
-                buttonsVBox,
-                label2VBox
+                locationLabel1,
+                distanceAndUnitVbox,
+                locationLabel2
         );
 
         outPutFieldHBox.getChildren().addAll(
                 new Label("Distance"), distanceField
         );
-
 
         root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox);
     }
@@ -136,6 +135,7 @@ public class GUI extends Application {
     }
 
     public void turnAddressesToDistance() throws IOException, InterruptedException {
+
         GUIHelper helper = new GUIHelper();
         DistanceCalculator distanceCalculator = new DistanceCalculator();
         double lat1 = helper.getDouble("lat", inputFirstAddress.getText());
@@ -146,10 +146,11 @@ public class GUI extends Application {
         double lat2 = helper.getDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.getDouble("lon", inputSecondAddress.getText());
 
-        lat1Label.setText("Latitude: " + (lat1));
-        lon1Label.setText("Longitude: " + (lon1));
-        lat2Label.setText("Latitude: " + (lat2));
-        lon2Label.setText("Longitude: " + (lon2));
+        latLabelAddress1.setText("Latitude: " + (lat1));
+        lonLabelAddress1.setText("Longitude: " + (lon1));
+
+        latLabelAddress2.setText("Latitude: " + (lat2));
+        lonLabelAddress2.setText("Longitude: " + (lon2));
 
 
         double distance = distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
