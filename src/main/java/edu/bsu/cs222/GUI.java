@@ -1,6 +1,7 @@
 package edu.bsu.cs222;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -26,9 +27,9 @@ public class GUI extends Application {
     private final HBox hBox2 = configureHBox(100);
     private final HBox hBox3 = configureHBox(100);
 
-    private final VBox label1VBox = configureVBox(100);
+    private final VBox label1VBox = configureVBox(150);
     private final VBox buttonsVBox = configureVBox(100);
-    private final VBox label2VBox = configureVBox(100);
+    private final VBox label2VBox = configureVBox(150);
 
     private final Label lon1Label = new Label();
     private final Label lat1Label = new Label();
@@ -60,11 +61,22 @@ public class GUI extends Application {
 
     private Pane createRoot() {
         VBox root = configureVBox(500);
-        hBox1.getChildren().addAll(
+        HBox testHBox = configureHBox(50);
+        testHBox.getChildren().addAll(
                 new Label("First Address"),
-                inputFirstAddress,
+                inputFirstAddress
+        );
+
+        HBox testHBox2 = configureHBox(50);
+        testHBox.getChildren().addAll(
                 new Label("Second Address"),
-                inputSecondAddress);
+                inputSecondAddress
+        );
+
+        hBox1.getChildren().addAll(
+                testHBox,
+                testHBox2
+        );
 
         label1VBox.getChildren().addAll(
                 lat1Label,
@@ -72,8 +84,8 @@ public class GUI extends Application {
         );
 
         buttonsVBox.getChildren().addAll(
-                getDistanceButton,
-                unitOfMeasureSelector
+                unitOfMeasureSelector,
+                getDistanceButton
         );
 
         label2VBox.getChildren().addAll(
@@ -86,17 +98,12 @@ public class GUI extends Application {
                 buttonsVBox,
                 label2VBox
         );
-        formatHBox(hBox1);
-        formatHBox(hBox2);
+
         hBox3.getChildren().addAll(new Label("Distance"), distanceField);
         root.getChildren().addAll(hBox1, hBox2, hBox3);
         return root;
     }
 
-    private void formatHBox(HBox hBox) {
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setSpacing(50);
-    }
     private void configureButton() {
         getDistanceButton.setOnAction(event -> {
             try {
@@ -130,10 +137,10 @@ public class GUI extends Application {
         double lat2 = helper.getDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.getDouble("lon", inputSecondAddress.getText());
 
-        lat1Label.setText(Double.toString(lat1));
-        lon1Label.setText(Double.toString(lon1));
-        lat2Label.setText(Double.toString(lat2));
-        lon2Label.setText(Double.toString(lon2));
+        lat1Label.setText("Latitude: " + Double.toString(lat1));
+        lon1Label.setText("Longitude: " +Double.toString(lon1));
+        lat2Label.setText("Latitude: " +Double.toString(lat2));
+        lon2Label.setText("Longitude: " +Double.toString(lon2));
 
 
         double distance = distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
@@ -152,6 +159,7 @@ public class GUI extends Application {
         HBox hBox = new HBox();
         hBox.setPrefHeight(height);
         hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(10);
 
         return hBox;
     }
