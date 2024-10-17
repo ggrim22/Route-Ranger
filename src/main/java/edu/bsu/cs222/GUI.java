@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.util.Timer;
 
 public class GUI extends Application {
     private final Button getDistanceButton = new Button("Get Distance");
