@@ -18,10 +18,14 @@ public class DistanceCalculator {
         double x = (lon2Rad - lon1Rad) * Math.cos((lat1Rad + lat2Rad) / 2);
         double y = (lat2Rad - lat1Rad);
 
-        return (Math.sqrt((x * x) + (y * y)) * EARTH_RADIUS);
+        return (Math.sqrt((x * x) + (y * y)) * EARTH_RADIUS) ;
     }
 
     protected double kilometersToMiles(double distance) {
-        return (double) Math.round(distance * .621 * 100) /100;
+        return (distance * .621);
+    }
+
+    protected  double roundDistanceTwoDecimal(double distance) {
+        return (double) Math.round(distance * 100) / 100;
     }
 }

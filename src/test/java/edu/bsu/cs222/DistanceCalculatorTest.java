@@ -18,4 +18,11 @@ public class DistanceCalculatorTest {
         double testDistance = 8.04672;
         Assertions.assertEquals(5.0,distanceCalculator.kilometersToMiles(testDistance),.1);
     }
+
+    @Test
+    public void roundingTest() {
+        DistanceCalculator distanceCalculator = new DistanceCalculator();
+        double testDistance = 3025.78997;
+        Assertions.assertEquals(3025.79, distanceCalculator.roundDistanceTwoDecimal(testDistance));
+    }
 }
