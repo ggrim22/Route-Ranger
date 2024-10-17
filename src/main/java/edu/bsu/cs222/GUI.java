@@ -3,6 +3,7 @@ package edu.bsu.cs222;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -25,6 +26,8 @@ public class GUI extends Application {
     private final Label lat1Label = new Label();
     private final Label lon2Label = new Label();
     private final Label lat2Label = new Label();
+    private final ComboBox<String> unitOfMeasureSelector = new ComboBox<>();
+    private static boolean milesFlag = false;
 
     @Override
 
@@ -32,6 +35,7 @@ public class GUI extends Application {
     public void start(Stage stage) {
         inputFirstAddress.setPrefWidth(170);
         inputSecondAddress.setPrefWidth(170);
+        configureComboBox();
         configureButton();
         configure(stage);
     }
@@ -54,6 +58,7 @@ public class GUI extends Application {
         hBox2.getChildren().addAll(lat1Label,
                 lon1Label,
                 getDistanceButton,
+                unitOfMeasureSelector,
                 lat2Label,
                 lon2Label
         );
@@ -79,6 +84,18 @@ public class GUI extends Application {
         });
     }
 
+    private void configureComboBox() {
+        unitOfMeasureSelector.getItems().addAll("Miles","Kilometers");
+    }
+    private void comboBoxDecision(){
+        if (unitOfMeasureSelector.getValue().equals("Miles")) {
+            milesFlag = true;
+        }
+        else if(unitOfMeasureSelector.getValue().equals("Kilometers")) {
+            milesFlag = false;
+        }
+    }
+
     public void turnAddressesToDistance() throws IOException, InterruptedException {
         GUIHelper helper = new GUIHelper();
         DistanceCalculator distanceCalculator = new DistanceCalculator();
@@ -97,8 +114,12 @@ public class GUI extends Application {
 
 
         double distance = distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
-        double distanceInMiles = distanceCalculator.kilometersToMiles(distance);
-        distanceField.setText(Double.toString(distanceInMiles));
+
+        comboBoxDecision();
+        if (milesFlag) {
+            distance = distanceCalculator.kilometersToMiles(distance);
+        }
+        distanceField.setText(Double.toString(distance));
 
     }
 
