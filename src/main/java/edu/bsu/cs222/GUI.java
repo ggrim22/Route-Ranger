@@ -1,7 +1,5 @@
 package edu.bsu.cs222;
-
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
@@ -50,30 +48,32 @@ public class GUI extends Application {
     }
 
     private Pane createRoot() {
-        VBox root = configureVBox(500);
+        GUIHelper helper = new GUIHelper();
+        VBox root = helper.configureVBox(500);
 
         populateVBox(root);
         return root;
     }
 
     private void populateVBox(VBox root) {
-        HBox testHBox = configureHBox(50);
-        HBox userInputHBox = configureHBox(50);
+        GUIHelper helper = new GUIHelper();
+        HBox testHBox = helper.configureHBox(50);
+        HBox userInputHBox = helper.configureHBox(50);
 
-        VBox locationLabel1 = configureVBox(150);
-        VBox distanceAndUnitVbox = configureVBox(100);
-        VBox locationLabel2 = configureVBox(150);
+        VBox locationLabel1 = helper.configureVBox(150);
+        VBox distanceAndUnitVbox = helper.configureVBox(100);
+        VBox locationLabel2 = helper.configureVBox(150);
 
-        HBox latLonAndButtonsHBox = configureHBox(100);
+        HBox latLonAndButtonsHBox = helper.configureHBox(100);
 
-        HBox outPutFieldHBox = configureHBox(50);
+        HBox outPutFieldHBox = helper.configureHBox(50);
 
         testHBox.getChildren().addAll(
                 new Label("First Address"),
                 inputFirstAddress
         );
 
-        HBox testHBox2 = configureHBox(50);
+        HBox testHBox2 = helper.configureHBox(50);
         testHBox.getChildren().addAll(
                 new Label("Second Address"),
                 inputSecondAddress
@@ -162,26 +162,6 @@ public class GUI extends Application {
         distance = distanceCalculator.roundDistanceTwoDecimal(distance);
 
         distanceField.setText(Double.toString(distance));
-
-    }
-
-    private HBox configureHBox(int height){
-
-        HBox hBox = new HBox();
-        hBox.setPrefHeight(height);
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setSpacing(10);
-
-        return hBox;
-    }
-
-    private VBox configureVBox(int width){
-
-        VBox vBox = new VBox();
-        vBox.setPrefWidth(width);
-        vBox.setAlignment(Pos.BASELINE_CENTER);
-
-        return vBox;
 
     }
 }

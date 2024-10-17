@@ -1,5 +1,8 @@
 package edu.bsu.cs222;
 
+import javafx.geometry.Pos;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import net.minidev.json.JSONArray;
 
 import java.io.IOException;
@@ -13,6 +16,26 @@ public class GUIHelper {
         InputStream inputStream = access.getInputStream(access.connectToGeocode(Address));
         JSONArray jsonArray = parser.makeJSONArray(inputStream, keyword);
         return Double.parseDouble(parser.parseToString(jsonArray));
+
+    }
+
+    protected HBox configureHBox(int height){
+
+        HBox hBox = new HBox();
+        hBox.setPrefHeight(height);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(10);
+
+        return hBox;
+    }
+
+    protected VBox configureVBox(int width){
+
+        VBox vBox = new VBox();
+        vBox.setPrefWidth(width);
+        vBox.setAlignment(Pos.BASELINE_CENTER);
+
+        return vBox;
 
     }
 }
