@@ -22,9 +22,13 @@ public class GUI extends Application {
     private final TextField inputSecondAddress = new TextField();
     private final TextField distanceField = new TextField();
 
-    private final HBox hBox1 = hBoxMaker(100);
-    private final HBox hBox2 = hBoxMaker(100);
-    private final HBox hBox3 = hBoxMaker(100);
+    private final HBox hBox1 = configureHBox(100);
+    private final HBox hBox2 = configureHBox(100);
+    private final HBox hBox3 = configureHBox(100);
+
+    private final VBox label1VBox = configureVBox(100);
+    private final VBox buttonsVBox = configureVBox(100);
+    private final VBox label2VBox = configureVBox(100);
 
     private final Label lon1Label = new Label();
     private final Label lat1Label = new Label();
@@ -55,18 +59,32 @@ public class GUI extends Application {
     }
 
     private Pane createRoot() {
-        VBox root = new VBox();
+        VBox root = configureVBox(500);
         hBox1.getChildren().addAll(
                 new Label("First Address"),
                 inputFirstAddress,
                 new Label("Second Address"),
                 inputSecondAddress);
-        hBox2.getChildren().addAll(lat1Label,
-                lon1Label,
+
+        label1VBox.getChildren().addAll(
+                lat1Label,
+                lon1Label
+        );
+
+        buttonsVBox.getChildren().addAll(
                 getDistanceButton,
-                unitOfMeasureSelector,
+                unitOfMeasureSelector
+        );
+
+        label2VBox.getChildren().addAll(
                 lat2Label,
                 lon2Label
+        );
+
+        hBox2.getChildren().addAll(
+                label1VBox,
+                buttonsVBox,
+                label2VBox
         );
         formatHBox(hBox1);
         formatHBox(hBox2);
@@ -107,7 +125,7 @@ public class GUI extends Application {
         double lat1 = helper.getDouble("lat", inputFirstAddress.getText());
         double lon1 = helper.getDouble("lon", inputFirstAddress.getText());
 
-        Thread.sleep(500);
+        Thread.sleep(1000);
 
         double lat2 = helper.getDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.getDouble("lon", inputSecondAddress.getText());
@@ -129,7 +147,7 @@ public class GUI extends Application {
 
     }
 
-    private HBox hBoxMaker(int height){
+    private HBox configureHBox(int height){
 
         HBox hBox = new HBox();
         hBox.setPrefHeight(height);
@@ -138,4 +156,13 @@ public class GUI extends Application {
         return hBox;
     }
 
+    private VBox configureVBox(int width){
+
+        VBox vBox = new VBox();
+        vBox.setPrefWidth(width);
+        vBox.setAlignment(Pos.BASELINE_CENTER);
+
+        return vBox;
+
+    }
 }
