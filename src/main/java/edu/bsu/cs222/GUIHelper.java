@@ -13,10 +13,18 @@ public class GUIHelper {
     public double getDouble(String keyword, String Address) throws IOException {
         AccessAPI access = new AccessAPI();
         Parser parser = new Parser();
+        ErrorHandler errorHandler = new ErrorHandler();
+
         InputStream inputStream = access.getInputStream(access.connectToGeocode(Address));
         JSONArray jsonArray = parser.makeJSONArray(inputStream, keyword);
-        return Double.parseDouble(parser.parseToString(jsonArray));
 
+        if (errorHandler.noAddressFoundError(jsonArray)){
+            ErrorModalBox errorPopUp = new ErrorModalBox();
+            errorPopUp.popUp();
+            return 0.0;
+        }else {
+            return Double.parseDouble(parser.parseToString(jsonArray));
+        }
     }
 
     protected HBox configureHBox(int height){

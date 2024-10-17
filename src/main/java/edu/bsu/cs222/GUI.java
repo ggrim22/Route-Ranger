@@ -141,6 +141,10 @@ public class GUI extends Application {
 
         GUIHelper helper = new GUIHelper();
         DistanceCalculator distanceCalculator = new DistanceCalculator();
+        ErrorHandler errorHandler = new ErrorHandler();
+
+
+
         double lat1 = helper.getDouble("lat", inputFirstAddress.getText());
         double lon1 = helper.getDouble("lon", inputFirstAddress.getText());
 
