@@ -1,5 +1,6 @@
 package edu.bsu.cs222;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
@@ -50,6 +51,8 @@ public class GUI extends Application {
     private Pane createRoot() {
         GUIHelper helper = new GUIHelper();
         VBox root = helper.configureVBox(500);
+        root.setAlignment(Pos.CENTER);
+        root.setStyle(GUIStyle.BACKGROUND_COLOR);
 
         populateVBox(root);
         return root;
@@ -161,7 +164,7 @@ public class GUI extends Application {
         }
         distance = distanceCalculator.roundDistanceTwoDecimal(distance);
 
-        distanceField.setText(Double.toString(distance));
+        distanceField.setText(distance + " " + unitOfMeasureSelector.getValue().toLowerCase());
 
     }
 }
