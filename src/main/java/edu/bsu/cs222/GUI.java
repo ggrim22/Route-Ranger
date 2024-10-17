@@ -1,7 +1,6 @@
 package edu.bsu.cs222;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -137,10 +136,10 @@ public class GUI extends Application {
         double lat2 = helper.getDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.getDouble("lon", inputSecondAddress.getText());
 
-        lat1Label.setText("Latitude: " + Double.toString(lat1));
-        lon1Label.setText("Longitude: " +Double.toString(lon1));
-        lat2Label.setText("Latitude: " +Double.toString(lat2));
-        lon2Label.setText("Longitude: " +Double.toString(lon2));
+        lat1Label.setText("Latitude: " + (lat1));
+        lon1Label.setText("Longitude: " + (lon1));
+        lat2Label.setText("Latitude: " + (lat2));
+        lon2Label.setText("Longitude: " + (lon2));
 
 
         double distance = distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
@@ -150,6 +149,7 @@ public class GUI extends Application {
             distance = distanceCalculator.kilometersToMiles(distance);
         }
         distance = distanceCalculator.roundDistanceTwoDecimal(distance);
+
         distanceField.setText(Double.toString(distance));
 
     }
