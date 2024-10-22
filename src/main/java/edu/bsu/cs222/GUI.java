@@ -16,7 +16,6 @@ import java.io.IOException;
 public class GUI extends Application {
 
     private final Button getDistanceButton = new Button("Get Distance");
-
     private final TextField inputFirstAddress = new TextField();
     private final TextField inputSecondAddress = new TextField();
     private final TextField distanceField = new TextField();
@@ -30,8 +29,6 @@ public class GUI extends Application {
     private static boolean milesFlag = false;
 
     @Override
-
-
     public void start(Stage stage) {
         inputFirstAddress.setPrefWidth(170);
         inputSecondAddress.setPrefWidth(170);
@@ -118,6 +115,7 @@ public class GUI extends Application {
     private void configureButton() {
         getDistanceButton.setOnAction(event -> {
             try {
+                configureErrorHandling();
                 turnAddressesToDistance();
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
@@ -126,7 +124,9 @@ public class GUI extends Application {
     }
 
     private void configureComboBox() {
+
         unitOfMeasureSelector.getItems().addAll("Miles","Kilometers");
+        unitOfMeasureSelector.setValue("Miles");
     }
     private void comboBoxDecision(){
         if (unitOfMeasureSelector.getValue().equals("Miles")) {
@@ -141,8 +141,6 @@ public class GUI extends Application {
 
         GUIHelper helper = new GUIHelper();
         DistanceCalculator distanceCalculator = new DistanceCalculator();
-        ErrorHandler errorHandler = new ErrorHandler();
-
 
 
         double lat1 = helper.getDouble("lat", inputFirstAddress.getText());
@@ -169,6 +167,15 @@ public class GUI extends Application {
         String outputDistance = distanceCalculator.roundDistanceTwoDecimal(distance);
 
         distanceField.setText(String.format("%s %s",outputDistance, unitOfMeasureSelector.getValue().toLowerCase()));
+
+    }
+
+    protected void configureErrorHandling() {
+        ErrorModalBox errorModalBox = new ErrorModalBox();
+        errorModalBox.networkConnectionPopUp();
+
+        errorModalBox.noInputFoundPopUp(inputFirstAddress.getText());
+        errorModalBox.noInputFoundPopUp(inputSecondAddress.getText());
 
     }
 }

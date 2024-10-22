@@ -18,13 +18,7 @@ public class GUIHelper {
         InputStream inputStream = access.getInputStream(access.connectToGeocode(Address));
         JSONArray jsonArray = parser.makeJSONArray(inputStream, keyword);
 
-        if (errorHandler.noAddressFoundError(jsonArray)){
-            ErrorModalBox errorPopUp = new ErrorModalBox();
-            errorPopUp.popUp();
-            return 0.0;
-        }else {
-            return Double.parseDouble(parser.parseToString(jsonArray));
-        }
+        return Double.parseDouble(parser.parseToString(jsonArray));
     }
 
     protected HBox configureHBox(int height){

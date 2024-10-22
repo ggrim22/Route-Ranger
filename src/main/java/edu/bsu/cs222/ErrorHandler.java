@@ -7,13 +7,17 @@ import java.io.InputStream;
 
 public class ErrorHandler {
 
-    public Boolean noAddressFoundError(JSONArray address) throws IOException {
-        boolean addressNotFound = false;
+    public Boolean noInputFoundError(String input)  {
+        return input.isEmpty();
+    }
 
-        if (address.getFirst() == null){
-            addressNotFound = true;
+    public boolean networkConnectionError() {
+        try{
+            AccessAPI access = new AccessAPI();
+            access.connectToGeocode("146 Nursery Rd Anderson IN");
+        } catch(Exception e) {
+            return true;
         }
-
-        return addressNotFound;
+        return false;
     }
 }
