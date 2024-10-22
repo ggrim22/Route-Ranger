@@ -1,7 +1,6 @@
 package edu.bsu.cs222;
 
 import javafx.scene.control.Dialog;
-import net.minidev.json.JSONArray;
 
 import java.io.IOException;
 
