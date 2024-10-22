@@ -146,8 +146,6 @@ public class GUI extends Application {
         double lat1 = helper.makeAddressIntoLatAndLonDouble("lat", inputFirstAddress.getText());
         double lon1 = helper.makeAddressIntoLatAndLonDouble("lon", inputFirstAddress.getText());
 
-        Thread.sleep(2000);
-
         double lat2 = helper.makeAddressIntoLatAndLonDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.makeAddressIntoLatAndLonDouble("lon", inputSecondAddress.getText());
 
