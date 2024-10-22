@@ -143,19 +143,19 @@ public class GUI extends Application {
         DistanceCalculator distanceCalculator = new DistanceCalculator();
 
 
-        double lat1 = helper.getDouble("lat", inputFirstAddress.getText());
-        double lon1 = helper.getDouble("lon", inputFirstAddress.getText());
+        double lat1 = helper.makeAddressIntoLatAndLonDouble("lat", inputFirstAddress.getText());
+        double lon1 = helper.makeAddressIntoLatAndLonDouble("lon", inputFirstAddress.getText());
 
         Thread.sleep(1000);
 
-        double lat2 = helper.getDouble("lat", inputSecondAddress.getText());
-        double lon2 = helper.getDouble("lon", inputSecondAddress.getText());
+        double lat2 = helper.makeAddressIntoLatAndLonDouble("lat", inputSecondAddress.getText());
+        double lon2 = helper.makeAddressIntoLatAndLonDouble("lon", inputSecondAddress.getText());
 
-        latLabelAddress1.setText("Latitude: " + (distanceCalculator.roundDistanceTwoDecimal(lat1)));
-        lonLabelAddress1.setText("Longitude: " + (distanceCalculator.roundDistanceTwoDecimal(lon1)));
+        latLabelAddress1.setText("Latitude: " + (distanceCalculator.roundDistanceFourDecimal(lat1)));
+        lonLabelAddress1.setText("Longitude: " + (distanceCalculator.roundDistanceFourDecimal(lon1)));
 
-        latLabelAddress2.setText("Latitude: " + (distanceCalculator.roundDistanceTwoDecimal(lat2)));
-        lonLabelAddress2.setText("Longitude: " + (distanceCalculator.roundDistanceTwoDecimal(lon2)));
+        latLabelAddress2.setText("Latitude: " + (distanceCalculator.roundDistanceFourDecimal(lat2)));
+        lonLabelAddress2.setText("Longitude: " + (distanceCalculator.roundDistanceFourDecimal(lon2)));
 
 
         double distance = distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
@@ -164,18 +164,21 @@ public class GUI extends Application {
         if (milesFlag) {
             distance = distanceCalculator.kilometersToMiles(distance);
         }
-        String outputDistance = distanceCalculator.roundDistanceTwoDecimal(distance);
+        String outputDistance = distanceCalculator.roundDistanceFourDecimal(distance);
 
         distanceField.setText(String.format("%s %s",outputDistance, unitOfMeasureSelector.getValue().toLowerCase()));
 
     }
 
-    protected void configureErrorHandling() {
+    protected void configureErrorHandling() throws IOException {
         ErrorModalBox errorModalBox = new ErrorModalBox();
         errorModalBox.networkConnectionPopUp();
 
         errorModalBox.noInputFoundPopUp(inputFirstAddress.getText());
         errorModalBox.noInputFoundPopUp(inputSecondAddress.getText());
+
+        errorModalBox.noAddressFoundPopUp("lat", inputFirstAddress.getText());
+        errorModalBox.noAddressFoundPopUp("lat", inputSecondAddress.getText());
 
     }
 }

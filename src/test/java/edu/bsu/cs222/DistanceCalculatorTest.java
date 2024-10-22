@@ -23,6 +23,6 @@ public class DistanceCalculatorTest {
     public void roundingTest() {
         DistanceCalculator distanceCalculator = new DistanceCalculator();
         double testDistance = 3025.3452234;
-        Assertions.assertEquals(Double.toString(3025.3452),distanceCalculator.roundDistanceTwoDecimal(testDistance));
+        Assertions.assertEquals(Double.toString(3025.3452),distanceCalculator.roundDistanceFourDecimal(testDistance));
     }
 }

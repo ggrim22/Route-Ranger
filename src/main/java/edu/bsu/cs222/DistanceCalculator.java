@@ -26,7 +26,7 @@ public class DistanceCalculator {
         return (distance * .621);
     }
 
-    protected  String roundDistanceTwoDecimal(double distance) {
+    protected  String roundDistanceFourDecimal(double distance) {
         return String.format("%.4f",distance);
     }
 }

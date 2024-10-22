@@ -10,15 +10,20 @@ import java.io.InputStream;
 
 public class GUIHelper {
 
-    public double getDouble(String keyword, String Address) throws IOException {
+    public JSONArray getJSONArray(String keyword, String Address) throws IOException {
         AccessAPI access = new AccessAPI();
         Parser parser = new Parser();
-        ErrorHandler errorHandler = new ErrorHandler();
-
         InputStream inputStream = access.getInputStream(access.connectToGeocode(Address));
-        JSONArray jsonArray = parser.makeJSONArray(inputStream, keyword);
 
+        return parser.makeJSONArray(inputStream, keyword);
+    }
+    public double makeJSONArrayIntoDouble(JSONArray jsonArray) {
+        Parser parser = new Parser();
         return Double.parseDouble(parser.parseToString(jsonArray));
+    }
+
+    public double makeAddressIntoLatAndLonDouble(String keyword, String Address) throws IOException {
+        return makeJSONArrayIntoDouble(getJSONArray(keyword, Address));
     }
 
     protected HBox configureHBox(int height){
