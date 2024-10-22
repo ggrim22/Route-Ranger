@@ -26,7 +26,7 @@ public class DistanceCalculator {
         return (distance * .621);
     }
 
-    protected  double roundDistanceTwoDecimal(double distance) {
-        return (double) Math.round(distance * 100) / 100;
+    protected  String roundDistanceTwoDecimal(double distance) {
+        return String.format("%.4f",distance);
     }
 }

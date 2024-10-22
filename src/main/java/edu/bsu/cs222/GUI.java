@@ -153,11 +153,11 @@ public class GUI extends Application {
         double lat2 = helper.getDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.getDouble("lon", inputSecondAddress.getText());
 
-        latLabelAddress1.setText("Latitude: " + (lat1));
-        lonLabelAddress1.setText("Longitude: " + (lon1));
+        latLabelAddress1.setText("Latitude: " + (distanceCalculator.roundDistanceTwoDecimal(lat1)));
+        lonLabelAddress1.setText("Longitude: " + (distanceCalculator.roundDistanceTwoDecimal(lon1)));
 
-        latLabelAddress2.setText("Latitude: " + (lat2));
-        lonLabelAddress2.setText("Longitude: " + (lon2));
+        latLabelAddress2.setText("Latitude: " + (distanceCalculator.roundDistanceTwoDecimal(lat2)));
+        lonLabelAddress2.setText("Longitude: " + (distanceCalculator.roundDistanceTwoDecimal(lon2)));
 
 
         double distance = distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
@@ -166,9 +166,9 @@ public class GUI extends Application {
         if (milesFlag) {
             distance = distanceCalculator.kilometersToMiles(distance);
         }
-        distance = distanceCalculator.roundDistanceTwoDecimal(distance);
+        String outputDistance = distanceCalculator.roundDistanceTwoDecimal(distance);
 
-        distanceField.setText(distance + " " + unitOfMeasureSelector.getValue().toLowerCase());
+        distanceField.setText(String.format("%s %s",outputDistance, unitOfMeasureSelector.getValue().toLowerCase()));
 
     }
 }
