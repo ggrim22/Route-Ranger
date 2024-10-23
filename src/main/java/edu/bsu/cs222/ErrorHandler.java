@@ -5,7 +5,7 @@ import net.minidev.json.JSONArray;
 import java.io.IOException;
 public class ErrorHandler {
 
-    public Boolean noInputFoundError(String address)  {
+    public boolean noInputFoundError(String address)  {
         return address.isEmpty();
     }
 
