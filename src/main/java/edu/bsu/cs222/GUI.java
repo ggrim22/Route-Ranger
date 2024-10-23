@@ -1,5 +1,7 @@
 package edu.bsu.cs222;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -10,12 +12,12 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
 import java.io.IOException;
 
 public class GUI extends Application {
 
     private final Button getDistanceButton = new Button("Get Distance");
+    private final Button closeButton = new Button("Close Window");
     private final TextField inputFirstAddress = new TextField();
     private final TextField inputSecondAddress = new TextField();
     private final TextField distanceField = new TextField();
@@ -33,8 +35,9 @@ public class GUI extends Application {
         inputFirstAddress.setPrefWidth(170);
         inputSecondAddress.setPrefWidth(170);
         configureComboBox();
-        configureButton();
+        configureGetDistanceButton();
         configure(stage);
+        configureCloseButton();
     }
 
     private void configure(Stage stage) {
@@ -59,6 +62,7 @@ public class GUI extends Application {
         GUIHelper helper = new GUIHelper();
         HBox testHBox = helper.configureHBox(50);
         HBox userInputHBox = helper.configureHBox(50);
+        HBox closeButtonHBox = helper.configureHBox(200);
 
         VBox locationLabel1 = helper.configureVBox(150);
         VBox distanceAndUnitVbox = helper.configureVBox(100);
@@ -109,10 +113,17 @@ public class GUI extends Application {
                 new Label("Distance"), distanceField
         );
 
-        root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox);
+        closeButtonHBox.getChildren().addAll(
+                closeButton
+        );
+
+        closeButtonHBox.setAlignment(Pos.BOTTOM_LEFT);
+        closeButtonHBox.setPadding(new Insets(0,40,0,20));
+
+        root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, closeButtonHBox);
     }
 
-    private void configureButton() {
+    private void configureGetDistanceButton() {
         getDistanceButton.setOnAction(event -> {
             try {
                 configureErrorHandling();
@@ -123,6 +134,9 @@ public class GUI extends Application {
         });
     }
 
+    private void configureCloseButton() {
+        closeButton.setOnAction(event -> Platform.exit());
+    }
     private void configureComboBox() {
 
         unitOfMeasureSelector.getItems().addAll("Miles","Kilometers");
@@ -146,7 +160,6 @@ public class GUI extends Application {
         double lat1 = helper.makeAddressIntoLatAndLonDouble("lat", inputFirstAddress.getText());
         double lon1 = helper.makeAddressIntoLatAndLonDouble("lon", inputFirstAddress.getText());
 
-        Thread.sleep(2000);
 
         double lat2 = helper.makeAddressIntoLatAndLonDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.makeAddressIntoLatAndLonDouble("lon", inputSecondAddress.getText());
