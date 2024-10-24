@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import java.io.IOException;
+import java.util.Objects;
 
 public class GUI extends Application {
 
@@ -27,8 +28,6 @@ public class GUI extends Application {
     private final Label latLabelAddress2 = new Label();
 
     private final ComboBox<String> unitOfMeasureSelector = new ComboBox<>();
-
-    private static boolean milesFlag = false;
 
     @Override
     public void start(Stage stage) {
@@ -127,7 +126,7 @@ public class GUI extends Application {
         getDistanceButton.setOnAction(event -> {
             try {
                 configureErrorHandling();
-                turnAddressesToDistance();
+                unitConverter();
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -142,16 +141,8 @@ public class GUI extends Application {
         unitOfMeasureSelector.getItems().addAll("Miles","Kilometers");
         unitOfMeasureSelector.setValue("Miles");
     }
-    private void comboBoxDecision(){
-        if (unitOfMeasureSelector.getValue().equals("Miles")) {
-            milesFlag = true;
-        }
-        else if(unitOfMeasureSelector.getValue().equals("Kilometers")) {
-            milesFlag = false;
-        }
-    }
 
-    public void turnAddressesToDistance() throws IOException, InterruptedException {
+    public double turnAddressesToDistance() throws IOException, InterruptedException {
 
         GUIHelper helper = new GUIHelper();
         DistanceCalculator distanceCalculator = new DistanceCalculator();
@@ -171,16 +162,19 @@ public class GUI extends Application {
         lonLabelAddress2.setText("Longitude: " + (distanceCalculator.roundDistanceFourDecimal(lon2)));
 
 
-        double distance = distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
+        return distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
 
-        comboBoxDecision();
-        if (milesFlag) {
+
+    }
+    private void unitConverter() throws IOException, InterruptedException {
+        DistanceCalculator distanceCalculator = new DistanceCalculator();
+        double distance = turnAddressesToDistance();
+        if (Objects.equals(unitOfMeasureSelector.getValue(), "Miles")) {
             distance = distanceCalculator.kilometersToMiles(distance);
         }
         String outputDistance = distanceCalculator.roundDistanceFourDecimal(distance);
 
         distanceField.setText(String.format("%s %s",outputDistance, unitOfMeasureSelector.getValue().toLowerCase()));
-
     }
 
     protected void configureErrorHandling() throws IOException {
