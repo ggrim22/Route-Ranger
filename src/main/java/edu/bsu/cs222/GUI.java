@@ -142,7 +142,7 @@ public class GUI extends Application {
         unitOfMeasureSelector.setValue("Miles");
     }
 
-    public double turnAddressesToDistance() throws IOException, InterruptedException {
+    public double turnAddressesToDistance() throws IOException{
 
         GUIHelper helper = new GUIHelper();
         DistanceCalculator distanceCalculator = new DistanceCalculator();
