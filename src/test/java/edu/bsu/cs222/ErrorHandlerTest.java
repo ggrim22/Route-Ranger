@@ -24,9 +24,10 @@ public class ErrorHandlerTest {
     }
 
     @Test
-    public void testNoAddressFound() throws IOException {
+    public void testNoAddressFound() throws IOException, InterruptedException {
         ErrorHandler errorHandler = new ErrorHandler();
         boolean result = true;
+        Thread.sleep(1000);
         Assertions.assertEquals(result,errorHandler.noAddressFoundError("lat","No Address Found Place Holder"));
     }
 

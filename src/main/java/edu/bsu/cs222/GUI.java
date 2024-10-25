@@ -40,7 +40,7 @@ public class GUI extends Application {
     }
 
     private void configure(Stage stage) {
-        stage.setTitle("Location Explorer");
+        stage.setTitle("Route Ranger");
         stage.setScene(new Scene(createRoot()));
         stage.setMinWidth(800);
         stage.setMinHeight(500);
