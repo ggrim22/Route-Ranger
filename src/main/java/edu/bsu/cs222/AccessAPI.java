@@ -12,11 +12,8 @@ public class AccessAPI {
         String encodedUrlString = "https://geocode.maps.co/search?q=" +
                 URLEncoder.encode(address, Charset.defaultCharset()) +
                 "&api_key=" + readFromAdminFile();
-        URL url = URI.create(encodedUrlString).toURL();
-        URLConnection connection = url.openConnection();
-        connection.setRequestProperty("User-Agent", "CS222FinalProject/0.1");
-        connection.connect();
-        return connection;
+
+        return createURL(encodedUrlString);
     }
 
     public URLConnection connectToGeoapify(String lon, String lat) throws IOException {
@@ -29,11 +26,8 @@ public class AccessAPI {
                 "marker=lonlat%3A-122.29188334609739%2C47.54403990655936" +
                 "%3Btype%3Aawesome%3Bcolor%3A%23bb3f73%3Bsize%3Ax-large%3Bicon%3Apaw%7Clonlat%3A-122.29282631194182%2C47.549609195001494%3Btype%3Amaterial%3Bcolor%3A%234c905a%3Bicon%3Atree%3Bicontype%3Aawesome%7Clonlat%3A-122.28726954893025%2C47.541766557545884%3Btype%3Amaterial%3Bcolor%3A%234c905a%3Bicon%3Atree%3Bicontype%3Aawesome&" +
                 "apiKey=aa0bba8d694e473db0f91977c507a13a";
-        URL url = URI.create(encodedUrlString).toURL();
-        URLConnection connection = url.openConnection();
-        connection.setRequestProperty("User-Agent", "CS222FinalProject/0.1");
-        connection.connect();
-        return connection;
+
+        return createURL(encodedUrlString);
     }
 
 
@@ -53,6 +47,16 @@ public class AccessAPI {
         }
 
         return "";
+    }
+
+    private URLConnection createURL(String encodedURL) throws IOException {
+
+        URL url = URI.create(encodedURL).toURL();
+        URLConnection connection = url.openConnection();
+        connection.setRequestProperty("User-Agent", "CS222FinalProject/0.1");
+        connection.connect();
+        return connection;
+
     }
 
 }
