@@ -10,11 +10,20 @@ import java.net.URLConnection;
 public class AccessAPITest {
 
     @Test
-    public void urlReturnTest() throws IOException {
+    public void GeocodeAPIURLReturnTest() throws IOException {
         AccessAPI api = new AccessAPI();
         String address = "146 S Nursery Rd Anderson IN 46012 US";
         URLConnection result;
         result = api.connectToGeocode(address);
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    public void GeoapifyAPIURLReturnTest() throws IOException {
+        AccessAPI api = new AccessAPI();
+        String address = "146 S Nursery Rd Anderson IN 46012 US";
+        URLConnection result;
+        result = api.connectToGeoapify("-122.29009844646316", "47.54607447032754");
         Assertions.assertNotNull(result);
     }
 
