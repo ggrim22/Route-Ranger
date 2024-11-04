@@ -25,31 +25,30 @@ public class ErrorModalBox {
     private Dialog<String> configureErrorModalBox(){
         Dialog<String> errorBox = new Dialog<>();
         errorBox.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
-        errorBox.setHeight(111);
+        errorBox.setHeight(150);
+        errorBox.setWidth(500);
         return errorBox;
     }
 
     private void networkConnectionPopUp() {
-        Dialog<String> errorBox = configureErrorModalBox();
-        errorBox.setContentText("There has been a network error. Please try again later.");
-        errorBox.show();
+        createErrorPopUp("There has been a network error. Please try again later.");
     }
 
     private void noInputFoundPopUp() {
-        Dialog<String> errorBox = configureErrorModalBox();
-        errorBox.setContentText("There has been an error, please fill each allotted space.");
-        errorBox.show();
+        createErrorPopUp("There has been an error, please fill each allotted space.");
     }
 
     private void noAddressFoundPopUp(){
-        Dialog<String> errorBox = configureErrorModalBox();
-        errorBox.setContentText("There has been an error, please enter a valid address");
-        errorBox.show();
+        createErrorPopUp("There has been an error, please enter a valid address");
     }
 
     private void noAPIKeyFoundPopUp(){
+        createErrorPopUp("There has been an error, if you would like to use this application, contact us or visit the API website to get an API key.");
+    }
+
+    private void createErrorPopUp(String errorMessage){
         Dialog<String> errorBox = configureErrorModalBox();
-        errorBox.setContentText("There has been an error, if you would like to use this application, contact us or visit the API website to get an API key.");
+        errorBox.setContentText(errorMessage);
         errorBox.show();
     }
 
