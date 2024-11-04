@@ -13,6 +13,12 @@ public class Parser {
     }
 
     public String parseToString(JSONArray jsonArray) {
-        return jsonArray.getFirst().toString();
+        String resultString;
+        try {
+            resultString = jsonArray.getFirst().toString();
+        } catch(Exception e) {
+            resultString = "0";
+        }
+        return resultString;
     }
 }
