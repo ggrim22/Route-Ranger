@@ -12,8 +12,10 @@ public class ErrorModalBox {
 
         if (errorHandler.networkConnectionError()){
             networkConnectionPopUp();
-        } else if (errorHandler.noInputFoundError(address1) || errorHandler.noInputFoundError(address2)) {
-             noInputFoundPopUp();
+        }else if(errorHandler.noAPIKey()){
+            noAPIKeyFoundPopUp();
+        }else if (errorHandler.noInputFoundError(address1) || errorHandler.noInputFoundError(address2)) {
+            noInputFoundPopUp();
         } else if (errorHandler.noAddressFoundError(keyword,address1) || errorHandler.noAddressFoundError(keyword, address2)) {
             noAddressFoundPopUp();
         }
@@ -42,6 +44,12 @@ public class ErrorModalBox {
     private void noAddressFoundPopUp(){
         Dialog<String> errorBox = configureErrorModalBox();
         errorBox.setContentText("There has been an error, please enter a valid address");
+        errorBox.show();
+    }
+
+    private void noAPIKeyFoundPopUp(){
+        Dialog<String> errorBox = configureErrorModalBox();
+        errorBox.setContentText("There has been an error, if you would like to use this application, contact us or visit the API website to get an API key.");
         errorBox.show();
     }
 
