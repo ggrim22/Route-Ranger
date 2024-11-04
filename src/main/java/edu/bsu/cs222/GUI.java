@@ -5,6 +5,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -12,7 +16,11 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 public class GUI extends Application {
@@ -26,17 +34,19 @@ public class GUI extends Application {
     private final Label latLabelAddress1 = new Label();
     private final Label lonLabelAddress2 = new Label();
     private final Label latLabelAddress2 = new Label();
+    private final ImageView logo = new ImageView();
 
     private final ComboBox<String> unitOfMeasureSelector = new ComboBox<>();
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         inputFirstAddress.setPrefWidth(170);
         inputSecondAddress.setPrefWidth(170);
         configureComboBox();
         configureGetDistanceButton();
         configure(stage);
         configureCloseButton();
+        configureImage();
     }
 
     private void configure(Stage stage) {
@@ -89,7 +99,8 @@ public class GUI extends Application {
 
         locationLabel1.getChildren().addAll(
                 latLabelAddress1,
-                lonLabelAddress1
+                lonLabelAddress1,
+                logo
         );
 
         distanceAndUnitVbox.getChildren().addAll(
@@ -120,6 +131,29 @@ public class GUI extends Application {
         closeButtonHBox.setPadding(new Insets(0,40,0,20));
 
         root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, closeButtonHBox);
+    }
+    private void configureImage() throws IOException {
+        InputStream imageInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("RouteRanger.jpg");
+        assert imageInputStream != null;
+        Image image = convertToFxImage(ImageIO.read(imageInputStream));
+        logo.setImage(image);
+        logo.setFitWidth(10);
+        logo.setFitHeight(10);
+    }
+
+    private static Image convertToFxImage(BufferedImage image) {
+        WritableImage wr = null;
+        if (image != null) {
+            wr = new WritableImage(image.getWidth(), image.getHeight());
+            PixelWriter pw = wr.getPixelWriter();
+            for (int x = 0; x < image.getWidth(); x++) {
+                for (int y = 0; y < image.getHeight(); y++) {
+                    pw.setArgb(x, y, image.getRGB(x, y));
+                }
+            }
+        }
+
+        return new ImageView(wr).getImage();
     }
 
     private void configureGetDistanceButton() {
