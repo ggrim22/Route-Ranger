@@ -35,6 +35,9 @@ public class GUI extends Application {
     private final Label lonLabelAddress2 = new Label();
     private final Label latLabelAddress2 = new Label();
     private final ImageView logo = new ImageView();
+    private final ImageView firstAddressImage = new ImageView();
+    private final ImageView secondAddressImage = new ImageView();
+    private final ImageView bothAddressImage = new ImageView();
 
     private final ComboBox<String> unitOfMeasureSelector = new ComboBox<>();
 
@@ -46,7 +49,7 @@ public class GUI extends Application {
         configureGetDistanceButton();
         configure(stage);
         configureCloseButton();
-        configureImage();
+        //configureImage();
     }
 
     private void configure(Stage stage) {
