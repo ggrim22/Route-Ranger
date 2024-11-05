@@ -17,24 +17,20 @@ public class AccessAPI {
     }
 
     public URLConnection connectToGeoapify(String lon, String lat) throws IOException {
-        String encodedUrlString = "https://maps.geoapify.com/v1/staticmap?" +
-                "style=osm-bright-smooth&" +
-                "width=300&height=300&" +
-                "center=lonlat%3A" + URLEncoder.encode(lon, Charset.defaultCharset()) +
-                "%2C" + URLEncoder.encode(lat, Charset.defaultCharset()) +
-                "&zoom=14.3497&" +
-                "marker=lonlat%3A" + URLEncoder.encode(lon, Charset.defaultCharset()) +
-                "%2C" + URLEncoder.encode(lat, Charset.defaultCharset()) +
-                "%3Btype%3Aawesome%3Bcolor%3A%23bb3f73%3Bsize%3Ax-large%3Bicon%3Apaw%7C" +
-                "lonlat%3A" + URLEncoder.encode(lon, Charset.defaultCharset()) +
-                "%2C" + URLEncoder.encode(lat, Charset.defaultCharset()) +
-                "%3Btype%3Amaterial%3Bcolor%3A%234c905a%3Bicon%3Atree%3Bicontype%3Aawesome%7C" +
-                "lonlat%3A" + URLEncoder.encode(lon, Charset.defaultCharset()) +
-                "%2C" + URLEncoder.encode(lat, Charset.defaultCharset()) +
-                "%3Btype%3Amaterial%3Bcolor%3A%234c905a%3Bicon%3Atree%3Bicontype%3Aawesome&" +
+        String encodedURLString = "https://maps.geoapify.com/v1/staticmap?" +
+                "style=osm-bright&" +
+                "width=450&" +
+                "height=300&" +
+                "center=lonlat:" + URLEncoder.encode(lon, Charset.defaultCharset()) +
+                "," + URLEncoder.encode(lat, Charset.defaultCharset()) +
+                "&zoom=14&" +
+                "marker=lonlat:" + URLEncoder.encode(lon, Charset.defaultCharset()) +
+                "," + URLEncoder.encode(lat, Charset.defaultCharset()) +
+                ";color:%23ff0000;size:small&" +
                 "apiKey=aa0bba8d694e473db0f91977c507a13a";
 
-        return createURL(encodedUrlString);
+
+        return createURL(encodedURLString);
     }
 
 

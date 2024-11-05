@@ -12,7 +12,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -58,6 +57,8 @@ public class GUI extends Application {
         stage.setScene(new Scene(createRoot()));
         stage.setMinWidth(800);
         stage.setMinHeight(500);
+        stage.setFullScreen(true);
+        stage.setFullScreenExitHint("Route Ranger!");
         stage.show();
     }
 
@@ -79,6 +80,8 @@ public class GUI extends Application {
     }
 
     private void populateVBox(VBox root) {
+        inputFirstAddress.setText("146 Nursery Rd Anderson IN");
+        inputSecondAddress.setText("320 S Talley Ave Muncie IN");
         GUIHelper helper = new GUIHelper();
 
         HBox leftHeaderHBox = helper.configureHBox(50);
@@ -134,7 +137,8 @@ public class GUI extends Application {
 
         outPutFieldHBox.getChildren().addAll(
                 firstAddressImage,
-                new Label("Distance"), distanceField
+                new Label("Distance"), distanceField,
+                secondAddressImage
         );
 
         closeButtonHBox.getChildren().addAll(
@@ -170,11 +174,30 @@ public class GUI extends Application {
 
     private void configureAddressImageOne() throws IOException {
         AccessAPI accessAPI = new AccessAPI();
-        String lat = latLabelAddress1.getText();
-        String lon = lonLabelAddress1.getText();
+
+        String latLabel = latLabelAddress1.getText();
+        String lat = latLabel.split(" ")[1];
+
+        String lonLabel = lonLabelAddress1.getText();
+        String lon = lonLabel.split(" ")[1];
+
         ImageHandler handler = new ImageHandler();
         Image image = handler.accessImage(accessAPI.connectToGeoapify(lon, lat));
         firstAddressImage.setImage(image);
+    }
+
+    private void configureAddressImageTwo() throws IOException {
+        AccessAPI accessAPI = new AccessAPI();
+
+        String latLabel = latLabelAddress2.getText();
+        String lat = latLabel.split(" ")[1];
+
+        String lonLabel = lonLabelAddress2.getText();
+        String lon = lonLabel.split(" ")[1];
+
+        ImageHandler handler = new ImageHandler();
+        Image image = handler.accessImage(accessAPI.connectToGeoapify(lon, lat));
+        secondAddressImage.setImage(image);
     }
 
     private void configureRectangle() {
@@ -189,6 +212,7 @@ public class GUI extends Application {
                 configureErrorHandling();
                 unitConverter();
                 configureAddressImageOne();
+                configureAddressImageTwo();
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -217,8 +241,8 @@ public class GUI extends Application {
         double lat2 = helper.makeAddressIntoLatAndLonDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.makeAddressIntoLatAndLonDouble("lon", inputSecondAddress.getText());
 
-        latLabelAddress1.setText((distanceCalculator.roundDistanceFourDecimal(lat1)));
-        lonLabelAddress1.setText((distanceCalculator.roundDistanceFourDecimal(lon1)));
+        latLabelAddress1.setText("Latitude: " + (distanceCalculator.roundDistanceFourDecimal(lat1)));
+        lonLabelAddress1.setText("Longitude: " + (distanceCalculator.roundDistanceFourDecimal(lon1)));
 
         Thread.sleep(1000);
 
