@@ -13,7 +13,11 @@ public class AccessAPI {
                 URLEncoder.encode(address, Charset.defaultCharset()) +
                 "&api_key=" + readFromAdminFile();
 
-        return createURL(encodedUrlString);
+        String encodedURLString = "https://api.geoapify.com/v1/geocode/search?" +
+                "text=" +URLEncoder.encode(address, Charset.defaultCharset()) + "&format=json&" +
+                "apiKey=" + readFromAdminFile();
+
+        return createURL(encodedURLString);
     }
 
     public URLConnection connectToGeoapify(String lon, String lat) throws IOException {
@@ -27,7 +31,7 @@ public class AccessAPI {
                 "marker=lonlat:" + URLEncoder.encode(lon, Charset.defaultCharset()) +
                 "," + URLEncoder.encode(lat, Charset.defaultCharset()) +
                 ";color:%23ff0000;size:small&" +
-                "apiKey=aa0bba8d694e473db0f91977c507a13a";
+                "apiKey=" + readFromAdminFile();
 
 
         return createURL(encodedURLString);
