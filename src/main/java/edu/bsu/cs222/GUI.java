@@ -49,7 +49,7 @@ public class GUI extends Application {
         configureGetDistanceButton();
         configure(stage);
         configureCloseButton();
-        //configureImage();
+        configureImage();
     }
 
     private void configure(Stage stage) {
@@ -90,7 +90,7 @@ public class GUI extends Application {
         );
 
         HBox testHBox2 = helper.configureHBox(50);
-        testHBox.getChildren().addAll(
+        testHBox2.getChildren().addAll(
                 new Label("Second Address"),
                 inputSecondAddress
         );
@@ -136,12 +136,11 @@ public class GUI extends Application {
         root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, closeButtonHBox);
     }
     private void configureImage() throws IOException {
-        InputStream imageInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("RouteRanger.jpg");
+        InputStream imageInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("RouteRangerImage.jpg");
         assert imageInputStream != null;
         Image image = convertToFxImage(ImageIO.read(imageInputStream));
         logo.setImage(image);
-        logo.setFitWidth(10);
-        logo.setFitHeight(10);
+        logo.setFitHeight(30);
     }
 
     private static Image convertToFxImage(BufferedImage image) {
