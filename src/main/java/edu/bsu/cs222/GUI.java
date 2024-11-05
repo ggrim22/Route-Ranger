@@ -133,6 +133,7 @@ public class GUI extends Application {
         );
 
         outPutFieldHBox.getChildren().addAll(
+                firstAddressImage,
                 new Label("Distance"), distanceField
         );
 
@@ -156,6 +157,7 @@ public class GUI extends Application {
 
         return logoHBox;
     }
+
     private void configureLogo() throws IOException {
         ImageHandler imageHandler = new ImageHandler();
         InputStream imageInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("RouteRangerImage.png");
@@ -164,6 +166,15 @@ public class GUI extends Application {
         logo.setImage(image);
         logo.setFitHeight(120);
         logo.setFitWidth(120);
+    }
+
+    private void configureAddressImageOne() throws IOException {
+        AccessAPI accessAPI = new AccessAPI();
+        String lat = latLabelAddress1.getText();
+        String lon = lonLabelAddress1.getText();
+        ImageHandler handler = new ImageHandler();
+        Image image = handler.accessImage(accessAPI.connectToGeoapify(lon, lat));
+        firstAddressImage.setImage(image);
     }
 
     private void configureRectangle() {
@@ -177,6 +188,7 @@ public class GUI extends Application {
             try {
                 configureErrorHandling();
                 unitConverter();
+                configureAddressImageOne();
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -192,7 +204,7 @@ public class GUI extends Application {
         unitOfMeasureSelector.setValue("Miles");
     }
 
-    public double turnAddressesToDistance() throws IOException{
+    public double turnAddressesToDistance() throws IOException, InterruptedException {
 
         GUIHelper helper = new GUIHelper();
         DistanceCalculator distanceCalculator = new DistanceCalculator();
@@ -205,8 +217,10 @@ public class GUI extends Application {
         double lat2 = helper.makeAddressIntoLatAndLonDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.makeAddressIntoLatAndLonDouble("lon", inputSecondAddress.getText());
 
-        latLabelAddress1.setText("Latitude: " + (distanceCalculator.roundDistanceFourDecimal(lat1)));
-        lonLabelAddress1.setText("Longitude: " + (distanceCalculator.roundDistanceFourDecimal(lon1)));
+        latLabelAddress1.setText((distanceCalculator.roundDistanceFourDecimal(lat1)));
+        lonLabelAddress1.setText((distanceCalculator.roundDistanceFourDecimal(lon1)));
+
+        Thread.sleep(1000);
 
         latLabelAddress2.setText("Latitude: " + (distanceCalculator.roundDistanceFourDecimal(lat2)));
         lonLabelAddress2.setText("Longitude: " + (distanceCalculator.roundDistanceFourDecimal(lon2)));

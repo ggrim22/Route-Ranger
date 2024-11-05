@@ -5,17 +5,17 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
+import javafx.scene.image.Image;
 
 public class ImageHandler {
     public Image accessImage(URLConnection connection) throws IOException {
         AccessAPI access = new AccessAPI();
         InputStream inputStream = access.getInputStream(connection);
-        return ImageIO.read(inputStream);
+        return convertToFxImage(ImageIO.read(inputStream));
     }
 
     protected  javafx.scene.image.Image convertToFxImage(BufferedImage image) {
