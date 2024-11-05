@@ -7,24 +7,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
 public class GUI extends Application {
-
     private final Button getDistanceButton = new Button("Get Distance");
     private final Button closeButton = new Button("Close Window");
     private final TextField inputFirstAddress = new TextField();
@@ -34,10 +33,11 @@ public class GUI extends Application {
     private final Label latLabelAddress1 = new Label();
     private final Label lonLabelAddress2 = new Label();
     private final Label latLabelAddress2 = new Label();
+    private final Rectangle blankRectangleForSpace = new Rectangle();
     private final ImageView logo = new ImageView();
     private final ImageView firstAddressImage = new ImageView();
     private final ImageView secondAddressImage = new ImageView();
-    private final ImageView bothAddressImage = new ImageView();
+    private final ImageView bothAddressesImage = new ImageView();
 
     private final ComboBox<String> unitOfMeasureSelector = new ComboBox<>();
 
@@ -49,7 +49,8 @@ public class GUI extends Application {
         configureGetDistanceButton();
         configure(stage);
         configureCloseButton();
-        configureImage();
+        configureLogo();
+        configureRectangle();
     }
 
     private void configure(Stage stage) {
@@ -60,19 +61,27 @@ public class GUI extends Application {
         stage.show();
     }
 
-    private Pane createRoot() {
+    private Pane createRoot(){
         GUIHelper helper = new GUIHelper();
-        VBox root = helper.configureVBox(500);
-        root.setAlignment(Pos.CENTER);
+        VBox root = helper.configureVBox(700);
         root.setStyle(GUIStyle.BACKGROUND_COLOR);
-
-        populateVBox(root);
+        root.getChildren().addAll(configureLogoHbox(), configureMainVBox());
         return root;
+    }
+
+    private VBox configureMainVBox() {
+        GUIHelper helper = new GUIHelper();
+        VBox mainVBox = helper.configureVBox(500);
+        mainVBox.setAlignment(Pos.CENTER);
+
+        populateVBox(mainVBox);
+        return mainVBox;
     }
 
     private void populateVBox(VBox root) {
         GUIHelper helper = new GUIHelper();
-        HBox testHBox = helper.configureHBox(50);
+
+        HBox leftHeaderHBox = helper.configureHBox(50);
         HBox userInputHBox = helper.configureHBox(50);
         HBox closeButtonHBox = helper.configureHBox(200);
 
@@ -84,26 +93,27 @@ public class GUI extends Application {
 
         HBox outPutFieldHBox = helper.configureHBox(50);
 
-        testHBox.getChildren().addAll(
+
+        leftHeaderHBox.getChildren().addAll(
                 new Label("First Address"),
                 inputFirstAddress
         );
 
-        HBox testHBox2 = helper.configureHBox(50);
-        testHBox2.getChildren().addAll(
+        HBox rightHeaderHBox = helper.configureHBox(50);
+        rightHeaderHBox.getChildren().addAll(
+                blankRectangleForSpace,
                 new Label("Second Address"),
                 inputSecondAddress
         );
 
         userInputHBox.getChildren().addAll(
-                testHBox,
-                testHBox2
+                leftHeaderHBox,
+                rightHeaderHBox
         );
 
         locationLabel1.getChildren().addAll(
                 latLabelAddress1,
-                lonLabelAddress1,
-                logo
+                lonLabelAddress1
         );
 
         distanceAndUnitVbox.getChildren().addAll(
@@ -135,27 +145,31 @@ public class GUI extends Application {
 
         root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, closeButtonHBox);
     }
-    private void configureImage() throws IOException {
-        InputStream imageInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("RouteRangerImage.jpg");
+
+    private HBox configureLogoHbox() {
+        GUIHelper helper = new GUIHelper();
+        HBox logoHBox = helper.configureHBox(50);
+        logoHBox.getChildren().addAll(
+                logo
+        );
+        logoHBox.setAlignment(Pos.TOP_LEFT);
+
+        return logoHBox;
+    }
+    private void configureLogo() throws IOException {
+        ImageHandler imageHandler = new ImageHandler();
+        InputStream imageInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("RouteRangerImage.png");
         assert imageInputStream != null;
-        Image image = convertToFxImage(ImageIO.read(imageInputStream));
+        Image image = imageHandler.convertToFxImage(ImageIO.read(imageInputStream));
         logo.setImage(image);
-        logo.setFitHeight(30);
+        logo.setFitHeight(120);
+        logo.setFitWidth(120);
     }
 
-    private static Image convertToFxImage(BufferedImage image) {
-        WritableImage wr = null;
-        if (image != null) {
-            wr = new WritableImage(image.getWidth(), image.getHeight());
-            PixelWriter pw = wr.getPixelWriter();
-            for (int x = 0; x < image.getWidth(); x++) {
-                for (int y = 0; y < image.getHeight(); y++) {
-                    pw.setArgb(x, y, image.getRGB(x, y));
-                }
-            }
-        }
-
-        return new ImageView(wr).getImage();
+    private void configureRectangle() {
+        blankRectangleForSpace.setHeight(50);
+        blankRectangleForSpace.setWidth(200);
+        blankRectangleForSpace.setFill(Color.TRANSPARENT);
     }
 
     private void configureGetDistanceButton() {
