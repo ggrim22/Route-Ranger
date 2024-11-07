@@ -208,8 +208,11 @@ public class GUI extends Application {
         String address2LonText = lonLabelAddress2.getText();
         String address2Lon = address2LonText.split(" ")[1];
 
+        String centerLat = Double.toString((Double.parseDouble(address1Lat) + Double.parseDouble(address2Lat))/2);
+        String centerLon = Double.toString((Double.parseDouble(address2Lat) + Double.parseDouble(address2Lat))/2);
+
         ImageHandler handler = new ImageHandler();
-        Image image = handler.accessImage(accessAPI.connectToDynamicMap(address1Lat, address1Lon,address2Lat,address2Lon, address1Lat,address1Lon));
+        Image image = handler.accessImage(accessAPI.connectToDynamicMap(address1Lat, address1Lon,address2Lat,address2Lon,centerLat,centerLon));
         dynamicMapImage.setImage(image);
     }
 
