@@ -9,9 +9,6 @@ import java.util.Scanner;
 public class AccessAPI {
 
     public URLConnection connectToGeocode(String address) throws IOException {
-        String encodedUrlString = "https://geocode.maps.co/search?q=" +
-                URLEncoder.encode(address, Charset.defaultCharset()) +
-                "&api_key=" + readFromAdminFile();
 
         String encodedURLString = "https://api.geoapify.com/v1/geocode/search?" +
                 "text=" +URLEncoder.encode(address, Charset.defaultCharset()) + "&format=json&" +
@@ -20,7 +17,7 @@ public class AccessAPI {
         return createURL(encodedURLString);
     }
 
-    public URLConnection connectToGeoapify(String lon, String lat) throws IOException {
+    public URLConnection connectToStaticMap(String lat, String lon) throws IOException {
         String encodedURLString = "https://maps.geoapify.com/v1/staticmap?" +
                 "style=osm-bright&" +
                 "width=450&" +
@@ -33,6 +30,33 @@ public class AccessAPI {
                 ";color:%23ff0000;size:small&" +
                 "apiKey=" + readFromAdminFile();
 
+
+        return createURL(encodedURLString);
+    }
+
+    public URLConnection connectToDynamicMap(String address1Lat, String address1Lon, String address2Lat, String address2Lon, String centerLat, String centerLon) throws IOException {
+        String encodedURLString = "https://maps.geoapify.com/v1/" +
+                "staticmap?style=osm-bright&" +
+                "width=600&" +
+                "height=400&" +
+                "center=lonlat:" +
+                URLEncoder.encode(centerLon, Charset.defaultCharset()) +
+                "," +
+                URLEncoder.encode(centerLat, Charset.defaultCharset()) +
+                "&zoom=14&" +
+                "marker=lonlat:" +
+                URLEncoder.encode(address1Lon, Charset.defaultCharset()) +
+                "," +
+                URLEncoder.encode(address1Lat, Charset.defaultCharset()) +
+                ";color:%23ff0000;" +
+                "size:medium" + "|" +
+                "lonlat:" +
+                URLEncoder.encode(address2Lon, Charset.defaultCharset()) +
+                "," +
+                URLEncoder.encode(address2Lat, Charset.defaultCharset()) +
+                ";color:%23ff0000;" +
+                "size:medium&" +
+                "apiKey=" + readFromAdminFile();
 
         return createURL(encodedURLString);
     }

@@ -22,7 +22,15 @@ public class AccessAPITest {
     public void GeoapifyAPIURLReturnTest() throws IOException {
         AccessAPI api = new AccessAPI();
         URLConnection result;
-        result = api.connectToGeoapify("-122.29009844646316", "47.54607447032754");
+        result = api.connectToStaticMap("40.115843", "-85.657507");
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    public void GeoapifyTwoAddressMapTest() throws IOException {
+        AccessAPI api = new AccessAPI();
+        URLConnection result;
+        result = api.connectToDynamicMap("40.115843", "-85.657507", "40.191503", "-85.4102546", "40.191503","-85.4102546");
         Assertions.assertNotNull(result);
     }
 

@@ -182,7 +182,7 @@ public class GUI extends Application {
         String lon = lonLabel.split(" ")[1];
 
         ImageHandler handler = new ImageHandler();
-        Image image = handler.accessImage(accessAPI.connectToGeoapify(lon, lat));
+        Image image = handler.accessImage(accessAPI.connectToStaticMap(lat, lon));
         firstAddressImage.setImage(image);
     }
 
@@ -196,7 +196,7 @@ public class GUI extends Application {
         String lon = lonLabel.split(" ")[1];
 
         ImageHandler handler = new ImageHandler();
-        Image image = handler.accessImage(accessAPI.connectToGeoapify(lon, lat));
+        Image image = handler.accessImage(accessAPI.connectToStaticMap(lat, lon));
         secondAddressImage.setImage(image);
     }
 
