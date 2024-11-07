@@ -30,7 +30,7 @@ public class AccessAPITest {
     public void GeoapifyTwoAddressMapTest() throws IOException {
         AccessAPI api = new AccessAPI();
         URLConnection result;
-        result = api.connectToDynamicMap("40.115843", "-85.657507", "40.191503", "-85.4102546", "40.191503","-85.4102546");
+        result = api.connectToDynamicMap("40.115843", "-85.657507", "40.191503", "-85.4102546", "40.191503","-85.4102546", "14");
         Assertions.assertNotNull(result);
     }
 

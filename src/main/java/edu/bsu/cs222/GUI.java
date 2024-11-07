@@ -195,6 +195,8 @@ public class GUI extends Application {
 
     private void configureDynamicMapImage() throws IOException {
         AccessAPI accessAPI = new AccessAPI();
+        DistanceCalculator distanceCalculator = new DistanceCalculator();
+
 
         String address1LatText = latLabelAddress1.getText();
         String address1Lat = address1LatText.split(" ")[1];
@@ -208,11 +210,16 @@ public class GUI extends Application {
         String address2LonText = lonLabelAddress2.getText();
         String address2Lon = address2LonText.split(" ")[1];
 
-        String centerLat = Double.toString((Double.parseDouble(address1Lat) + Double.parseDouble(address2Lat))/2);
-        String centerLon = Double.toString((Double.parseDouble(address2Lat) + Double.parseDouble(address2Lat))/2);
+        double distance = distanceCalculator.calculateDistanceKiloMeters(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat),Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
+
+        String zoomLevel = distanceCalculator.calculateZoomLevel(distance);
+
+        double[] centerLatAndLon = distanceCalculator.calculateCenterLatAndLon(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat),Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
+        double centerLon = centerLatAndLon[1];
+        double centerLat = centerLatAndLon[0];
 
         ImageHandler handler = new ImageHandler();
-        Image image = handler.accessImage(accessAPI.connectToDynamicMap(address1Lat, address1Lon,address2Lat,address2Lon,centerLat,centerLon));
+        Image image = handler.accessImage(accessAPI.connectToDynamicMap(address1Lat, address1Lon,address2Lat,address2Lon,Double.toString(centerLat), Double.toString(centerLon), zoomLevel));
         dynamicMapImage.setImage(image);
     }
 
@@ -245,7 +252,7 @@ public class GUI extends Application {
         unitOfMeasureSelector.setValue("Miles");
     }
 
-    public double turnAddressesToDistance() throws IOException, InterruptedException {
+    public double turnAddressesToDistance() throws IOException{
 
         GUIHelper helper = new GUIHelper();
         DistanceCalculator distanceCalculator = new DistanceCalculator();

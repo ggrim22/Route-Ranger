@@ -34,16 +34,17 @@ public class AccessAPI {
         return createURL(encodedURLString);
     }
 
-    public URLConnection connectToDynamicMap(String address1Lat, String address1Lon, String address2Lat, String address2Lon, String centerLat, String centerLon) throws IOException {
+    public URLConnection connectToDynamicMap(String address1Lat, String address1Lon, String address2Lat, String address2Lon, String centerLat, String centerLon, String zoomLevel) throws IOException {
         String encodedURLString = "https://maps.geoapify.com/v1/" +
                 "staticmap?style=osm-bright&" +
-                "width=400&" +
-                "height=300&" +
+                "width=500&" +
+                "height=400&" +
                 "center=lonlat:" +
                 URLEncoder.encode(centerLon, Charset.defaultCharset()) +
                 "," +
                 URLEncoder.encode(centerLat, Charset.defaultCharset()) +
-                "&zoom=8&" +
+                "&zoom=" + URLEncoder.encode(zoomLevel, Charset.defaultCharset()) +
+                "&" +
                 "marker=lonlat:" +
                 URLEncoder.encode(address1Lon, Charset.defaultCharset()) +
                 "," +
