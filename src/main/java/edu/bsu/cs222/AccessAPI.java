@@ -49,7 +49,7 @@ public class AccessAPI {
                 "," +
                 URLEncoder.encode(address1Lat, Charset.defaultCharset()) +
                 ";color:%23ff0000;" +
-                "size:medium" + "|" +
+                "size:medium" + URLEncoder.encode("|", Charset.defaultCharset()) +
                 "lonlat:" +
                 URLEncoder.encode(address2Lon, Charset.defaultCharset()) +
                 "," +
