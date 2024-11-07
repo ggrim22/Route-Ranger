@@ -172,32 +172,19 @@ public class GUI extends Application {
         logo.setFitWidth(120);
     }
 
-    private void configureAddressImageOne() throws IOException {
+
+    private void configureMapImage(ImageView mapChoice, Label latLabel, Label lonLabel) throws IOException {
         AccessAPI accessAPI = new AccessAPI();
 
-        String latLabel = latLabelAddress1.getText();
-        String lat = latLabel.split(" ")[1];
+        String latLabelText = latLabel.getText();
+        String lat = latLabelText.split(" ")[1];
 
-        String lonLabel = lonLabelAddress1.getText();
-        String lon = lonLabel.split(" ")[1];
+        String lonLabelText = lonLabel.getText();
+        String lon = lonLabelText.split(" ")[1];
 
         ImageHandler handler = new ImageHandler();
         Image image = handler.accessImage(accessAPI.connectToStaticMap(lat, lon));
-        firstAddressImage.setImage(image);
-    }
-
-    private void configureAddressImageTwo() throws IOException {
-        AccessAPI accessAPI = new AccessAPI();
-
-        String latLabel = latLabelAddress2.getText();
-        String lat = latLabel.split(" ")[1];
-
-        String lonLabel = lonLabelAddress2.getText();
-        String lon = lonLabel.split(" ")[1];
-
-        ImageHandler handler = new ImageHandler();
-        Image image = handler.accessImage(accessAPI.connectToStaticMap(lat, lon));
-        secondAddressImage.setImage(image);
+        mapChoice.setImage(image);
     }
 
     private void configureRectangle() {
@@ -211,8 +198,8 @@ public class GUI extends Application {
             try {
                 configureErrorHandling();
                 unitConverter();
-                configureAddressImageOne();
-                configureAddressImageTwo();
+                configureMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
+                configureMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
