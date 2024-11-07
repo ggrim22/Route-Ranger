@@ -43,7 +43,7 @@ public class AccessAPI {
                 URLEncoder.encode(centerLon, Charset.defaultCharset()) +
                 "," +
                 URLEncoder.encode(centerLat, Charset.defaultCharset()) +
-                "&zoom=14&" +
+                "&zoom=8&" +
                 "marker=lonlat:" +
                 URLEncoder.encode(address1Lon, Charset.defaultCharset()) +
                 "," +

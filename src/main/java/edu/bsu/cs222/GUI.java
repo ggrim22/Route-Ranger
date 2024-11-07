@@ -36,7 +36,7 @@ public class GUI extends Application {
     private final ImageView logo = new ImageView();
     private final ImageView firstAddressImage = new ImageView();
     private final ImageView secondAddressImage = new ImageView();
-    private final ImageView bothAddressesImage = new ImageView();
+    private final ImageView dynamicMapImage = new ImageView();
 
     private final ComboBox<String> unitOfMeasureSelector = new ComboBox<>();
 
@@ -96,6 +96,8 @@ public class GUI extends Application {
 
         HBox outPutFieldHBox = helper.configureHBox(50);
 
+        HBox dynamicMapHbox = helper.configureHBox(100);
+
 
         leftHeaderHBox.getChildren().addAll(
                 new Label("First Address"),
@@ -141,6 +143,10 @@ public class GUI extends Application {
                 secondAddressImage
         );
 
+        dynamicMapHbox.getChildren().addAll(
+                dynamicMapImage
+        );
+
         closeButtonHBox.getChildren().addAll(
                 closeButton
         );
@@ -148,7 +154,7 @@ public class GUI extends Application {
         closeButtonHBox.setAlignment(Pos.BOTTOM_LEFT);
         closeButtonHBox.setPadding(new Insets(0,40,0,20));
 
-        root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, closeButtonHBox);
+        root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, dynamicMapHbox, closeButtonHBox);
     }
 
     private HBox configureLogoHbox() {
@@ -173,7 +179,7 @@ public class GUI extends Application {
     }
 
 
-    private void configureMapImage(ImageView mapChoice, Label latLabel, Label lonLabel) throws IOException {
+    private void configureStaticMapImage(ImageView mapChoice, Label latLabel, Label lonLabel) throws IOException {
         AccessAPI accessAPI = new AccessAPI();
 
         String latLabelText = latLabel.getText();
@@ -187,6 +193,26 @@ public class GUI extends Application {
         mapChoice.setImage(image);
     }
 
+    private void configureDynamicMapImage() throws IOException {
+        AccessAPI accessAPI = new AccessAPI();
+
+        String address1LatText = latLabelAddress1.getText();
+        String address1Lat = address1LatText.split(" ")[1];
+
+        String address1LonText = lonLabelAddress1.getText();
+        String address1Lon = address1LonText.split(" ")[1];
+
+        String address2LatText = latLabelAddress2.getText();
+        String address2Lat = address2LatText.split(" ")[1];
+
+        String address2LonText = lonLabelAddress2.getText();
+        String address2Lon = address2LonText.split(" ")[1];
+
+        ImageHandler handler = new ImageHandler();
+        Image image = handler.accessImage(accessAPI.connectToDynamicMap(address1Lat, address1Lon,address2Lat,address2Lon, address1Lat,address1Lon));
+        dynamicMapImage.setImage(image);
+    }
+
     private void configureRectangle() {
         blankRectangleForSpace.setHeight(50);
         blankRectangleForSpace.setWidth(200);
@@ -198,8 +224,9 @@ public class GUI extends Application {
             try {
                 configureErrorHandling();
                 unitConverter();
-                configureMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
-                configureMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);
+                configureStaticMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
+                configureStaticMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);
+                configureDynamicMapImage();
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
