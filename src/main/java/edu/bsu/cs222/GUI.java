@@ -9,9 +9,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,8 +47,7 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        inputFirstAddress.setPrefWidth(170);
-        inputSecondAddress.setPrefWidth(170);
+        configureInputBoxes();
         configureComboBox();
         configureGetDistanceButton();
         configure(stage);
@@ -52,9 +56,32 @@ public class GUI extends Application {
         configureRectangle();
     }
 
-    private void configure(Stage stage) {
+    private void configure(Stage stage) throws IOException {
         stage.setTitle("Route Ranger");
-        stage.setScene(new Scene(createRoot()));
+
+        // Load the background image
+        ImageHandler imageHandler = new ImageHandler();
+        InputStream imageInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Background_Satellite.jpg");
+        assert imageInputStream != null;
+        Image backgroundImage = imageHandler.convertToFxImage(ImageIO.read(imageInputStream));
+
+        // Create an ImageView for the background image
+        ImageView imageView = new ImageView(backgroundImage);
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+        imageView.setCache(true);
+        imageView.fitWidthProperty().bind(stage.widthProperty());
+        imageView.fitHeightProperty().bind(stage.heightProperty());
+
+
+        StackPane root = new StackPane(); //Stack pane is multiple "scenes" on top of eachother
+        // Add the background image as the first child to ensure it's at the back and the rest in front
+        root.getChildren().add(imageView);
+        root.getChildren().add(createRoot());
+
+        Scene scene = new Scene(root, 800, 500);
+        stage.setScene(scene);
+
         stage.setMinWidth(800);
         stage.setMinHeight(500);
         stage.setFullScreen(true);
@@ -62,10 +89,10 @@ public class GUI extends Application {
         stage.show();
     }
 
+
     private Pane createRoot(){
         GUIHelper helper = new GUIHelper();
         VBox root = helper.configureVBox(700);
-        root.setStyle(GUIStyle.BACKGROUND_COLOR);
         root.getChildren().addAll(configureLogoHbox(), configureMainVBox());
         return root;
     }
@@ -100,14 +127,14 @@ public class GUI extends Application {
 
 
         leftHeaderHBox.getChildren().addAll(
-                new Label("First Address"),
+                configureText("First Address"),
                 inputFirstAddress
         );
 
         HBox rightHeaderHBox = helper.configureHBox(50);
         rightHeaderHBox.getChildren().addAll(
                 blankRectangleForSpace,
-                new Label("Second Address"),
+                configureText("Second Address"),
                 inputSecondAddress
         );
 
@@ -139,7 +166,7 @@ public class GUI extends Application {
 
         outPutFieldHBox.getChildren().addAll(
                 firstAddressImage,
-                new Label("Distance"), distanceField,
+                configureText("Distance"), distanceField,
                 secondAddressImage
         );
 
@@ -157,6 +184,27 @@ public class GUI extends Application {
         root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, dynamicMapHbox, closeButtonHBox);
     }
 
+    private Text configureText(String textString) {
+        Text resultText = new Text(textString);
+        Font font = Font.font("Georgia", FontWeight.BOLD, FontPosture.REGULAR, 25);
+        resultText.setFont(font);
+        resultText.setFill(Color.WHITE);
+        resultText.setStrokeWidth(1);
+        resultText.setStroke(Color.BLACK);
+        return resultText;
+    }
+    private void configureInputBoxes(){
+        Font font = Font.font("Serif", FontWeight.BOLD, FontPosture.REGULAR, 12);
+
+        inputFirstAddress.setFont(font);
+        inputFirstAddress.setPrefWidth(170);
+        inputFirstAddress.setPromptText("123 Main St City State");
+
+        inputSecondAddress.setFont(font);
+        inputSecondAddress.setPrefWidth(170);
+        inputSecondAddress.setPromptText("123 Main St City State");
+
+    }
     private HBox configureLogoHbox() {
         GUIHelper helper = new GUIHelper();
         HBox logoHBox = helper.configureHBox(50);
