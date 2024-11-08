@@ -195,7 +195,7 @@ public class GUI extends Application {
 
     private void configureDynamicMapImage() throws IOException {
         AccessAPI accessAPI = new AccessAPI();
-        DistanceCalculator distanceCalculator = new DistanceCalculator();
+        GeoCalculator geoCalculator = new GeoCalculator();
 
 
         String address1LatText = latLabelAddress1.getText();
@@ -210,11 +210,11 @@ public class GUI extends Application {
         String address2LonText = lonLabelAddress2.getText();
         String address2Lon = address2LonText.split(" ")[1];
 
-        double distance = distanceCalculator.calculateDistanceKiloMeters(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat),Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
+        double distance = geoCalculator.calculateDistanceKiloMeters(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat),Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
 
-        String zoomLevel = distanceCalculator.calculateZoomLevel(distance);
+        String zoomLevel = geoCalculator.calculateZoomLevel(distance);
 
-        double[] centerLatAndLon = distanceCalculator.calculateCenterLatAndLon(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat),Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
+        double[] centerLatAndLon = geoCalculator.calculateCenterLatAndLon(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat),Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
         double centerLon = centerLatAndLon[1];
         double centerLat = centerLatAndLon[0];
 
@@ -255,7 +255,7 @@ public class GUI extends Application {
     public double turnAddressesToDistance() throws IOException{
 
         GUIHelper helper = new GUIHelper();
-        DistanceCalculator distanceCalculator = new DistanceCalculator();
+        GeoCalculator geoCalculator = new GeoCalculator();
 
 
         double lat1 = helper.makeAddressIntoLatAndLonDouble("lat", inputFirstAddress.getText());
@@ -265,24 +265,24 @@ public class GUI extends Application {
         double lat2 = helper.makeAddressIntoLatAndLonDouble("lat", inputSecondAddress.getText());
         double lon2 = helper.makeAddressIntoLatAndLonDouble("lon", inputSecondAddress.getText());
 
-        latLabelAddress1.setText("Latitude: " + (distanceCalculator.roundDistanceFourDecimal(lat1)));
-        lonLabelAddress1.setText("Longitude: " + (distanceCalculator.roundDistanceFourDecimal(lon1)));
+        latLabelAddress1.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat1)));
+        lonLabelAddress1.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon1)));
 
-        latLabelAddress2.setText("Latitude: " + (distanceCalculator.roundDistanceFourDecimal(lat2)));
-        lonLabelAddress2.setText("Longitude: " + (distanceCalculator.roundDistanceFourDecimal(lon2)));
+        latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat2)));
+        lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon2)));
 
 
-        return distanceCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
+        return geoCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
 
 
     }
     private void unitConverter() throws IOException, InterruptedException {
-        DistanceCalculator distanceCalculator = new DistanceCalculator();
+        GeoCalculator geoCalculator = new GeoCalculator();
         double distance = turnAddressesToDistance();
         if (Objects.equals(unitOfMeasureSelector.getValue(), "Miles")) {
-            distance = distanceCalculator.kilometersToMiles(distance);
+            distance = geoCalculator.kilometersToMiles(distance);
         }
-        String outputDistance = distanceCalculator.roundDistanceFourDecimal(distance);
+        String outputDistance = geoCalculator.roundDistanceFourDecimal(distance);
 
         distanceField.setText(String.format("%s %s",outputDistance, unitOfMeasureSelector.getValue().toLowerCase()));
     }

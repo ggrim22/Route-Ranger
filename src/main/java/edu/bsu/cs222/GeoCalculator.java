@@ -1,6 +1,6 @@
 package edu.bsu.cs222;
 
-public class DistanceCalculator {
+public class GeoCalculator {
     private static final int EARTH_RADIUS = 6378;
 
     public double calculateDistanceKiloMeters(double lat1, double lon1, double lat2, double lon2) {
