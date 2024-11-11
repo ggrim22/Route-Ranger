@@ -37,8 +37,8 @@ public class AccessAPI {
     public URLConnection connectToDynamicMap(String address1Lat, String address1Lon, String address2Lat, String address2Lon, String centerLat, String centerLon, String zoomLevel) throws IOException {
         String encodedURLString = "https://maps.geoapify.com/v1/" +
                 "staticmap?style=osm-bright&" +
-                "width=500&" +
-                "height=400&" +
+                "width=400&" +
+                "height=300&" +
                 "center=lonlat:" +
                 URLEncoder.encode(centerLon, Charset.defaultCharset()) +
                 "," +

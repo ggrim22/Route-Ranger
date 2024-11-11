@@ -1,7 +1,6 @@
 package edu.bsu.cs222;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -53,7 +52,7 @@ public class GUI extends Application {
         configure(stage);
         configureCloseButton();
         configureLogo();
-        configureRectangle();
+        configureRectangle(20, 50);
     }
 
     private void configure(Stage stage) throws IOException {
@@ -93,7 +92,7 @@ public class GUI extends Application {
     private Pane createRoot(){
         GUIHelper helper = new GUIHelper();
         VBox root = helper.configureVBox(700);
-        root.getChildren().addAll(configureLogoHbox(), configureMainVBox());
+        root.getChildren().addAll(configureLogoHbox(), configureMainVBox(),configureFooterHBox());
         return root;
     }
 
@@ -105,7 +104,6 @@ public class GUI extends Application {
         populateVBox(mainVBox);
         return mainVBox;
     }
-
     private void populateVBox(VBox root) {
         inputFirstAddress.setText("146 Nursery Rd Anderson IN");
         inputSecondAddress.setText("320 S Talley Ave Muncie IN");
@@ -113,7 +111,6 @@ public class GUI extends Application {
 
         HBox leftHeaderHBox = helper.configureHBox(50);
         HBox userInputHBox = helper.configureHBox(50);
-        HBox closeButtonHBox = helper.configureHBox(200);
 
         VBox locationLabel1 = helper.configureVBox(150);
         VBox distanceAndUnitVbox = helper.configureVBox(100);
@@ -173,15 +170,7 @@ public class GUI extends Application {
         dynamicMapHbox.getChildren().addAll(
                 dynamicMapImage
         );
-
-        closeButtonHBox.getChildren().addAll(
-                closeButton
-        );
-
-        closeButtonHBox.setAlignment(Pos.BOTTOM_LEFT);
-        closeButtonHBox.setPadding(new Insets(0,40,0,20));
-
-        root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, dynamicMapHbox, closeButtonHBox);
+        root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, dynamicMapHbox);
     }
 
     private Text configureText(String textString) {
@@ -214,6 +203,23 @@ public class GUI extends Application {
         logoHBox.setAlignment(Pos.TOP_LEFT);
 
         return logoHBox;
+    }
+
+    private HBox configureFooterHBox() {
+        GUIHelper helper = new GUIHelper();
+        HBox footerHBox = helper.configureHBox(400);
+        Text credits = new Text("A Grim West Culp Production. 2024.");
+        Font font = Font.font("Georgia", FontWeight.BOLD, FontPosture.ITALIC, 15);
+        credits.setFont(font);
+        credits.setStroke(Color.LIGHTGRAY);
+        configureRectangle(20,100);
+        footerHBox.getChildren().addAll(
+                closeButton,
+                blankRectangleForSpace,
+                credits
+        );
+        footerHBox.setAlignment(Pos.BOTTOM_LEFT);
+        return footerHBox;
     }
 
     private void configureLogo() throws IOException {
@@ -271,9 +277,9 @@ public class GUI extends Application {
         dynamicMapImage.setImage(image);
     }
 
-    private void configureRectangle() {
-        blankRectangleForSpace.setHeight(50);
-        blankRectangleForSpace.setWidth(200);
+    private void configureRectangle(int height, int width) {
+        blankRectangleForSpace.setHeight(height);
+        blankRectangleForSpace.setWidth(width);
         blankRectangleForSpace.setFill(Color.TRANSPARENT);
     }
 
