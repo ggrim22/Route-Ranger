@@ -61,24 +61,12 @@ public class GUI extends Application {
     private void configure(Stage stage) throws IOException {
         stage.setTitle("Route Ranger");
 
-        // Load the background image
-        ImageHandler imageHandler = new ImageHandler();
-        InputStream imageInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Background_Satellite.jpg");
-        assert imageInputStream != null;
-        Image backgroundImage = imageHandler.convertToFxImage(ImageIO.read(imageInputStream));
+        GUIStyle styler = new GUIStyle();
+        ImageView backgroundImage = styler.configureBackgroundImage(stage);
 
-        // Create an ImageView for the background image
-        ImageView imageView = new ImageView(backgroundImage);
-        imageView.setPreserveRatio(true);
-        imageView.setSmooth(true);
-        imageView.setCache(true);
-        imageView.fitWidthProperty().bind(stage.widthProperty());
-        imageView.fitHeightProperty().bind(stage.heightProperty());
+        StackPane root = new StackPane();
 
-
-        StackPane root = new StackPane(); //Stack pane is multiple "scenes" on top of eachother
-        // Add the background image as the first child to ensure it's at the back and the rest in front
-        root.getChildren().add(imageView);
+        root.getChildren().add(backgroundImage);
         root.getChildren().add(createRoot());
 
         Scene scene = new Scene(root, 800, 500);
@@ -106,6 +94,7 @@ public class GUI extends Application {
         populateVBox(mainVBox);
         return mainVBox;
     }
+
     private void populateVBox(VBox root) {
         inputFirstAddress.setText("146 Nursery Rd Anderson IN");
         inputSecondAddress.setText("320 S Talley Ave Muncie IN");
@@ -248,7 +237,6 @@ public class GUI extends Application {
         logo.setFitHeight(120);
         logo.setFitWidth(120);
     }
-
 
     private void configureStaticMapImage(ImageView mapChoice, Label latLabel, Label lonLabel) throws IOException {
         AccessAPI accessAPI = new AccessAPI();
