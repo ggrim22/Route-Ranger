@@ -8,58 +8,73 @@ import java.util.Scanner;
 
 public class AccessAPI {
 
-    public URLConnection connectToGeocode(String address) throws IOException {
+    public URLConnection connectToGeocode(String address){
         assert !address.isEmpty();
-        String encodedURLString = "https://api.geoapify.com/v1/geocode/search?" +
-                "text=" +URLEncoder.encode(address, Charset.defaultCharset()) + "&format=json&" +
-                "apiKey=" + readFromAdminFile();
+        URLConnection resultConnection;
+        try {
+            String encodedURLString = "https://api.geoapify.com/v1/geocode/search?" +
+                    "text=" + URLEncoder.encode(address, Charset.defaultCharset()) + "&format=json&" +
+                    "apiKey=" + readFromAdminFile();
+            resultConnection = createURL(encodedURLString);
+        } catch (Exception e) {
+            return null;
+        }
 
-        return createURL(encodedURLString);
+        return resultConnection;
     }
 
-    public URLConnection connectToStaticMap(String lat, String lon) throws IOException {
-        String encodedURLString = "https://maps.geoapify.com/v1/staticmap?" +
-                "style=osm-bright&" +
-                "width=300&" +
-                "height=200&" +
-                "center=lonlat:" + URLEncoder.encode(lon, Charset.defaultCharset()) +
-                "," + URLEncoder.encode(lat, Charset.defaultCharset()) +
-                "&zoom=14&" +
-                "marker=lonlat:" + URLEncoder.encode(lon, Charset.defaultCharset()) +
-                "," + URLEncoder.encode(lat, Charset.defaultCharset()) +
-                ";color:%23ff0000;size:small&" +
-                "apiKey=" + readFromAdminFile();
-
-
-        return createURL(encodedURLString);
+    public URLConnection connectToStaticMap(String lat, String lon){
+        URLConnection resultConnection;
+        try {
+            String encodedURLString = "https://maps.geoapify.com/v1/staticmap?" +
+                    "style=osm-bright&" +
+                    "width=300&" +
+                    "height=200&" +
+                    "center=lonlat:" + URLEncoder.encode(lon, Charset.defaultCharset()) +
+                    "," + URLEncoder.encode(lat, Charset.defaultCharset()) +
+                    "&zoom=14&" +
+                    "marker=lonlat:" + URLEncoder.encode(lon, Charset.defaultCharset()) +
+                    "," + URLEncoder.encode(lat, Charset.defaultCharset()) +
+                    ";color:%23ff0000;size:small&" +
+                    "apiKey=" + readFromAdminFile();
+            resultConnection = createURL(encodedURLString);
+        }catch(Exception e) {
+            return null;
+        }
+        return resultConnection;
     }
 
-    public URLConnection connectToDynamicMap(String address1Lat, String address1Lon, String address2Lat, String address2Lon, String centerLat, String centerLon, String zoomLevel) throws IOException {
-        String encodedURLString = "https://maps.geoapify.com/v1/" +
-                "staticmap?style=osm-bright&" +
-                "width=400&" +
-                "height=300&" +
-                "center=lonlat:" +
-                URLEncoder.encode(centerLon, Charset.defaultCharset()) +
-                "," +
-                URLEncoder.encode(centerLat, Charset.defaultCharset()) +
-                "&zoom=" + URLEncoder.encode(zoomLevel, Charset.defaultCharset()) +
-                "&" +
-                "marker=lonlat:" +
-                URLEncoder.encode(address1Lon, Charset.defaultCharset()) +
-                "," +
-                URLEncoder.encode(address1Lat, Charset.defaultCharset()) +
-                ";color:%23ff0000;" +
-                "size:medium" + URLEncoder.encode("|", Charset.defaultCharset()) +
-                "lonlat:" +
-                URLEncoder.encode(address2Lon, Charset.defaultCharset()) +
-                "," +
-                URLEncoder.encode(address2Lat, Charset.defaultCharset()) +
-                ";color:%23ff0000;" +
-                "size:medium&" +
-                "apiKey=" + readFromAdminFile();
-
-        return createURL(encodedURLString);
+    public URLConnection connectToDynamicMap(String address1Lat, String address1Lon, String address2Lat, String address2Lon, String centerLat, String centerLon, String zoomLevel){
+        URLConnection resultConnection;
+        try {
+            String encodedURLString = "https://maps.geoapify.com/v1/" +
+                    "staticmap?style=osm-bright&" +
+                    "width=400&" +
+                    "height=300&" +
+                    "center=lonlat:" +
+                    URLEncoder.encode(centerLon, Charset.defaultCharset()) +
+                    "," +
+                    URLEncoder.encode(centerLat, Charset.defaultCharset()) +
+                    "&zoom=" + URLEncoder.encode(zoomLevel, Charset.defaultCharset()) +
+                    "&" +
+                    "marker=lonlat:" +
+                    URLEncoder.encode(address1Lon, Charset.defaultCharset()) +
+                    "," +
+                    URLEncoder.encode(address1Lat, Charset.defaultCharset()) +
+                    ";color:%23ff0000;" +
+                    "size:medium" + URLEncoder.encode("|", Charset.defaultCharset()) +
+                    "lonlat:" +
+                    URLEncoder.encode(address2Lon, Charset.defaultCharset()) +
+                    "," +
+                    URLEncoder.encode(address2Lat, Charset.defaultCharset()) +
+                    ";color:%23ff0000;" +
+                    "size:medium&" +
+                    "apiKey=" + readFromAdminFile();
+            resultConnection = createURL(encodedURLString);
+        } catch(Exception e) {
+            return null;
+        }
+        return resultConnection;
     }
 
 

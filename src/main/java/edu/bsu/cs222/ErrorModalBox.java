@@ -3,11 +3,10 @@ package edu.bsu.cs222;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 
-import java.io.IOException;
 
 public class ErrorModalBox {
 
-    public void assertErrorType(String keyword, String address1, String address2) throws IOException {
+    public void assertErrorType(String keyword, String address1, String address2) {
         ErrorHandler errorHandler = new ErrorHandler();
 
         if (errorHandler.noAPIKey()){
@@ -22,7 +21,7 @@ public class ErrorModalBox {
 
     }
 
-    public void assertErrorType(String keyword, String address) throws IOException {
+    public void assertErrorType(String keyword, String address) {
         ErrorHandler errorHandler = new ErrorHandler();
 
         if (errorHandler.noAPIKey()){

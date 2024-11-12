@@ -5,24 +5,28 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import net.minidev.json.JSONArray;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 public class GUIHelper {
 
-    public JSONArray getJSONArray(String keyword, String Address) throws IOException {
+    public JSONArray getJSONArray(String keyword, String Address)  {
         AccessAPI access = new AccessAPI();
         Parser parser = new Parser();
-        InputStream inputStream = access.getInputStream(access.connectToGeocode(Address));
 
-        return parser.makeJSONArray(inputStream, keyword);
+        try {
+            InputStream inputStream = access.getInputStream(access.connectToGeocode(Address));
+            return parser.makeJSONArray(inputStream, keyword);
+        }catch(Exception e){
+            return null;
+        }
+
     }
     public double makeJSONArrayIntoDouble(JSONArray jsonArray) {
         Parser parser = new Parser();
         return Double.parseDouble(parser.parseToString(jsonArray));
     }
 
-    public double makeAddressIntoLatAndLonDouble(String keyword, String Address) throws IOException {
+    public double makeAddressIntoLatAndLonDouble(String keyword, String Address) {
         return makeJSONArrayIntoDouble(getJSONArray(keyword, Address));
     }
 

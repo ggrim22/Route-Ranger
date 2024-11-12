@@ -2,7 +2,6 @@ package edu.bsu.cs222;
 
 import net.minidev.json.JSONArray;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 public class ErrorHandler {
@@ -21,7 +20,7 @@ public class ErrorHandler {
         return false;
     }
 
-    public boolean noAddressFoundError(String keyword, String address) throws IOException {
+    public boolean noAddressFoundError(String keyword, String address)  {
         GUIHelper helper = new GUIHelper();
         JSONArray jsonArray = helper.getJSONArray(keyword,address);
         try {
