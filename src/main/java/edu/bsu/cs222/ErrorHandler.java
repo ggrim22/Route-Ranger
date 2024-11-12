@@ -8,7 +8,7 @@ import java.io.InputStream;
 public class ErrorHandler {
 
     public boolean noInputFoundError(String address)  {
-        return address.isEmpty();
+        return address.isBlank();
     }
 
     public boolean networkConnectionError() {

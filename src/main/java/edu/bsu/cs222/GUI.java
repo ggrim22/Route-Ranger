@@ -53,10 +53,11 @@ public class GUI extends Application {
         configureInputBoxes();
         configureLatLonLabels();
         configureComboBox();
-        configureGetDistanceButton();
-        configureStaticMapButtons(address1MapButton, firstAddressImage, latLabelAddress1, lonLabelAddress1);
-        configureStaticMapButtons(address2MapButton, secondAddressImage, latLabelAddress2, lonLabelAddress2);
         configure(stage);
+        configureGetDistanceButton();
+
+        configureStaticMapButtons(address1MapButton, firstAddressImage, latLabelAddress1, lonLabelAddress1, inputFirstAddress);
+        configureStaticMapButtons(address2MapButton, secondAddressImage, latLabelAddress2, lonLabelAddress2, inputSecondAddress);
         configureCloseButton();
         configureLogo();
         configureRectangle();
@@ -309,13 +310,16 @@ public class GUI extends Application {
         });
     }
 
-    private void configureStaticMapButtons(Button addressMapButton, ImageView imageView, Label label1, Label label2){
+    private void configureStaticMapButtons(Button addressMapButton, ImageView imageView, Label label1, Label label2, TextField addressInput){
 
         addressMapButton.setOnAction(event -> {
             try {
-                configureErrorHandling();
-                setAddress1Geo();
-                setAddress2Geo();
+                configureErrorHandling(addressInput.getText());
+                if (addressInput == inputFirstAddress){
+                    setAddress1Geo();
+                }else {
+                    setAddress2Geo();
+                }
                 configureStaticMapImage(imageView,label1,label2);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -399,7 +403,11 @@ public class GUI extends Application {
     protected void configureErrorHandling() throws IOException {
         ErrorModalBox errorModalBox = new ErrorModalBox();
         errorModalBox.assertErrorType("lat", inputFirstAddress.getText(),inputSecondAddress.getText());
+    }
 
+    protected void configureErrorHandling(String address) throws IOException {
+        ErrorModalBox errorModalBox = new ErrorModalBox();
+        errorModalBox.assertErrorType("lat", address);
     }
 
 }

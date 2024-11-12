@@ -22,6 +22,22 @@ public class ErrorModalBox {
 
     }
 
+    public void assertErrorType(String keyword, String address) throws IOException {
+        ErrorHandler errorHandler = new ErrorHandler();
+
+        if (errorHandler.noAPIKey()){
+            noAPIKeyFoundPopUp();
+        }else if(errorHandler.networkConnectionError()){
+            networkConnectionPopUp();
+        }else if (errorHandler.noInputFoundError(address)) {
+            noInputFoundPopUp();
+        } else if (errorHandler.noAddressFoundError(keyword,address)) {
+            noAddressFoundPopUp();
+        }
+
+    }
+
+
     private Dialog<String> configureErrorModalBox(){
         Dialog<String> errorBox = new Dialog<>();
         errorBox.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
