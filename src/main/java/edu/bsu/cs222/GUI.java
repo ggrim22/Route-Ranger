@@ -30,6 +30,8 @@ public class GUI extends Application {
     //Instance Variables
     private final Button getDistanceButton = new Button("Get Distance");
     private final Button closeButton = new Button("Close Window");
+    private final Button address1MapButton = new Button("Get Map");
+    private final Button address2MapButton = new Button("Get Map");
     private final TextField inputFirstAddress = new TextField();
     private final TextField inputSecondAddress = new TextField();
     private final TextField distanceField = new TextField();
@@ -52,6 +54,8 @@ public class GUI extends Application {
         configureLatLonLabels();
         configureComboBox();
         configureGetDistanceButton();
+        configureStaticMapButtons(address1MapButton, firstAddressImage, latLabelAddress1, lonLabelAddress1);
+        configureStaticMapButtons(address2MapButton, secondAddressImage, latLabelAddress2, lonLabelAddress2);
         configure(stage);
         configureCloseButton();
         configureLogo();
@@ -147,9 +151,11 @@ public class GUI extends Application {
         );
 
         latLonAndButtonsHBox.getChildren().addAll(
+                address1MapButton,
                 locationLabel1,
                 distanceAndUnitVbox,
-                locationLabel2
+                locationLabel2,
+                address2MapButton
         );
 
         outPutFieldHBox.getChildren().addAll(
@@ -303,6 +309,21 @@ public class GUI extends Application {
         });
     }
 
+    private void configureStaticMapButtons(Button addressMapButton, ImageView imageView, Label label1, Label label2){
+
+        addressMapButton.setOnAction(event -> {
+            try {
+                configureErrorHandling();
+                setAddress1Geo();
+                setAddress2Geo();
+                configureStaticMapImage(imageView,label1,label2);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
+
     private void configureCloseButton() {
         closeButton.setOnAction(event -> Platform.exit());
     }
@@ -314,30 +335,57 @@ public class GUI extends Application {
 
 
     //Distance Output Calculations
-    public double turnAddressesToDistance() throws IOException{
-
-        GUIHelper helper = new GUIHelper();
+    public double getDistance() throws IOException{
         GeoCalculator geoCalculator = new GeoCalculator();
 
-        double lat1 = helper.makeAddressIntoLatAndLonDouble("lat", inputFirstAddress.getText());
-        double lon1 = helper.makeAddressIntoLatAndLonDouble("lon", inputFirstAddress.getText());
+        setAddress1Geo();
+        setAddress2Geo();
 
+        String address1LatText = latLabelAddress1.getText();
+        String address1Lat = address1LatText.split(" ")[1];
+        double lat1 = Double.parseDouble(address1Lat);
 
-        double lat2 = helper.makeAddressIntoLatAndLonDouble("lat", inputSecondAddress.getText());
-        double lon2 = helper.makeAddressIntoLatAndLonDouble("lon", inputSecondAddress.getText());
+        String address1LonText = lonLabelAddress1.getText();
+        String address1Lon = address1LonText.split(" ")[1];
+        double lon1 = Double.parseDouble(address1Lon);
 
-        latLabelAddress1.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat1)));
-        lonLabelAddress1.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon1)));
+        String address2LatText = latLabelAddress2.getText();
+        String address2Lat = address2LatText.split(" ")[1];
+        double lat2 = Double.parseDouble(address2Lat);
 
-        latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat2)));
-        lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon2)));
+        String address2LonText = lonLabelAddress2.getText();
+        String address2Lon = address2LonText.split(" ")[1];
+        double lon2 = Double.parseDouble(address2Lon);
 
 
         return geoCalculator.calculateDistanceKiloMeters(lat1, lon1, lat2, lon2);
     }
+
+    private void setAddress1Geo() throws IOException {
+        GUIHelper helper = new GUIHelper();
+        GeoCalculator geoCalculator = new GeoCalculator();
+
+        double lat = helper.makeAddressIntoLatAndLonDouble("lat", inputFirstAddress.getText());
+        double lon = helper.makeAddressIntoLatAndLonDouble("lon", inputFirstAddress.getText());
+
+        latLabelAddress1.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
+        lonLabelAddress1.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+    }
+
+    private void setAddress2Geo() throws IOException {
+        GUIHelper helper = new GUIHelper();
+        GeoCalculator geoCalculator = new GeoCalculator();
+
+        double lat = helper.makeAddressIntoLatAndLonDouble("lat", inputSecondAddress.getText());
+        double lon = helper.makeAddressIntoLatAndLonDouble("lon", inputSecondAddress.getText());
+
+        latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
+        lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+    }
+
     private void unitConverter() throws IOException, InterruptedException {
         GeoCalculator geoCalculator = new GeoCalculator();
-        double distance = turnAddressesToDistance();
+        double distance = getDistance();
         if (Objects.equals(unitOfMeasureSelector.getValue(), "Miles")) {
             distance = geoCalculator.kilometersToMiles(distance);
         }
@@ -353,4 +401,5 @@ public class GUI extends Application {
         errorModalBox.assertErrorType("lat", inputFirstAddress.getText(),inputSecondAddress.getText());
 
     }
+
 }
