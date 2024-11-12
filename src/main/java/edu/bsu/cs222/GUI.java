@@ -212,7 +212,6 @@ public class GUI extends Application {
         Font font = Font.font("Georgia", FontWeight.BOLD, FontPosture.ITALIC, 15);
         credits.setFont(font);
         credits.setStroke(Color.LIGHTGRAY);
-        configureRectangle(20,100);
         footerHBox.getChildren().addAll(
                 closeButton,
                 blankRectangleForSpace,

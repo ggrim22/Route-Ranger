@@ -10,10 +10,10 @@ public class ErrorModalBox {
     public void assertErrorType(String keyword, String address1, String address2) throws IOException {
         ErrorHandler errorHandler = new ErrorHandler();
 
-        if (errorHandler.networkConnectionError()){
-            networkConnectionPopUp();
-        }else if(errorHandler.noAPIKey()){
+        if (errorHandler.noAPIKey()){
             noAPIKeyFoundPopUp();
+        }else if(errorHandler.networkConnectionError()){
+            networkConnectionPopUp();
         }else if (errorHandler.noInputFoundError(address1) || errorHandler.noInputFoundError(address2)) {
             noInputFoundPopUp();
         } else if (errorHandler.noAddressFoundError(keyword,address1) || errorHandler.noAddressFoundError(keyword, address2)) {
