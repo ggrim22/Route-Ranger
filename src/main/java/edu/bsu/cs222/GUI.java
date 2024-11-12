@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.util.Objects;
 
 public class GUI extends Application {
+    //Instance Variables
     private final Button getDistanceButton = new Button("Get Distance");
     private final Button closeButton = new Button("Close Window");
     private final TextField inputFirstAddress = new TextField();
@@ -44,15 +45,17 @@ public class GUI extends Application {
 
     private final ComboBox<String> unitOfMeasureSelector = new ComboBox<>();
 
+    //Stage Configuration
     @Override
     public void start(Stage stage) throws IOException {
         configureInputBoxes();
+        configureLatLonLabels();
         configureComboBox();
         configureGetDistanceButton();
         configure(stage);
         configureCloseButton();
         configureLogo();
-        configureRectangle(20, 50);
+        configureRectangle();
     }
 
     private void configure(Stage stage) throws IOException {
@@ -87,8 +90,6 @@ public class GUI extends Application {
         stage.setFullScreenExitHint("Route Ranger!");
         stage.show();
     }
-
-
     private Pane createRoot(){
         GUIHelper helper = new GUIHelper();
         VBox root = helper.configureVBox(700);
@@ -96,6 +97,7 @@ public class GUI extends Application {
         return root;
     }
 
+    //Population of the stage
     private VBox configureMainVBox() {
         GUIHelper helper = new GUIHelper();
         VBox mainVBox = helper.configureVBox(500);
@@ -173,6 +175,7 @@ public class GUI extends Application {
         root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, dynamicMapHbox);
     }
 
+    //Configuration of stage objects
     private Text configureText(String textString) {
         Text resultText = new Text(textString);
         Font font = Font.font("Georgia", FontWeight.BOLD, FontPosture.REGULAR, 25);
@@ -181,6 +184,21 @@ public class GUI extends Application {
         resultText.setStrokeWidth(1);
         resultText.setStroke(Color.BLACK);
         return resultText;
+    }
+    private void configureLatLonLabels() {
+        Font font = Font.font("Georgia", FontWeight.BOLD, FontPosture.REGULAR, 10);
+
+        latLabelAddress1.setFont(font);
+        latLabelAddress1.setTextFill(Color.WHITE);
+
+        lonLabelAddress1.setFont(font);
+        lonLabelAddress1.setTextFill(Color.WHITE);
+
+        latLabelAddress2.setFont(font);
+        latLabelAddress2.setTextFill(Color.WHITE);
+
+        lonLabelAddress2.setFont(font);
+        lonLabelAddress2.setTextFill(Color.WHITE);
     }
     private void configureInputBoxes(){
         Font font = Font.font("Serif", FontWeight.BOLD, FontPosture.REGULAR, 12);
@@ -276,9 +294,9 @@ public class GUI extends Application {
         dynamicMapImage.setImage(image);
     }
 
-    private void configureRectangle(int height, int width) {
-        blankRectangleForSpace.setHeight(height);
-        blankRectangleForSpace.setWidth(width);
+    private void configureRectangle() {
+        blankRectangleForSpace.setHeight(20);
+        blankRectangleForSpace.setWidth(50);
         blankRectangleForSpace.setFill(Color.TRANSPARENT);
     }
 
@@ -305,6 +323,8 @@ public class GUI extends Application {
         unitOfMeasureSelector.setValue("Miles");
     }
 
+
+    //Distance Output Calculations
     public double turnAddressesToDistance() throws IOException{
 
         GUIHelper helper = new GUIHelper();
@@ -326,8 +346,6 @@ public class GUI extends Application {
 
 
         return geoCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
-
-
     }
     private void unitConverter() throws IOException, InterruptedException {
         GeoCalculator geoCalculator = new GeoCalculator();
@@ -340,6 +358,8 @@ public class GUI extends Application {
         distanceField.setText(String.format("%s %s",outputDistance, unitOfMeasureSelector.getValue().toLowerCase()));
     }
 
+
+    //Error handling
     protected void configureErrorHandling() throws IOException {
         ErrorModalBox errorModalBox = new ErrorModalBox();
         errorModalBox.assertErrorType("lat", inputFirstAddress.getText(),inputSecondAddress.getText());
