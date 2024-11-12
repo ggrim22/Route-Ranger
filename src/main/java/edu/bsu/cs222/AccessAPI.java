@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class AccessAPI {
 
     public URLConnection connectToGeocode(String address) throws IOException {
-
+        assert !address.isEmpty();
         String encodedURLString = "https://api.geoapify.com/v1/geocode/search?" +
                 "text=" +URLEncoder.encode(address, Charset.defaultCharset()) + "&format=json&" +
                 "apiKey=" + readFromAdminFile();

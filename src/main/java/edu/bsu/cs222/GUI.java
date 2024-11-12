@@ -262,6 +262,7 @@ public class GUI extends Application {
         ImageHandler handler = new ImageHandler();
         Image image = handler.accessImage(accessAPI.connectToStaticMap(lat, lon));
         mapChoice.setImage(image);
+
     }
 
     private void configureDynamicMapImage() throws IOException {
@@ -290,7 +291,7 @@ public class GUI extends Application {
         double centerLat = centerLatAndLon[0];
 
         ImageHandler handler = new ImageHandler();
-        Image image = handler.accessImage(accessAPI.connectToDynamicMap(address1Lat, address1Lon,address2Lat,address2Lon,Double.toString(centerLat), Double.toString(centerLon), zoomLevel));
+        Image image = handler.accessImage(accessAPI.connectToDynamicMap(address1Lat, address1Lon, address2Lat, address2Lon, Double.toString(centerLat), Double.toString(centerLon), zoomLevel));
         dynamicMapImage.setImage(image);
     }
 
@@ -330,7 +331,6 @@ public class GUI extends Application {
         GUIHelper helper = new GUIHelper();
         GeoCalculator geoCalculator = new GeoCalculator();
 
-
         double lat1 = helper.makeAddressIntoLatAndLonDouble("lat", inputFirstAddress.getText());
         double lon1 = helper.makeAddressIntoLatAndLonDouble("lon", inputFirstAddress.getText());
 
@@ -345,7 +345,7 @@ public class GUI extends Application {
         lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon2)));
 
 
-        return geoCalculator.calculateDistanceKiloMeters(lat1,lon1,lat2,lon2);
+        return geoCalculator.calculateDistanceKiloMeters(lat1, lon1, lat2, lon2);
     }
     private void unitConverter() throws IOException, InterruptedException {
         GeoCalculator geoCalculator = new GeoCalculator();
