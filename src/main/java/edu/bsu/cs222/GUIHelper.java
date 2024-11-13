@@ -22,14 +22,16 @@ public class GUIHelper {
         }
 
     }
-    public double makeJSONArrayIntoDouble(JSONArray jsonArray) {
+    public double makeJSONArrayIntoDouble(String keyword, String Address) {
         Parser parser = new Parser();
-        return Double.parseDouble(parser.parseToString(jsonArray));
+        try {
+            return Double.parseDouble(parser.parseToString(getJSONArray(keyword, Address)));
+        } catch(Exception e) {
+            return -1;
+        }
     }
 
-    public double makeAddressIntoLatAndLonDouble(String keyword, String Address) {
-        return makeJSONArrayIntoDouble(getJSONArray(keyword, Address));
-    }
+
 
     protected HBox configureHBox(int height){
 

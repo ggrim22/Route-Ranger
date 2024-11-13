@@ -244,15 +244,20 @@ public class GUI extends Application {
     }
 
     private void configureStaticMapImage(ImageView mapChoice, Label latLabel, Label lonLabel) throws IOException {
-        String lat = latLabel.getText().split(" ")[1];
-        String lon = lonLabel.getText().split(" ")[1];
+        try {
+            String lat = latLabel.getText().split(" ")[1];
+            String lon = lonLabel.getText().split(" ")[1];
 
-        if (lat != null && lon != null && !lat.equals("0") && !lon.equals("0")) {
-            AccessAPI accessAPI = new AccessAPI();
-            ImageHandler handler = new ImageHandler();
-            Image image = handler.accessImage(accessAPI.connectToStaticMap(lat, lon));
-            mapChoice.setImage(image);
-        } else {
+
+            if (lat != null && lon != null && !lat.equals("0") && !lon.equals("0")) {
+                AccessAPI accessAPI = new AccessAPI();
+                ImageHandler handler = new ImageHandler();
+                Image image = handler.accessImage(accessAPI.connectToStaticMap(lat, lon));
+                mapChoice.setImage(image);
+            } else {
+                mapChoice.setImage(null);
+            }
+        }catch (Exception e) {
             mapChoice.setImage(null);
         }
     }
@@ -261,30 +266,33 @@ public class GUI extends Application {
         AccessAPI accessAPI = new AccessAPI();
         GeoCalculator geoCalculator = new GeoCalculator();
 
+        try {
+            String address1LatText = latLabelAddress1.getText();
+            String address1Lat = address1LatText.split(" ")[1];
 
-        String address1LatText = latLabelAddress1.getText();
-        String address1Lat = address1LatText.split(" ")[1];
+            String address1LonText = lonLabelAddress1.getText();
+            String address1Lon = address1LonText.split(" ")[1];
 
-        String address1LonText = lonLabelAddress1.getText();
-        String address1Lon = address1LonText.split(" ")[1];
+            String address2LatText = latLabelAddress2.getText();
+            String address2Lat = address2LatText.split(" ")[1];
 
-        String address2LatText = latLabelAddress2.getText();
-        String address2Lat = address2LatText.split(" ")[1];
+            String address2LonText = lonLabelAddress2.getText();
+            String address2Lon = address2LonText.split(" ")[1];
 
-        String address2LonText = lonLabelAddress2.getText();
-        String address2Lon = address2LonText.split(" ")[1];
+            double distance = geoCalculator.calculateDistanceKiloMeters(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat), Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
 
-        double distance = geoCalculator.calculateDistanceKiloMeters(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat),Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
+            String zoomLevel = geoCalculator.calculateZoomLevel(distance);
 
-        String zoomLevel = geoCalculator.calculateZoomLevel(distance);
+            double[] centerLatAndLon = geoCalculator.calculateCenterLatAndLon(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat), Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
+            double centerLon = centerLatAndLon[1];
+            double centerLat = centerLatAndLon[0];
 
-        double[] centerLatAndLon = geoCalculator.calculateCenterLatAndLon(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat),Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
-        double centerLon = centerLatAndLon[1];
-        double centerLat = centerLatAndLon[0];
-
-        ImageHandler handler = new ImageHandler();
-        Image image = handler.accessImage(accessAPI.connectToDynamicMap(address1Lat, address1Lon, address2Lat, address2Lon, Double.toString(centerLat), Double.toString(centerLon), zoomLevel));
-        dynamicMapImage.setImage(image);
+            ImageHandler handler = new ImageHandler();
+            Image image = handler.accessImage(accessAPI.connectToDynamicMap(address1Lat, address1Lon, address2Lat, address2Lon, Double.toString(centerLat), Double.toString(centerLon), zoomLevel));
+            dynamicMapImage.setImage(image);
+        } catch (Exception e) {
+            dynamicMapImage.setImage(null);
+        }
     }
 
     private void configureRectangle() {
@@ -341,52 +349,58 @@ public class GUI extends Application {
 
         setAddress1Geo();
         setAddress2Geo();
+        try {
+            String address1LatText = latLabelAddress1.getText();
+            String address1Lat = address1LatText.split(" ")[1];
+            double lat1 = Double.parseDouble(address1Lat);
 
-        String address1LatText = latLabelAddress1.getText();
-        String address1Lat = address1LatText.split(" ")[1];
-        double lat1 = Double.parseDouble(address1Lat);
+            String address1LonText = lonLabelAddress1.getText();
+            String address1Lon = address1LonText.split(" ")[1];
+            double lon1 = Double.parseDouble(address1Lon);
 
-        String address1LonText = lonLabelAddress1.getText();
-        String address1Lon = address1LonText.split(" ")[1];
-        double lon1 = Double.parseDouble(address1Lon);
+            String address2LatText = latLabelAddress2.getText();
+            String address2Lat = address2LatText.split(" ")[1];
+            double lat2 = Double.parseDouble(address2Lat);
 
-        String address2LatText = latLabelAddress2.getText();
-        String address2Lat = address2LatText.split(" ")[1];
-        double lat2 = Double.parseDouble(address2Lat);
-
-        String address2LonText = lonLabelAddress2.getText();
-        String address2Lon = address2LonText.split(" ")[1];
-        double lon2 = Double.parseDouble(address2Lon);
-
-
-        return geoCalculator.calculateDistanceKiloMeters(lat1, lon1, lat2, lon2);
+            String address2LonText = lonLabelAddress2.getText();
+            String address2Lon = address2LonText.split(" ")[1];
+            double lon2 = Double.parseDouble(address2Lon);
+            return geoCalculator.calculateDistanceKiloMeters(lat1, lon1, lat2, lon2);
+        } catch(Exception e) {
+            return -1;
+        }
     }
 
     private void setAddress1Geo() throws IOException {
         GUIHelper helper = new GUIHelper();
         GeoCalculator geoCalculator = new GeoCalculator();
 
-        double lat = helper.makeAddressIntoLatAndLonDouble("lat", inputFirstAddress.getText());
-        double lon = helper.makeAddressIntoLatAndLonDouble("lon", inputFirstAddress.getText());
-
-        latLabelAddress1.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
-        lonLabelAddress1.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+        double lat = helper.makeJSONArrayIntoDouble("lat", inputFirstAddress.getText());
+        double lon = helper.makeJSONArrayIntoDouble("lon", inputFirstAddress.getText());
+        if(lat >= 0 || lon >= 0) {
+            latLabelAddress1.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
+            lonLabelAddress1.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+        }
     }
 
     private void setAddress2Geo() throws IOException {
         GUIHelper helper = new GUIHelper();
         GeoCalculator geoCalculator = new GeoCalculator();
 
-        double lat = helper.makeAddressIntoLatAndLonDouble("lat", inputSecondAddress.getText());
-        double lon = helper.makeAddressIntoLatAndLonDouble("lon", inputSecondAddress.getText());
+        double lat = helper.makeJSONArrayIntoDouble("lat", inputSecondAddress.getText());
+        double lon = helper.makeJSONArrayIntoDouble("lon", inputSecondAddress.getText());
 
-        latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
-        lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+        if(lat >= 0 || lon >= 0) {
+            latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
+            lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+        }
     }
     protected void updateDistanceOutput(String distance) {
-        distanceField.setText(String.format("%s %s", distance, unitOfMeasureSelector.getValue().toLowerCase()));
+        if(Double.parseDouble(distance) < 0) {
+            distanceField.setText("");
+        }
+        else {
+            distanceField.setText(String.format("%s %s", distance, unitOfMeasureSelector.getValue().toLowerCase()));
+        }
     }
-
-
-
 }
