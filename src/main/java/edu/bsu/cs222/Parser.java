@@ -17,7 +17,7 @@ public class Parser {
         try {
             resultString = jsonArray.getFirst().toString();
         } catch(Exception e) {
-            resultString = "0";
+            resultString = null;
         }
         return resultString;
     }

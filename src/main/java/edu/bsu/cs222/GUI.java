@@ -172,32 +172,33 @@ public class GUI extends Application {
     }
 
     //Configuration of stage objects
+    private Font createFont(int size, FontPosture posture) {
+        return Font.font("Georgia", FontWeight.BOLD, posture, size);
+    }
+
     private Text configureText(String textString) {
         Text resultText = new Text(textString);
-        Font font = Font.font("Georgia", FontWeight.BOLD, FontPosture.REGULAR, 25);
-        resultText.setFont(font);
+        resultText.setFont(createFont(25, FontPosture.REGULAR));
         resultText.setFill(Color.WHITE);
         resultText.setStrokeWidth(1);
         resultText.setStroke(Color.BLACK);
         return resultText;
     }
+
     private void configureLatLonLabels() {
-        Font font = Font.font("Georgia", FontWeight.BOLD, FontPosture.REGULAR, 10);
-
+        Font font = createFont(10, FontPosture.REGULAR);
         latLabelAddress1.setFont(font);
-        latLabelAddress1.setTextFill(Color.WHITE);
-
         lonLabelAddress1.setFont(font);
-        lonLabelAddress1.setTextFill(Color.WHITE);
-
         latLabelAddress2.setFont(font);
-        latLabelAddress2.setTextFill(Color.WHITE);
-
         lonLabelAddress2.setFont(font);
-        lonLabelAddress2.setTextFill(Color.WHITE);
+        Color textColor = Color.WHITE;
+        latLabelAddress1.setTextFill(textColor);
+        lonLabelAddress1.setTextFill(textColor);
+        latLabelAddress2.setTextFill(textColor);
+        lonLabelAddress2.setTextFill(textColor);
     }
     private void configureInputBoxes(){
-        Font font = Font.font("Serif", FontWeight.BOLD, FontPosture.REGULAR, 12);
+        Font font = createFont(12, FontPosture.REGULAR);
 
         inputFirstAddress.setFont(font);
         inputFirstAddress.setPrefWidth(170);
@@ -223,8 +224,7 @@ public class GUI extends Application {
         GUIHelper helper = new GUIHelper();
         HBox footerHBox = helper.configureHBox(400);
         Text credits = new Text("A Grim West Culp Production. 2024.");
-        Font font = Font.font("Georgia", FontWeight.BOLD, FontPosture.ITALIC, 15);
-        credits.setFont(font);
+        credits.setFont(createFont(15, FontPosture.ITALIC));
         credits.setStroke(Color.LIGHTGRAY);
         footerHBox.getChildren().addAll(
                 closeButton,
@@ -246,18 +246,17 @@ public class GUI extends Application {
     }
 
     private void configureStaticMapImage(ImageView mapChoice, Label latLabel, Label lonLabel) throws IOException {
-        AccessAPI accessAPI = new AccessAPI();
+        String lat = latLabel.getText().split(" ")[1];
+        String lon = lonLabel.getText().split(" ")[1];
 
-        String latLabelText = latLabel.getText();
-        String lat = latLabelText.split(" ")[1];
-
-        String lonLabelText = lonLabel.getText();
-        String lon = lonLabelText.split(" ")[1];
-
-        ImageHandler handler = new ImageHandler();
-        Image image = handler.accessImage(accessAPI.connectToStaticMap(lat, lon));
-        mapChoice.setImage(image);
-
+        if (lat != null && lon != null && !lat.equals("0") && !lon.equals("0")) {
+            AccessAPI accessAPI = new AccessAPI();
+            ImageHandler handler = new ImageHandler();
+            Image image = handler.accessImage(accessAPI.connectToStaticMap(lat, lon));
+            mapChoice.setImage(image);
+        } else {
+            mapChoice.setImage(null);
+        }
     }
 
     private void configureDynamicMapImage() throws IOException {
@@ -387,15 +386,20 @@ public class GUI extends Application {
         lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
     }
 
-    private void unitConverter() throws IOException, InterruptedException {
-        GeoCalculator geoCalculator = new GeoCalculator();
+    private double calculateDistance() throws IOException {
         double distance = getDistance();
-        if (Objects.equals(unitOfMeasureSelector.getValue(), "Miles")) {
-            distance = geoCalculator.kilometersToMiles(distance);
-        }
-        String outputDistance = geoCalculator.roundDistanceFourDecimal(distance);
+        return Objects.equals(unitOfMeasureSelector.getValue(), "Miles")?
+                new GeoCalculator().kilometersToMiles(distance)
+                : distance;
+    }
 
-        distanceField.setText(String.format("%s %s",outputDistance, unitOfMeasureSelector.getValue().toLowerCase()));
+    private void updateDistanceOutput(double distance) {
+        distanceField.setText(String.format("%s %s", new GeoCalculator().roundDistanceFourDecimal(distance), unitOfMeasureSelector.getValue().toLowerCase()));
+    }
+
+    private void unitConverter() throws IOException, InterruptedException {
+        double distance = calculateDistance();
+        updateDistanceOutput(distance);
     }
 
 
