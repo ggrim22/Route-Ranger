@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import net.minidev.json.JSONArray;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class GUIHelper {
@@ -47,6 +48,15 @@ public class GUIHelper {
         vBox.setAlignment(Pos.BASELINE_CENTER);
 
         return vBox;
+    }
 
+    protected void configureErrorHandling(String address) throws IOException {
+        ErrorModalBox errorModalBox = new ErrorModalBox();
+        errorModalBox.assertErrorType("lat", address);
+    }
+    protected void configureErrorHandling(String address1, String address2) throws IOException {
+        ErrorModalBox errorModalBox = new ErrorModalBox();
+        errorModalBox.assertErrorType("lat", address1, address2);
     }
 }
+

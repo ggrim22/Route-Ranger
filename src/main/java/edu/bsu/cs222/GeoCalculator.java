@@ -1,4 +1,6 @@
 package edu.bsu.cs222;
+import java.io.IOException;
+import java.util.Objects;
 
 public class GeoCalculator {
     private static final int EARTH_RADIUS = 6378;
@@ -62,6 +64,17 @@ public class GeoCalculator {
         else if (distance < 3000) return "2";
         else if(distance < 5000) return "1";
         else return "0";
+    }
+
+    protected String unitConverter(String comboBoxSelection, double rawDistance) throws IOException, InterruptedException {
+        double distance = calculateDistance(comboBoxSelection, rawDistance);
+        return new GeoCalculator().roundDistanceFourDecimal(distance);
+    }
+
+    protected double calculateDistance(String comboBoxSelection, double rawDistance) throws IOException {
+        return Objects.equals(comboBoxSelection, "Miles")?
+                new GeoCalculator().kilometersToMiles(rawDistance)
+                : rawDistance;
     }
 
 }

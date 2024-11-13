@@ -24,8 +24,6 @@ import javafx.scene.control.TextField;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
-
 public class GUI extends Application {
     //Instance Variables
     private final Button getDistanceButton = new Button("Get Distance");
@@ -298,8 +296,8 @@ public class GUI extends Application {
     private void configureGetDistanceButton() {
         getDistanceButton.setOnAction(event -> {
             try {
-                configureErrorHandling();
-                unitConverter();
+                new GUIHelper().configureErrorHandling(inputFirstAddress.getText(),inputSecondAddress.getText());
+                updateDistanceOutput(new GeoCalculator().unitConverter(unitOfMeasureSelector.getValue(), getDistance()));
                 configureStaticMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
                 configureStaticMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);
                 configureDynamicMapImage();
@@ -313,7 +311,7 @@ public class GUI extends Application {
 
         addressMapButton.setOnAction(event -> {
             try {
-                configureErrorHandling(addressInput.getText());
+                new GUIHelper().configureErrorHandling(addressInput.getText());
                 if (addressInput == inputFirstAddress){
                     setAddress1Geo();
                 }else {
@@ -385,33 +383,10 @@ public class GUI extends Application {
         latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
         lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
     }
-
-    private double calculateDistance() throws IOException {
-        double distance = getDistance();
-        return Objects.equals(unitOfMeasureSelector.getValue(), "Miles")?
-                new GeoCalculator().kilometersToMiles(distance)
-                : distance;
-    }
-
-    private void updateDistanceOutput(double distance) {
-        distanceField.setText(String.format("%s %s", new GeoCalculator().roundDistanceFourDecimal(distance), unitOfMeasureSelector.getValue().toLowerCase()));
-    }
-
-    private void unitConverter() throws IOException, InterruptedException {
-        double distance = calculateDistance();
-        updateDistanceOutput(distance);
+    protected void updateDistanceOutput(String distance) {
+        distanceField.setText(String.format("%s %s", distance, unitOfMeasureSelector.getValue().toLowerCase()));
     }
 
 
-    //Error handling
-    protected void configureErrorHandling() throws IOException {
-        ErrorModalBox errorModalBox = new ErrorModalBox();
-        errorModalBox.assertErrorType("lat", inputFirstAddress.getText(),inputSecondAddress.getText());
-    }
-
-    protected void configureErrorHandling(String address) throws IOException {
-        ErrorModalBox errorModalBox = new ErrorModalBox();
-        errorModalBox.assertErrorType("lat", address);
-    }
 
 }
