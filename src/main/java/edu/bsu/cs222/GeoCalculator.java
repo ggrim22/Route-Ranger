@@ -47,22 +47,15 @@ public class GeoCalculator {
         return new double[]{Math.toDegrees(lat3), Math.toDegrees(lon3)};
     }
 
-    protected String calculateZoomLevel(double distance){
-        if (distance < 0.5) return "14";
-        else if (distance < 1) return "13";
-        else if (distance < 3) return "12";
-        else if (distance < 5) return "11";
-        else if (distance < 10) return "10";
-        else if (distance < 25) return "9";
-        else if (distance < 50) return "8";
-        else if (distance < 100) return "7";
-        else if (distance < 200) return "6";
-        else if (distance < 400) return "5";
-        else if (distance < 800) return "4";
-        else if (distance < 1500) return "3";
-        else if (distance < 3000) return "2";
-        else if(distance < 5000) return "1";
-        else return "0";
+    protected String calculateZoomLevel(double distance) {
+        double[] thresholds = {0.625, 1.25, 2.5, 5, 10, 25, 50, 100, 200, 400, 800, 1500, 3000, 5000};
+        int maxReturnValue = 14;
+
+        for (int i = 0; true; i++) {
+            if (distance < thresholds[i]) {
+                return String.valueOf(maxReturnValue - i);
+            }
+        }
     }
 
     protected String unitConverter(String comboBoxSelection, double rawDistance) throws IOException, InterruptedException {
