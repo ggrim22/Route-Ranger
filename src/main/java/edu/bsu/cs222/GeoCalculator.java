@@ -71,7 +71,7 @@ public class GeoCalculator {
         return new GeoCalculator().roundDistanceFourDecimal(distance);
     }
 
-    protected double calculateDistance(String comboBoxSelection, double rawDistance) throws IOException {
+    protected double calculateDistance(String comboBoxSelection, double rawDistance) {
         return Objects.equals(comboBoxSelection, "Miles")?
                 new GeoCalculator().kilometersToMiles(rawDistance)
                 : rawDistance;
