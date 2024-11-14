@@ -99,8 +99,6 @@ public class GUI extends Application {
     }
 
     private void populateVBox(VBox root) {
-        inputFirstAddress.setText("146 Nursery Rd Anderson IN");
-        inputSecondAddress.setText("320 S Talley Ave Muncie IN");
         GUIHelper helper = new GUIHelper();
 
         HBox leftHeaderHBox = helper.configureHBox(50);
@@ -200,11 +198,11 @@ public class GUI extends Application {
 
         inputFirstAddress.setFont(font);
         inputFirstAddress.setPrefWidth(170);
-        inputFirstAddress.setPromptText("123 Main St City State");
+        inputFirstAddress.setPromptText("123 Main St City State ZIP");
 
         inputSecondAddress.setFont(font);
         inputSecondAddress.setPrefWidth(170);
-        inputSecondAddress.setPromptText("123 Main St City State");
+        inputSecondAddress.setPromptText("123 Main St City State ZIP");
 
     }
     private HBox configureLogoHbox() {

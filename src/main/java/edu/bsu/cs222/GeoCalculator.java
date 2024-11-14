@@ -11,7 +11,6 @@ public class GeoCalculator {
          *    Author: Harpal Singh
          *    Date: 10/10/2024
          *    Availability: https://www.baeldung.com/java-find-distance-between-points
-         *
          */
         double lat1Rad = Math.toRadians(lat1);
         double lat2Rad = Math.toRadians(lat2);
@@ -71,7 +70,7 @@ public class GeoCalculator {
         return new GeoCalculator().roundDistanceFourDecimal(distance);
     }
 
-    protected double calculateDistance(String comboBoxSelection, double rawDistance) throws IOException {
+    protected double calculateDistance(String comboBoxSelection, double rawDistance) {
         return Objects.equals(comboBoxSelection, "Miles")?
                 new GeoCalculator().kilometersToMiles(rawDistance)
                 : rawDistance;

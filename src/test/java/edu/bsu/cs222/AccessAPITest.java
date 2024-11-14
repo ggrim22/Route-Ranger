@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class AccessAPITest {
 
     @Test
-    public void ConnectToGeocodeTest() throws IOException {
+    public void ConnectToGeocodeTest() {
         AccessAPI api = new AccessAPI();
         String address = "146 S Nursery Rd Anderson IN 46012 US";
         URLConnection result;
