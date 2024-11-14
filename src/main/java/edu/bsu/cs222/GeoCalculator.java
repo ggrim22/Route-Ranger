@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class GeoCalculator {
-    private static final int EARTH_RADIUS = 6378;
+    private static final double EARTH_RADIUS = 6371.0;
 
     public double calculateDistanceKiloMeters(double lat1, double lon1, double lat2, double lon2) {
         /*

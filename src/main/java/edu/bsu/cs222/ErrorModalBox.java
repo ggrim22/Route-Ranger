@@ -48,7 +48,6 @@ public class ErrorModalBox {
     private void networkConnectionPopUp() {
         createErrorPopUp("There has been a network error. Please try again later.");
     }
-
     private void noInputFoundPopUp() {
         createErrorPopUp("There has been an error, please fill each allotted space.");
     }

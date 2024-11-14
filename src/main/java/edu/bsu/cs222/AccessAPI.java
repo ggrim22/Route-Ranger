@@ -71,6 +71,7 @@ public class AccessAPI {
                     "size:medium&" +
                     "apiKey=" + readFromAdminFile();
             resultConnection = createURL(encodedURLString);
+            System.out.println("Zoom level:" + zoomLevel);
         } catch(Exception e) {
             return null;
         }

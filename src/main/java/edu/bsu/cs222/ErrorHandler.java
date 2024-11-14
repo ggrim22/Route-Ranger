@@ -11,13 +11,8 @@ public class ErrorHandler {
     }
 
     public boolean networkConnectionError() {
-        try{
-            AccessAPI access = new AccessAPI();
-            access.connectToGeocode("146 Nursery Rd Anderson IN");
-        } catch(Exception e) {
-            return true;
-        }
-        return false;
+        AccessAPI access = new AccessAPI();
+        return access.connectToGeocode("146 Nursery Rd Anderson IN") == null;
     }
 
     public boolean noAddressFoundError(String keyword, String address)  {

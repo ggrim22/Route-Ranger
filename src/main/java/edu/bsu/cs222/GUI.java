@@ -277,8 +277,7 @@ public class GUI extends Application {
             String address2LonText = lonLabelAddress2.getText();
             String address2Lon = address2LonText.split(" ")[1];
 
-            double distance = geoCalculator.calculateDistanceKiloMeters(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat), Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
-
+            double distance = geoCalculator.calculateDistanceKiloMeters(Double.parseDouble(address1Lat), Double.parseDouble(address1Lon), Double.parseDouble(address2Lat), Double.parseDouble(address2Lon));
             String zoomLevel = geoCalculator.calculateZoomLevel(distance);
 
             double[] centerLatAndLon = geoCalculator.calculateCenterLatAndLon(Double.parseDouble(address1Lon), Double.parseDouble(address1Lat), Double.parseDouble(address2Lon), Double.parseDouble(address2Lat));
@@ -335,7 +334,6 @@ public class GUI extends Application {
         closeButton.setOnAction(event -> Platform.exit());
     }
     private void configureComboBox() {
-
         unitOfMeasureSelector.getItems().addAll("Miles","Kilometers");
         unitOfMeasureSelector.setValue("Miles");
     }
