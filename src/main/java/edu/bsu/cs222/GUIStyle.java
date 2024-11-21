@@ -2,6 +2,10 @@ package edu.bsu.cs222;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -10,16 +14,14 @@ import java.io.InputStream;
 
 public class GUIStyle {
 
-    public ImageView configureBackgroundImage(Stage stage) throws IOException {
-        ImageView backgroundImage = new ImageView(loadBackgroundImage());
-        backgroundImage.setPreserveRatio(true);
-        backgroundImage.setSmooth(true);
-        backgroundImage.setCache(true);
-
-        backgroundImage.fitWidthProperty().bind(stage.widthProperty());
-        backgroundImage.fitHeightProperty().bind(stage.heightProperty());
-
-        return backgroundImage;
+    public BackgroundImage configureBackgroundImage() throws IOException {
+        return new BackgroundImage(
+                loadBackgroundImage(),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true, false, false)
+        );
     }
 
     private Image loadBackgroundImage() throws IOException {

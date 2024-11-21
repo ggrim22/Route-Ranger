@@ -6,10 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -65,11 +62,11 @@ public class GUI extends Application {
         stage.setTitle("Route Ranger");
 
         GUIStyle styler = new GUIStyle();
-        ImageView backgroundImage = styler.configureBackgroundImage(stage);
+        BackgroundImage backgroundImage = styler.configureBackgroundImage();
 
         StackPane root = new StackPane();
 
-        root.getChildren().add(backgroundImage);
+        root.setBackground(new Background(backgroundImage));
         root.getChildren().add(createRoot());
 
         Scene scene = new Scene(root, 800, 500);
