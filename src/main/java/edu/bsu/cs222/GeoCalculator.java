@@ -51,11 +51,12 @@ public class GeoCalculator {
         double[] thresholds = {0.625, 1.25, 2.5, 5, 10, 25, 50, 100, 200, 400, 800, 1500, 3000, 5000};
         int maxReturnValue = 14;
 
-        for (int i = 0; true; i++) {
+        for (int i = 0; i < maxReturnValue; i++) {
             if (distance < thresholds[i]) {
                 return String.valueOf(maxReturnValue - i);
             }
         }
+        return "0";
     }
 
     protected String unitConverter(String comboBoxSelection, double rawDistance) throws IOException, InterruptedException {
