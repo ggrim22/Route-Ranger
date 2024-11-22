@@ -34,6 +34,8 @@ public class GUI extends Application {
     private final Label latLabelAddress1 = new Label();
     private final Label lonLabelAddress2 = new Label();
     private final Label latLabelAddress2 = new Label();
+    private final Label firstAddressTime = new Label();
+    private final Label secondAddressTime = new Label();
     private final Rectangle blankRectangleForSpace = new Rectangle();
     private final ImageView logo = new ImageView();
     private final ImageView firstAddressImage = new ImageView();
@@ -159,7 +161,9 @@ public class GUI extends Application {
         );
 
         dynamicMapHbox.getChildren().addAll(
-                dynamicMapImage
+                firstAddressTime,
+                dynamicMapImage,
+                secondAddressTime
         );
         root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, dynamicMapHbox);
     }
@@ -303,6 +307,9 @@ public class GUI extends Application {
                 configureStaticMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
                 configureStaticMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);
                 configureDynamicMapImage();
+                configureTimeForFirstAddress();
+                configureTimeForSecondAddress();
+                styleTimeLabels();
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -395,5 +402,45 @@ public class GUI extends Application {
         else {
             distanceField.setText(String.format("%s %s", distance, unitOfMeasureSelector.getValue().toLowerCase()));
         }
+    }
+
+    protected void configureTimeForFirstAddress() throws IOException {
+        Timezone timezone = new Timezone();
+        setAddress1Geo();
+        setAddress2Geo();
+
+        String address1LatText = latLabelAddress1.getText();
+        String address1Lat = address1LatText.split(" ")[1];
+        double latitude = Double.parseDouble(address1Lat);
+
+        String address1LonText = lonLabelAddress1.getText();
+        String address1Lon = address1LonText.split(" ")[1];
+        double longitude = Double.parseDouble(address1Lon);
+
+        firstAddressTime.setText("Time: " + timezone.getTimezone(latitude, longitude));
+    }
+
+
+    protected void configureTimeForSecondAddress() throws IOException {
+        Timezone timezone = new Timezone();
+        setAddress1Geo();
+        setAddress2Geo();
+        String address2LatText = latLabelAddress2.getText();
+        String address2Lat = address2LatText.split(" ")[1];
+        double latitude = Double.parseDouble(address2Lat);
+
+        String address2LonText = lonLabelAddress2.getText();
+        String address2Lon = address2LonText.split(" ")[1];
+        double longitude = Double.parseDouble(address2Lon);
+        secondAddressTime.setText("Time: " + timezone.getTimezone(latitude, longitude));
+    }
+
+    private void styleTimeLabels() {
+        Font font = createFont(25, FontPosture.REGULAR);
+        firstAddressTime.setFont(font);
+        secondAddressTime.setFont(font);
+        Color textColor = Color.WHITE;
+        firstAddressTime.setTextFill(textColor);
+        secondAddressTime.setTextFill(textColor);
     }
 }
