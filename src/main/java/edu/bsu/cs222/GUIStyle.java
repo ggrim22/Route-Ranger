@@ -1,12 +1,10 @@
 package edu.bsu.cs222;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -26,7 +24,7 @@ public class GUIStyle {
 
     private Image loadBackgroundImage() throws IOException {
         ImageHandler imageHandler = new ImageHandler();
-        InputStream imageInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Background_Satellite.jpg");
+        InputStream imageInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Background.jpg");
         assert imageInputStream != null;
         return imageHandler.convertToFxImage(ImageIO.read(imageInputStream));
     }

@@ -111,7 +111,7 @@ public class GUI extends Application {
 
         HBox outPutFieldHBox = helper.configureHBox(50);
 
-        HBox dynamicMapHbox = helper.configureHBox(100);
+        HBox mapsHBox = helper.configureHBox(100);
 
 
         leftHeaderHBox.getChildren().addAll(
@@ -121,7 +121,6 @@ public class GUI extends Application {
 
         HBox rightHeaderHBox = helper.configureHBox(50);
         rightHeaderHBox.getChildren().addAll(
-                blankRectangleForSpace,
                 configureText("Second Address"),
                 inputSecondAddress
         );
@@ -155,17 +154,18 @@ public class GUI extends Application {
         );
 
         outPutFieldHBox.getChildren().addAll(
-                firstAddressImage,
+                firstAddressTime,
                 configureText("Distance"), distanceField,
-                secondAddressImage
+                secondAddressTime
+
         );
 
-        dynamicMapHbox.getChildren().addAll(
-                firstAddressTime,
+        mapsHBox.getChildren().addAll(
+                firstAddressImage,
                 dynamicMapImage,
-                secondAddressTime
+                secondAddressImage
         );
-        root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, dynamicMapHbox);
+        root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, mapsHBox);
     }
 
     //Configuration of stage objects
@@ -184,11 +184,11 @@ public class GUI extends Application {
 
     private void configureLatLonLabels() {
         Font font = createFont(10, FontPosture.REGULAR);
+        Color textColor = Color.WHITE;
         latLabelAddress1.setFont(font);
         lonLabelAddress1.setFont(font);
         latLabelAddress2.setFont(font);
         lonLabelAddress2.setFont(font);
-        Color textColor = Color.WHITE;
         latLabelAddress1.setTextFill(textColor);
         lonLabelAddress1.setTextFill(textColor);
         latLabelAddress2.setTextFill(textColor);
@@ -406,8 +406,6 @@ public class GUI extends Application {
 
     protected void configureTimeForFirstAddress() throws IOException {
         Timezone timezone = new Timezone();
-        setAddress1Geo();
-        setAddress2Geo();
 
         String address1LatText = latLabelAddress1.getText();
         String address1Lat = address1LatText.split(" ")[1];
@@ -423,8 +421,7 @@ public class GUI extends Application {
 
     protected void configureTimeForSecondAddress() throws IOException {
         Timezone timezone = new Timezone();
-        setAddress1Geo();
-        setAddress2Geo();
+
         String address2LatText = latLabelAddress2.getText();
         String address2Lat = address2LatText.split(" ")[1];
         double latitude = Double.parseDouble(address2Lat);

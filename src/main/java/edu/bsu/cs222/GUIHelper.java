@@ -31,8 +31,6 @@ public class GUIHelper {
         }
     }
 
-
-
     protected HBox configureHBox(int height){
 
         HBox hBox = new HBox();
