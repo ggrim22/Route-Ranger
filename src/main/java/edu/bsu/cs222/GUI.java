@@ -1,6 +1,7 @@
 package edu.bsu.cs222;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -8,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -21,6 +23,9 @@ import javafx.scene.control.TextField;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static javax.swing.text.StyleConstants.setBackground;
+
 public class GUI extends Application {
     //Instance Variables
     private final Button getDistanceButton = new Button("Get Distance");
@@ -193,6 +198,10 @@ public class GUI extends Application {
         lonLabelAddress1.setTextFill(textColor);
         latLabelAddress2.setTextFill(textColor);
         lonLabelAddress2.setTextFill(textColor);
+        latLabelAddress1.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        latLabelAddress2.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        lonLabelAddress1.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        lonLabelAddress2.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
     }
     private void configureInputBoxes(){
         Font font = createFont(12, FontPosture.REGULAR);
@@ -439,5 +448,7 @@ public class GUI extends Application {
         Color textColor = Color.WHITE;
         firstAddressTime.setTextFill(textColor);
         secondAddressTime.setTextFill(textColor);
+        firstAddressTime.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        secondAddressTime.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 }

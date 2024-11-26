@@ -43,7 +43,7 @@ public class GUIHelper {
 
     protected VBox configureVBox(int width){
 
-        VBox vBox = new VBox(5);
+        VBox vBox = new VBox(15);
         vBox.setPrefWidth(width);
         vBox.setAlignment(Pos.BASELINE_CENTER);
 
