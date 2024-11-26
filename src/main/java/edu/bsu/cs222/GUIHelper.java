@@ -33,7 +33,7 @@ public class GUIHelper {
 
     protected HBox configureHBox(int height){
 
-        HBox hBox = new HBox();
+        HBox hBox = new HBox(8);
         hBox.setPrefHeight(height);
         hBox.setAlignment(Pos.CENTER);
         hBox.setSpacing(10);
@@ -43,7 +43,7 @@ public class GUIHelper {
 
     protected VBox configureVBox(int width){
 
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(5);
         vBox.setPrefWidth(width);
         vBox.setAlignment(Pos.BASELINE_CENTER);
 
