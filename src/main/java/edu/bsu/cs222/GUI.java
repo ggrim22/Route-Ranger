@@ -56,8 +56,8 @@ public class GUI extends Application {
         configure(stage);
         configureGetDistanceButton();
 
-        configureStaticMapButtons(address1MapButton, firstAddressImage, latLabelAddress1, lonLabelAddress1, inputFirstAddress);
-        configureStaticMapButtons(address2MapButton, secondAddressImage, latLabelAddress2, lonLabelAddress2, inputSecondAddress);
+        configureFirstStaticMapButton();
+        configureSecondStaticMapButton();
         configureCloseButton();
         configureLogo();
         configureRectangle();
@@ -316,24 +316,34 @@ public class GUI extends Application {
                 configureDynamicMapImage();
                 configureTimeForFirstAddress();
                 configureTimeForSecondAddress();
-                styleTimeLabels();
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
-    private void configureStaticMapButtons(Button addressMapButton, ImageView imageView, Label label1, Label label2, TextField addressInput){
+    private void configureFirstStaticMapButton(){
 
-        addressMapButton.setOnAction(event -> {
+        address1MapButton.setOnAction(event -> {
             try {
-                new GUIHelper().configureErrorHandling(addressInput.getText());
-                if (addressInput == inputFirstAddress){
-                    setAddress1Geo();
-                }else {
-                    setAddress2Geo();
-                }
-                configureStaticMapImage(imageView,label1,label2);
+                new GUIHelper().configureErrorHandling(inputFirstAddress.getText());
+                setAddress1Geo();
+                configureTimeForFirstAddress();
+                configureStaticMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
+    private void configureSecondStaticMapButton(){
+
+        address2MapButton.setOnAction(event -> {
+            try {
+                new GUIHelper().configureErrorHandling(inputSecondAddress.getText());
+                setAddress2Geo();
+                configureTimeForSecondAddress();
+                configureStaticMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -390,7 +400,7 @@ public class GUI extends Application {
         }
     }
 
-    private void setAddress2Geo() throws IOException {
+    private void setAddress2Geo() {
         GUIHelper helper = new GUIHelper();
         GeoCalculator geoCalculator = new GeoCalculator();
 
@@ -423,6 +433,7 @@ public class GUI extends Application {
         double longitude = Double.parseDouble(address1Lon);
 
         firstAddressTime.setText("Time: " + timezone.getTimezone(latitude, longitude));
+        styleTimeLabels();
     }
 
 
@@ -437,6 +448,7 @@ public class GUI extends Application {
         String address2Lon = address2LonText.split(" ")[1];
         double longitude = Double.parseDouble(address2Lon);
         secondAddressTime.setText("Time: " + timezone.getTimezone(latitude, longitude));
+        styleTimeLabels();
     }
 
     private void styleTimeLabels() {

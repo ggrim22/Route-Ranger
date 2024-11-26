@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class AccessAPI {
 
-    public URLConnection connectToGeocode(String address){
+    public URLConnection connectToGeocode(String address) {
         assert !address.isEmpty();
         URLConnection resultConnection;
         try {
@@ -23,7 +23,7 @@ public class AccessAPI {
         return resultConnection;
     }
 
-    public URLConnection connectToStaticMap(String lat, String lon){
+    public URLConnection connectToStaticMap(String lat, String lon) {
         URLConnection resultConnection;
         try {
             String encodedURLString = "https://maps.geoapify.com/v1/staticmap?" +
@@ -38,13 +38,13 @@ public class AccessAPI {
                     ";color:%23ff0000;size:small&" +
                     "apiKey=" + readFromAdminFile();
             resultConnection = createURL(encodedURLString);
-        }catch(Exception e) {
+        } catch (Exception e) {
             return null;
         }
         return resultConnection;
     }
 
-    public URLConnection connectToDynamicMap(String address1Lat, String address1Lon, String address2Lat, String address2Lon, String centerLat, String centerLon, String zoomLevel){
+    public URLConnection connectToDynamicMap(String address1Lat, String address1Lon, String address2Lat, String address2Lon, String centerLat, String centerLon, String zoomLevel) {
         URLConnection resultConnection;
         try {
             String encodedURLString = "https://maps.geoapify.com/v1/" +
@@ -72,7 +72,7 @@ public class AccessAPI {
                     "apiKey=" + readFromAdminFile();
             resultConnection = createURL(encodedURLString);
             System.out.println("Zoom level:" + zoomLevel);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return null;
         }
         return resultConnection;
@@ -80,6 +80,7 @@ public class AccessAPI {
 
 
     public InputStream getInputStream(URLConnection connection) throws IOException {
+
         return connection.getInputStream();
     }
 
