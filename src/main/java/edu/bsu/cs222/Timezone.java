@@ -15,7 +15,7 @@ public class Timezone {
         Optional<ZoneId> tz = engine.query(latitude, longitude);
         String zoneText = tz.map(ZoneId::toString).orElse("Default/Zone");
         Date date = new Date();
-        DateFormat df = new SimpleDateFormat("hh:mm");
+        DateFormat df = new SimpleDateFormat("hh:mm aa");
         df.setTimeZone(TimeZone.getTimeZone(zoneText));
         return df.format(date);
     }
