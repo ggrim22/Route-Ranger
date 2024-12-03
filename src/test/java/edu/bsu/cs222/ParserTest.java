@@ -29,5 +29,12 @@ public class ParserTest {
         Assertions.assertEquals("-85.657242", result);
     }
 
+    @Test
+    public void getFormattedAddressTest() throws IOException {
+        Parser parser = new Parser();
+        InputStream testInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+        Assertions.assertEquals("146 South Nursery Road, Anderson, IN 46012, United States of America", parser.parseFullAddress(testInputStream));
+    }
+
 
 }

@@ -1,17 +1,16 @@
 package edu.bsu.cs222;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class AccessAPI {
+    String JSONString;
 
     public URLConnection connectToGeocode(String address) {
         assert !address.isEmpty();
@@ -145,6 +144,21 @@ public class AccessAPI {
         } catch (IOException e) {
             System.err.println("Error clearing the file: " + e.getMessage());
         }
+    }
+    public String getJsonString() {
+        return JSONString;
+    }
+
+    public void saveToString(InputStream inputStream) throws IOException {
+            StringBuilder textBuilder = new StringBuilder();
+            try (Reader reader = new BufferedReader(new InputStreamReader
+                    (inputStream, StandardCharsets.UTF_8))) {
+                int c;
+                while ((c = reader.read()) != -1) {
+                    textBuilder.append((char) c);
+                }
+            }
+            JSONString = textBuilder.toString();
     }
 
 }
