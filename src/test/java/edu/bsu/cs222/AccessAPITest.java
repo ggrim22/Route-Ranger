@@ -75,7 +75,7 @@ public class AccessAPITest {
     public void saveToStringTest() throws IOException {
         AccessAPI api = new AccessAPI();
         InputStream testInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
-        String copyright = "\u00A9";
+        String copyright = "©";
         api.saveToString(testInputStream);
         Assertions.assertEquals("{\n" +
                 "  \"results\": [\n" +
