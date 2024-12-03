@@ -15,7 +15,7 @@ public class ErrorModalBox {
             networkConnectionPopUp();
         }else if (errorHandler.noInputFoundError(address1) || errorHandler.noInputFoundError(address2)) {
             noInputFoundPopUp();
-        } else if (errorHandler.noAddressFoundError(keyword,address1) || errorHandler.noAddressFoundError(keyword, address2)) {
+        } else if (errorHandler.noAddressFoundError(keyword, "address1GeocodeResult") || errorHandler.noAddressFoundError(keyword, "address2GeocodeResult")) {
             noAddressFoundPopUp();
         }
 
@@ -30,7 +30,7 @@ public class ErrorModalBox {
             networkConnectionPopUp();
         }else if (errorHandler.noInputFoundError(address)) {
             noInputFoundPopUp();
-        } else if (errorHandler.noAddressFoundError(keyword,address)) {
+        } else if (errorHandler.noAddress1FoundError(keyword) || errorHandler.noAddress2FoundError(keyword)) {
             noAddressFoundPopUp();
         }
 

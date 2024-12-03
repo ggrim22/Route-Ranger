@@ -21,4 +21,8 @@ public class Parser {
         }
         return resultString;
     }
+    protected String parseFullAddress(InputStream inputStream) throws IOException {
+        return parseToString(makeJSONArray(inputStream, "formatted"));
+    }
+
 }

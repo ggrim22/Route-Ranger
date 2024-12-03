@@ -1,38 +1,57 @@
-[
-  {
-    "place_id": 329724071,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "way",
-    "osm_id": 17438082,
-    "boundingbox": [
-      "40.1111298",
-      "40.120483",
-      "-85.657527",
-      "-85.657499"
-    ],
-    "lat": "40.115843",
-    "lon": "-85.657507",
-    "display_name": "South Nursery Road, Eastern Heights, Anderson, Madison County, Indiana, 46012, United States",
-    "class": "highway",
-    "type": "tertiary",
-    "importance": 0.62001
-  },
-  {
-    "place_id": 329723750,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "way",
-    "osm_id": 361985433,
-    "boundingbox": [
-      "40.105834",
-      "40.107902",
-      "-85.657493",
-      "-85.657483"
-    ],
-    "lat": "40.1078205",
-    "lon": "-85.6574926",
-    "display_name": "South Nursery Road, Eastern Heights, Anderson, Madison County, Indiana, 46012, United States",
-    "class": "highway",
-    "type": "residential",
-    "importance": 0.62001
+{
+  "results": [
+    {
+      "country_code": "us",
+      "housenumber": "146",
+      "street": "South Nursery Road",
+      "country": "United States",
+      "county": "Madison County",
+      "datasource": {
+        "sourcename": "openaddresses",
+        "attribution": "© OpenAddresses contributors",
+        "license": "BSD-3-Clause License"
+      },
+      "postcode": "46012",
+      "state": "Indiana",
+      "district": "Anderson Township",
+      "city": "Anderson",
+      "state_code": "IN",
+      "lon": -85.657242,
+      "lat": 40.117316,
+      "result_type": "building",
+      "formatted": "146 South Nursery Road, Anderson, IN 46012, United States of America",
+      "address_line1": "146 South Nursery Road",
+      "address_line2": "Anderson, IN 46012, United States of America",
+      "timezone": {
+        "name": "America/Indiana/Indianapolis",
+        "offset_STD": "-05:00",
+        "offset_STD_seconds": -18000,
+        "offset_DST": "-04:00",
+        "offset_DST_seconds": -14400,
+        "abbreviation_STD": "EST",
+        "abbreviation_DST": "EDT"
+      },
+      "plus_code": "86GP488V+W4",
+      "plus_code_short": "488V+W4, 46012 Anderson, United States",
+      "rank": {
+        "popularity": 2.613542157567391,
+        "confidence": 0.9,
+        "confidence_city_level": 1,
+        "confidence_street_level": 0.9,
+        "confidence_building_level": 0.9,
+        "match_type": "full_match"
+      },
+      "place_id": "51b0e3bf40106a55c05916a6ef35040f4440c00203e203456f70656e6164647265737365733a616464726573733a75732f696e2f6d616469736f6e2d6164647265737365732d636f756e74793a30336630316635396132623035393133"
+    }
+  ],
+  "query": {
+    "text": "146 Nursery Rd Anderson IN",
+    "parsed": {
+      "housenumber": "146",
+      "street": "nursery rd",
+      "city": "anderson",
+      "state": "in",
+      "expected_type": "building"
+    }
   }
-]
+}

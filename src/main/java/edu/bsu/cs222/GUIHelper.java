@@ -10,22 +10,21 @@ import java.io.InputStream;
 
 public class GUIHelper {
 
-    public JSONArray getJSONArray(String keyword, String Address)  {
-        AccessAPI access = new AccessAPI();
+    public JSONArray getJSONArray(String keyword, String fileName)  {
         Parser parser = new Parser();
 
         try {
-            InputStream inputStream = access.getInputStream(access.connectToGeocode(Address));
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName + ".json");
             return parser.makeJSONArray(inputStream, keyword);
         }catch(Exception e){
             return null;
         }
 
     }
-    public double makeJSONArrayIntoDouble(String keyword, String Address) {
+    public double makeJSONArrayIntoDouble(String keyword, String fileName) {
         Parser parser = new Parser();
         try {
-            return Double.parseDouble(parser.parseToString(getJSONArray(keyword, Address)));
+            return Double.parseDouble(parser.parseToString(getJSONArray(keyword, fileName)));
         } catch(Exception e) {
             return -1;
         }

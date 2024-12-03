@@ -2,8 +2,12 @@ package edu.bsu.cs222;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.*;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class AccessAPI {
@@ -105,6 +109,29 @@ public class AccessAPI {
         connection.setRequestProperty("User-Agent", "CS222FinalProject/0.1");
         connection.connect();
         return connection;
+
+    }
+
+    public void saveToFile(InputStream inputStream, String fileName) throws IOException {
+        Path filePath = Paths.get("src/main/resources/" + fileName);
+
+        try (OutputStream outputStream = Files.newOutputStream(filePath)) {
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        }
+    }
+
+
+    public void fetchAndSaveGeocode(String address, String fileName) throws IOException {
+        URLConnection connection = connectToGeocode(address);
+        if (connection != null) {
+            try (InputStream inputStream = getInputStream(connection)) {
+                saveToFile(inputStream, fileName + ".json");
+            }
+        }
 
     }
 

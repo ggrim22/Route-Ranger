@@ -267,6 +267,12 @@ public class GUI extends Application {
             mapChoice.setImage(null);
         }
     }
+    private void setAddressToCompleteAddress(TextField inputAddress, String fileName) throws IOException {
+        Parser parser = new Parser();
+        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName + ".json");
+        String completeAddress = parser.parseFullAddress(inputStream);
+        inputAddress.setText(completeAddress);
+    }
 
     private void configureDynamicMapImage() throws IOException {
         AccessAPI accessAPI = new AccessAPI();
@@ -391,21 +397,30 @@ public class GUI extends Application {
     private void setAddress1Geo() throws IOException {
         GUIHelper helper = new GUIHelper();
         GeoCalculator geoCalculator = new GeoCalculator();
+        AccessAPI access = new AccessAPI();
 
-        double lat = helper.makeJSONArrayIntoDouble("lat", inputFirstAddress.getText());
-        double lon = helper.makeJSONArrayIntoDouble("lon", inputFirstAddress.getText());
+        access.fetchAndSaveGeocode(inputFirstAddress.getText(), "address1GeocodeResult");
+        setAddressToCompleteAddress(inputFirstAddress, "address1GeocodeResult");
+
+        double lat = helper.makeJSONArrayIntoDouble("lat", "address1GeocodeResult");
+        double lon = helper.makeJSONArrayIntoDouble("lon", "address1GeocodeResult");
         if(lat >= 0 || lon >= 0) {
             latLabelAddress1.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
             lonLabelAddress1.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
         }
     }
 
-    private void setAddress2Geo() {
+    private void setAddress2Geo() throws IOException {
         GUIHelper helper = new GUIHelper();
         GeoCalculator geoCalculator = new GeoCalculator();
+        AccessAPI access = new AccessAPI();
 
-        double lat = helper.makeJSONArrayIntoDouble("lat", inputSecondAddress.getText());
-        double lon = helper.makeJSONArrayIntoDouble("lon", inputSecondAddress.getText());
+        access.fetchAndSaveGeocode(inputSecondAddress.getText(), "address2GeocodeResult");
+        setAddressToCompleteAddress(inputSecondAddress, "address2GeocodeResult");
+
+
+        double lat = helper.makeJSONArrayIntoDouble("lat", "address2GeocodeResult");
+        double lon = helper.makeJSONArrayIntoDouble("lon", "address2GeocodeResult");
 
         if(lat >= 0 || lon >= 0) {
             latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));

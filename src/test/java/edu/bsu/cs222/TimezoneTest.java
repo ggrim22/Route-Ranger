@@ -14,7 +14,7 @@ public class TimezoneTest {
         Timezone timezone = new Timezone();
         double lat = 40.191898;
         double lon = -85.410027;
-        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa (z)");
         Assertions.assertEquals(timeFormat.format(date), timezone.getTimezone(lat, lon));
     }
 }

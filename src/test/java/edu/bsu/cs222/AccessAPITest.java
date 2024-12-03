@@ -64,4 +64,11 @@ public class AccessAPITest {
         Assertions.assertNotNull(result);
     }
 
+    @Test
+    public void fetchAndSaveGeocodeTest() throws IOException {
+        AccessAPI api = new AccessAPI();
+        String address = "146 Nursery Rd Anderson IN";
+        api.fetchAndSaveGeocode(address, "address1GeocodeResult");
+    }
+
 }

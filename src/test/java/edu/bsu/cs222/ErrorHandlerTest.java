@@ -3,8 +3,6 @@ package edu.bsu.cs222;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 public class ErrorHandlerTest {
 
     @Test
@@ -24,11 +22,11 @@ public class ErrorHandlerTest {
     }
 
     @Test
-    public void testNoAddressFound() throws IOException, InterruptedException {
+    public void testNoAddressFound() throws InterruptedException {
         ErrorHandler errorHandler = new ErrorHandler();
         boolean result = true;
         Thread.sleep(1000);
-        Assertions.assertEquals(result,errorHandler.noAddressFoundError("lat","No Address Found Place Holder"));
+        Assertions.assertEquals(result,errorHandler.noAddressFoundError(null, "address1GeocodeResult"));
     }
 
 }
