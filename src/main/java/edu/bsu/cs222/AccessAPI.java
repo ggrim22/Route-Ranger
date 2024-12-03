@@ -1,5 +1,6 @@
 package edu.bsu.cs222;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -133,6 +134,17 @@ public class AccessAPI {
             }
         }
 
+    }
+
+    public void clearFile(String fileName) {
+        String filePath = "src/main/resources/" + fileName + ".json";
+
+        try (FileWriter writer = new FileWriter(filePath)) {
+            // Writing an empty string effectively clears the file
+            writer.write("");
+        } catch (IOException e) {
+            System.err.println("Error clearing the file: " + e.getMessage());
+        }
     }
 
 }

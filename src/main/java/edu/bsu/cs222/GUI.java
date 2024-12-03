@@ -398,16 +398,18 @@ public class GUI extends Application {
         GUIHelper helper = new GUIHelper();
         GeoCalculator geoCalculator = new GeoCalculator();
         AccessAPI access = new AccessAPI();
+        String fileName = "address1GeocodeResult";
         try {
-            access.fetchAndSaveGeocode(inputFirstAddress.getText(), "address1GeocodeResult");
-            setAddressToCompleteAddress(inputFirstAddress, "address1GeocodeResult");
+            access.fetchAndSaveGeocode(inputFirstAddress.getText(), fileName);
+            setAddressToCompleteAddress(inputFirstAddress, fileName);
 
-            double lat = helper.makeJSONArrayIntoDouble("lat", "address1GeocodeResult");
-            double lon = helper.makeJSONArrayIntoDouble("lon", "address1GeocodeResult");
+            double lat = helper.makeJSONArrayIntoDouble("lat", fileName);
+            double lon = helper.makeJSONArrayIntoDouble("lon", fileName);
             if (lat >= 0 || lon >= 0) {
                 latLabelAddress1.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
                 lonLabelAddress1.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
             }
+            access.clearFile(fileName);
         } catch(Exception e) {
             e.getSuppressed();
         }
@@ -417,19 +419,20 @@ public class GUI extends Application {
         GUIHelper helper = new GUIHelper();
         GeoCalculator geoCalculator = new GeoCalculator();
         AccessAPI access = new AccessAPI();
-
+        String fileName = "address2GeocodeResult";
         try{
-            access.fetchAndSaveGeocode(inputSecondAddress.getText(), "address2GeocodeResult");
-            setAddressToCompleteAddress(inputSecondAddress, "address2GeocodeResult");
+            access.fetchAndSaveGeocode(inputSecondAddress.getText(), fileName);
+            setAddressToCompleteAddress(inputSecondAddress, fileName);
 
 
-            double lat = helper.makeJSONArrayIntoDouble("lat", "address2GeocodeResult");
-            double lon = helper.makeJSONArrayIntoDouble("lon", "address2GeocodeResult");
+            double lat = helper.makeJSONArrayIntoDouble("lat", fileName);
+            double lon = helper.makeJSONArrayIntoDouble("lon", fileName);
 
             if (lat >= 0 || lon >= 0) {
                 latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
                 lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
             }
+            access.clearFile(fileName);
         }catch(Exception e) {
             e.getSuppressed();
         }
