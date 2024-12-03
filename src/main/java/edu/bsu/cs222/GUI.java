@@ -398,15 +398,18 @@ public class GUI extends Application {
         GUIHelper helper = new GUIHelper();
         GeoCalculator geoCalculator = new GeoCalculator();
         AccessAPI access = new AccessAPI();
+        try {
+            access.fetchAndSaveGeocode(inputFirstAddress.getText(), "address1GeocodeResult");
+            setAddressToCompleteAddress(inputFirstAddress, "address1GeocodeResult");
 
-        access.fetchAndSaveGeocode(inputFirstAddress.getText(), "address1GeocodeResult");
-        setAddressToCompleteAddress(inputFirstAddress, "address1GeocodeResult");
-
-        double lat = helper.makeJSONArrayIntoDouble("lat", "address1GeocodeResult");
-        double lon = helper.makeJSONArrayIntoDouble("lon", "address1GeocodeResult");
-        if(lat >= 0 || lon >= 0) {
-            latLabelAddress1.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
-            lonLabelAddress1.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+            double lat = helper.makeJSONArrayIntoDouble("lat", "address1GeocodeResult");
+            double lon = helper.makeJSONArrayIntoDouble("lon", "address1GeocodeResult");
+            if (lat >= 0 || lon >= 0) {
+                latLabelAddress1.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
+                lonLabelAddress1.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+            }
+        } catch(Exception e) {
+            e.getSuppressed();
         }
     }
 
@@ -415,16 +418,20 @@ public class GUI extends Application {
         GeoCalculator geoCalculator = new GeoCalculator();
         AccessAPI access = new AccessAPI();
 
-        access.fetchAndSaveGeocode(inputSecondAddress.getText(), "address2GeocodeResult");
-        setAddressToCompleteAddress(inputSecondAddress, "address2GeocodeResult");
+        try{
+            access.fetchAndSaveGeocode(inputSecondAddress.getText(), "address2GeocodeResult");
+            setAddressToCompleteAddress(inputSecondAddress, "address2GeocodeResult");
 
 
-        double lat = helper.makeJSONArrayIntoDouble("lat", "address2GeocodeResult");
-        double lon = helper.makeJSONArrayIntoDouble("lon", "address2GeocodeResult");
+            double lat = helper.makeJSONArrayIntoDouble("lat", "address2GeocodeResult");
+            double lon = helper.makeJSONArrayIntoDouble("lon", "address2GeocodeResult");
 
-        if(lat >= 0 || lon >= 0) {
-            latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
-            lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+            if (lat >= 0 || lon >= 0) {
+                latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
+                lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+            }
+        }catch(Exception e) {
+            e.getSuppressed();
         }
     }
     protected void updateDistanceOutput(String distance) {
@@ -438,32 +445,39 @@ public class GUI extends Application {
 
     protected void configureTimeForFirstAddress() throws IOException {
         Timezone timezone = new Timezone();
+        try{
+            String address1LatText = latLabelAddress1.getText();
+            String address1Lat = address1LatText.split(" ")[1];
+            double latitude = Double.parseDouble(address1Lat);
 
-        String address1LatText = latLabelAddress1.getText();
-        String address1Lat = address1LatText.split(" ")[1];
-        double latitude = Double.parseDouble(address1Lat);
+            String address1LonText = lonLabelAddress1.getText();
+            String address1Lon = address1LonText.split(" ")[1];
+            double longitude = Double.parseDouble(address1Lon);
 
-        String address1LonText = lonLabelAddress1.getText();
-        String address1Lon = address1LonText.split(" ")[1];
-        double longitude = Double.parseDouble(address1Lon);
-
-        firstAddressTime.setText("Time: " + timezone.getTimezone(latitude, longitude));
-        styleTimeLabels();
+            firstAddressTime.setText("Time: " + timezone.getTimezone(latitude, longitude));
+            styleTimeLabels();
+        }catch(Exception e) {
+            e.getSuppressed();
+        }
     }
 
 
     protected void configureTimeForSecondAddress() throws IOException {
         Timezone timezone = new Timezone();
 
-        String address2LatText = latLabelAddress2.getText();
-        String address2Lat = address2LatText.split(" ")[1];
-        double latitude = Double.parseDouble(address2Lat);
+        try{
+            String address2LatText = latLabelAddress2.getText();
+            String address2Lat = address2LatText.split(" ")[1];
+            double latitude = Double.parseDouble(address2Lat);
 
-        String address2LonText = lonLabelAddress2.getText();
-        String address2Lon = address2LonText.split(" ")[1];
-        double longitude = Double.parseDouble(address2Lon);
-        secondAddressTime.setText("Time: " + timezone.getTimezone(latitude, longitude));
-        styleTimeLabels();
+            String address2LonText = lonLabelAddress2.getText();
+            String address2Lon = address2LonText.split(" ")[1];
+            double longitude = Double.parseDouble(address2Lon);
+            secondAddressTime.setText("Time: " + timezone.getTimezone(latitude, longitude));
+            styleTimeLabels();
+        }catch(Exception e) {
+            e.getSuppressed();
+        }
     }
 
     private void styleTimeLabels() {
