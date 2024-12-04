@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class GUIHelper {
 
@@ -27,9 +28,10 @@ public class GUIHelper {
         return vBox;
     }
 
-    protected void configureErrorHandling(String address1, String address2) throws IOException {
+    protected void configureErrorHandling(Map<String, Object> geocodeMap, String address1, String address2) throws IOException {
         ErrorModalBox errorModalBox = new ErrorModalBox();
-        errorModalBox.assertErrorType("lat", address1, address2);
+        errorModalBox.assertErrorType(geocodeMap, address1, address2);
     }
+
 }
 

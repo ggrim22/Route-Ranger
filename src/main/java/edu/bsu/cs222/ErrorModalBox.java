@@ -3,10 +3,12 @@ package edu.bsu.cs222;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 
+import java.util.Map;
+
 
 public class ErrorModalBox {
 
-    public void assertErrorType(String keyword, String address1, String address2) {
+    public void assertErrorType(Map<String, Object> geocodeMap, String address1, String address2) {
         ErrorTypeHandler errorHandler = new ErrorTypeHandler();
 
         if (errorHandler.noAPIKey()){
@@ -15,12 +17,11 @@ public class ErrorModalBox {
             networkConnectionPopUp();
         }else if (errorHandler.noInputFoundError(address1) || errorHandler.noInputFoundError(address2)) {
             noInputFoundPopUp();
-        } else if (errorHandler.noAddressFoundError(keyword, "address1GeocodeResult") || errorHandler.noAddressFoundError(keyword, "address2GeocodeResult")) {
+        } else if (errorHandler.noAddressFoundError(geocodeMap) || errorHandler.noAddressFoundError(geocodeMap)) {
             noAddressFoundPopUp();
         }
 
     }
-
 
     private Dialog<String> configureErrorModalBox(){
         Dialog<String> errorBox = new Dialog<>();

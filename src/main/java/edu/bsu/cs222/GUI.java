@@ -315,7 +315,6 @@ public class GUI extends Application {
     private void configureGetDistanceButton() {
         getDistanceButton.setOnAction(event -> {
             try {
-                new GUIHelper().configureErrorHandling(inputFirstAddress.getText(),inputSecondAddress.getText());
                 updateDistanceOutput(new GeoCalculator().unitConverter(unitOfMeasureSelector.getValue(), getDistance()));
                 configureStaticMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
                 configureStaticMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);
@@ -332,7 +331,6 @@ public class GUI extends Application {
 
         address1MapButton.setOnAction(event -> {
             try {
-                new GUIHelper().configureErrorHandling(inputFirstAddress.getText());
                 setAddressGeo(inputFirstAddress, latLabelAddress1, lonLabelAddress1);
                 configureTimeForFirstAddress();
                 configureStaticMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
@@ -346,7 +344,6 @@ public class GUI extends Application {
 
         address2MapButton.setOnAction(event -> {
             try {
-                new GUIHelper().configureErrorHandling(inputSecondAddress.getText());
                 setAddressGeo(inputSecondAddress, latLabelAddress2, lonLabelAddress2);
                 configureTimeForSecondAddress();
                 configureStaticMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);
@@ -360,6 +357,7 @@ public class GUI extends Application {
     private void configureCloseButton() {
         closeButton.setOnAction(event -> Platform.exit());
     }
+
     private void configureComboBox() {
         unitOfMeasureSelector.getItems().addAll("Miles","Kilometers");
         unitOfMeasureSelector.setValue("Miles");
@@ -400,6 +398,8 @@ public class GUI extends Application {
         Map<String, Object> map;
         try {
             map = mapMaker.getMapFromConnection(input.getText());
+            new GUIHelper().configureErrorHandling(map, inputFirstAddress.getText(), inputSecondAddress.getText());
+
             setAddressToCompleteAddress(map, input);
 
             String lat = (String)map.get("lat");

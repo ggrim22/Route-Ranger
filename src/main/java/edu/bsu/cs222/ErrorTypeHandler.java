@@ -2,6 +2,7 @@ package edu.bsu.cs222;
 
 
 import java.io.InputStream;
+import java.util.Map;
 
 public class ErrorTypeHandler {
 
@@ -14,8 +15,8 @@ public class ErrorTypeHandler {
         return access.connectToGeocode("146 Nursery Rd Anderson IN") == null;
     }
 
-    public boolean noAddressFoundError()  {
-        return false;
+    public boolean noAddressFoundError(Map<String, Object> map)  {
+        return map.get("lat") != null;
     }
 
     public boolean noAPIKey(){

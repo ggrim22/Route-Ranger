@@ -3,6 +3,10 @@ package edu.bsu.cs222;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+
 public class ErrorTypeHandlerTest {
 
     @Test
@@ -21,12 +25,20 @@ public class ErrorTypeHandlerTest {
         Assertions.assertEquals(testResult, errorHandler.noInputFoundError("1101 N Linden St"));
     }
 
+    private final JsonMapMaker jsonMapMaker = new JsonMapMaker();
+
     @Test
-    public void testNoAddressFound() throws InterruptedException {
+    public void testNoAddressFound() throws InterruptedException, IOException {
         ErrorTypeHandler errorHandler = new ErrorTypeHandler();
+        AccessAPI api = new AccessAPI();
+        InputStream testInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+        String jsonString = api.saveToString(testInputStream);
+
+        Map<String, Object> resultMap = jsonMapMaker.parseResultsJson(jsonString);
+
         boolean result = true;
         Thread.sleep(1000);
-        Assertions.assertEquals(result,errorHandler.noAddressFoundError(null, "address1GeocodeResult"));
+        Assertions.assertEquals(result,errorHandler.noAddressFoundError(resultMap));
     }
 
 }
