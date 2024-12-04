@@ -405,8 +405,8 @@ public class GUI extends Application {
             String lat = (String)map.get("lat");
             String lon = (String)map.get("lon");
             if (Double.parseDouble(lat) >= 0 || Double.parseDouble(lon) >= 0) {
-                latLabel.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
-                lonLabel.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+                latLabel.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(Double.parseDouble(lat))));
+                lonLabel.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(Double.parseDouble(lon))));
             }
         } catch(Exception e) {
             e.getSuppressed();

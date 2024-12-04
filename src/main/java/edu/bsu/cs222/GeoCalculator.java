@@ -27,8 +27,8 @@ public class GeoCalculator {
         return (distance * .621);
     }
 
-    protected  String roundDistanceFourDecimal(String distance) {
-        return String.format("%.4f",Double.parseDouble(distance));
+    protected String roundDistanceFourDecimal(double distance) {
+        return String.format("%.4f", distance);
     }
 
     protected double[] calculateCenterLatAndLon(double lon1, double lat1, double lon2, double lat2){
