@@ -3,11 +3,11 @@ package edu.bsu.cs222;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ErrorHandlerTest {
+public class ErrorTypeHandlerTest {
 
     @Test
     public void testNoInputFound(){
-        ErrorHandler errorHandler = new ErrorHandler();
+        ErrorTypeHandler errorHandler = new ErrorTypeHandler();
 
         boolean testResult = true;
         Assertions.assertEquals(testResult, errorHandler.noInputFoundError(""));
@@ -15,7 +15,7 @@ public class ErrorHandlerTest {
 
     @Test
     public void testInputFound(){
-        ErrorHandler errorHandler = new ErrorHandler();
+        ErrorTypeHandler errorHandler = new ErrorTypeHandler();
 
         boolean testResult = false;
         Assertions.assertEquals(testResult, errorHandler.noInputFoundError("1101 N Linden St"));
@@ -23,7 +23,7 @@ public class ErrorHandlerTest {
 
     @Test
     public void testNoAddressFound() throws InterruptedException {
-        ErrorHandler errorHandler = new ErrorHandler();
+        ErrorTypeHandler errorHandler = new ErrorTypeHandler();
         boolean result = true;
         Thread.sleep(1000);
         Assertions.assertEquals(result,errorHandler.noAddressFoundError(null, "address1GeocodeResult"));

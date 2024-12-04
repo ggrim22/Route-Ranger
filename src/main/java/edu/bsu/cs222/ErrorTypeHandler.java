@@ -3,7 +3,7 @@ package edu.bsu.cs222;
 
 import java.io.InputStream;
 
-public class ErrorHandler {
+public class ErrorTypeHandler {
 
     public boolean noInputFoundError(String address)  {
         return address.isBlank();
@@ -19,7 +19,6 @@ public class ErrorHandler {
     }
 
     public boolean noAPIKey(){
-
         InputStream inputStream = AccessAPI.class.getClassLoader().getResourceAsStream("APIToken.txt");
 
         return inputStream == null;

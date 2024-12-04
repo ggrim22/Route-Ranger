@@ -82,7 +82,6 @@ public class AccessAPI {
 
 
     public InputStream getInputStream(URLConnection connection) throws IOException {
-
         return connection.getInputStream();
     }
 
