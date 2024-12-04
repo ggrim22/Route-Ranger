@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 
 public class GUI extends Application {
@@ -267,11 +268,10 @@ public class GUI extends Application {
             mapChoice.setImage(null);
         }
     }
-    private void setAddressToCompleteAddress(TextField inputAddress, String fileName) throws IOException {
-        Parser parser = new Parser();
-        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName + ".json");
-        String completeAddress = parser.parseFullAddress(inputStream);
-        inputAddress.setText(completeAddress);
+    private void setAddressToCompleteAddress(Map<String, Object> map, TextField inputAddress) {
+
+        Object completeAddress = map.get("formatted");
+        inputAddress.setText((String) completeAddress);
     }
 
     private void configureDynamicMapImage() throws IOException {
@@ -333,7 +333,7 @@ public class GUI extends Application {
         address1MapButton.setOnAction(event -> {
             try {
                 new GUIHelper().configureErrorHandling(inputFirstAddress.getText());
-                setAddress1Geo();
+                setAddressGeo(inputFirstAddress, latLabelAddress1, lonLabelAddress1);
                 configureTimeForFirstAddress();
                 configureStaticMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
             } catch (IOException e) {
@@ -347,7 +347,7 @@ public class GUI extends Application {
         address2MapButton.setOnAction(event -> {
             try {
                 new GUIHelper().configureErrorHandling(inputSecondAddress.getText());
-                setAddress2Geo();
+                setAddressGeo(inputSecondAddress, latLabelAddress2, lonLabelAddress2);
                 configureTimeForSecondAddress();
                 configureStaticMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);
             } catch (IOException e) {
@@ -370,8 +370,8 @@ public class GUI extends Application {
     public double getDistance() throws IOException{
         GeoCalculator geoCalculator = new GeoCalculator();
 
-        setAddress1Geo();
-        setAddress2Geo();
+        setAddressGeo(inputFirstAddress, latLabelAddress1,lonLabelAddress1);
+        setAddressGeo(inputSecondAddress, latLabelAddress2, lonLabelAddress2);
         try {
             String address1LatText = latLabelAddress1.getText();
             String address1Lat = address1LatText.split(" ")[1];
@@ -394,49 +394,25 @@ public class GUI extends Application {
         }
     }
 
-    private void setAddress1Geo() throws IOException {
-        GUIHelper helper = new GUIHelper();
+    private void setAddressGeo(TextField input, Label latLabel, Label lonLabel) {
         GeoCalculator geoCalculator = new GeoCalculator();
-        AccessAPI access = new AccessAPI();
-        String fileName = "address1GeocodeResult";
+        JsonMapMaker mapMaker = new JsonMapMaker();
+        Map<String, Object> map;
         try {
-            access.fetchAndSaveGeocode(inputFirstAddress.getText(), fileName);
-            setAddressToCompleteAddress(inputFirstAddress, fileName);
+            map = mapMaker.getMapFromConnection(input.getText());
+            setAddressToCompleteAddress(map, input);
 
-            double lat = helper.makeJSONArrayIntoDouble("lat", fileName);
-            double lon = helper.makeJSONArrayIntoDouble("lon", fileName);
-            if (lat >= 0 || lon >= 0) {
-                latLabelAddress1.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
-                lonLabelAddress1.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
+            String lat = (String)map.get("lat");
+            String lon = (String)map.get("lon");
+            if (Double.parseDouble(lat) >= 0 || Double.parseDouble(lon) >= 0) {
+                latLabel.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
+                lonLabel.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
             }
-            access.clearFile(fileName);
         } catch(Exception e) {
             e.getSuppressed();
         }
     }
 
-    private void setAddress2Geo() throws IOException {
-        GUIHelper helper = new GUIHelper();
-        GeoCalculator geoCalculator = new GeoCalculator();
-        AccessAPI access = new AccessAPI();
-        String fileName = "address2GeocodeResult";
-        try{
-            access.fetchAndSaveGeocode(inputSecondAddress.getText(), fileName);
-            setAddressToCompleteAddress(inputSecondAddress, fileName);
-
-
-            double lat = helper.makeJSONArrayIntoDouble("lat", fileName);
-            double lon = helper.makeJSONArrayIntoDouble("lon", fileName);
-
-            if (lat >= 0 || lon >= 0) {
-                latLabelAddress2.setText("Latitude: " + (geoCalculator.roundDistanceFourDecimal(lat)));
-                lonLabelAddress2.setText("Longitude: " + (geoCalculator.roundDistanceFourDecimal(lon)));
-            }
-            access.clearFile(fileName);
-        }catch(Exception e) {
-            e.getSuppressed();
-        }
-    }
     protected void updateDistanceOutput(String distance) {
         if(Double.parseDouble(distance) < 0) {
             distanceField.setText("");

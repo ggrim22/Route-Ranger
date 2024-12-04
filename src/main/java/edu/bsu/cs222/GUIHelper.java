@@ -10,26 +10,6 @@ import java.io.InputStream;
 
 public class GUIHelper {
 
-    public JSONArray getJSONArray(String keyword, String fileName)  {
-        Parser parser = new Parser();
-
-        try {
-            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName + ".json");
-            return parser.makeJSONArray(inputStream, keyword);
-        }catch(Exception e){
-            return null;
-        }
-
-    }
-    public double makeJSONArrayIntoDouble(String keyword, String fileName) {
-        Parser parser = new Parser();
-        try {
-            return Double.parseDouble(parser.parseToString(getJSONArray(keyword, fileName)));
-        } catch(Exception e) {
-            return -1;
-        }
-    }
-
     protected HBox configureHBox(int height){
 
         HBox hBox = new HBox(8);

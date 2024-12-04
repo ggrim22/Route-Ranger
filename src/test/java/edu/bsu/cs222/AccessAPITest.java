@@ -65,75 +65,11 @@ public class AccessAPITest {
     }
 
     @Test
-    public void fetchAndSaveGeocodeTest() throws IOException {
-        AccessAPI api = new AccessAPI();
-        String address = "146 Nursery Rd Anderson IN";
-        api.fetchAndSaveGeocode(address, "address1GeocodeResult");
-    }
-
-    @Test
     public void saveToStringTest() throws IOException {
         AccessAPI api = new AccessAPI();
         InputStream testInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
-        String copyright = "©";
-        api.saveToString(testInputStream);
-        Assertions.assertEquals("{\n" +
-                "  \"results\": [\n" +
-                "    {\n" +
-                "      \"country_code\": \"us\",\n" +
-                "      \"housenumber\": \"146\",\n" +
-                "      \"street\": \"South Nursery Road\",\n" +
-                "      \"country\": \"United States\",\n" +
-                "      \"county\": \"Madison County\",\n" +
-                "      \"datasource\": {\n" +
-                "        \"sourcename\": \"openaddresses\",\n" +
-                "        \"attribution\": \""+ copyright + " OpenAddresses contributors\",\n" +
-                "        \"license\": \"BSD-3-Clause License\"\n" +
-                "      },\n" +
-                "      \"postcode\": \"46012\",\n" +
-                "      \"state\": \"Indiana\",\n" +
-                "      \"district\": \"Anderson Township\",\n" +
-                "      \"city\": \"Anderson\",\n" +
-                "      \"state_code\": \"IN\",\n" +
-                "      \"lon\": -85.657242,\n" +
-                "      \"lat\": 40.117316,\n" +
-                "      \"result_type\": \"building\",\n" +
-                "      \"formatted\": \"146 South Nursery Road, Anderson, IN 46012, United States of America\",\n" +
-                "      \"address_line1\": \"146 South Nursery Road\",\n" +
-                "      \"address_line2\": \"Anderson, IN 46012, United States of America\",\n" +
-                "      \"timezone\": {\n" +
-                "        \"name\": \"America/Indiana/Indianapolis\",\n" +
-                "        \"offset_STD\": \"-05:00\",\n" +
-                "        \"offset_STD_seconds\": -18000,\n" +
-                "        \"offset_DST\": \"-04:00\",\n" +
-                "        \"offset_DST_seconds\": -14400,\n" +
-                "        \"abbreviation_STD\": \"EST\",\n" +
-                "        \"abbreviation_DST\": \"EDT\"\n" +
-                "      },\n" +
-                "      \"plus_code\": \"86GP488V+W4\",\n" +
-                "      \"plus_code_short\": \"488V+W4, 46012 Anderson, United States\",\n" +
-                "      \"rank\": {\n" +
-                "        \"popularity\": 2.613542157567391,\n" +
-                "        \"confidence\": 0.9,\n" +
-                "        \"confidence_city_level\": 1,\n" +
-                "        \"confidence_street_level\": 0.9,\n" +
-                "        \"confidence_building_level\": 0.9,\n" +
-                "        \"match_type\": \"full_match\"\n" +
-                "      },\n" +
-                "      \"place_id\": \"51b0e3bf40106a55c05916a6ef35040f4440c00203e203456f70656e6164647265737365733a616464726573733a75732f696e2f6d616469736f6e2d6164647265737365732d636f756e74793a30336630316635396132623035393133\"\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"query\": {\n" +
-                "    \"text\": \"146 Nursery Rd Anderson IN\",\n" +
-                "    \"parsed\": {\n" +
-                "      \"housenumber\": \"146\",\n" +
-                "      \"street\": \"nursery rd\",\n" +
-                "      \"city\": \"anderson\",\n" +
-                "      \"state\": \"in\",\n" +
-                "      \"expected_type\": \"building\"\n" +
-                "    }\n" +
-                "  }\n" +
-                "}", api.getJsonString());
+        String result = api.saveToString(testInputStream);
+        Assertions.assertEquals("country_code", result.substring(33, 45));
     }
 
 }

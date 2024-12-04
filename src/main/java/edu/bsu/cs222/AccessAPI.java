@@ -10,8 +10,6 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class AccessAPI {
-    String JSONString;
-
     public URLConnection connectToGeocode(String address) {
         assert !address.isEmpty();
         URLConnection resultConnection;
@@ -112,44 +110,8 @@ public class AccessAPI {
 
     }
 
-    public void saveToFile(InputStream inputStream, String fileName) throws IOException {
-        Path filePath = Paths.get("src/main/resources/" + fileName);
 
-        try (OutputStream outputStream = Files.newOutputStream(filePath)) {
-            byte[] buffer = new byte[8192];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-        }
-    }
-
-
-    public void fetchAndSaveGeocode(String address, String fileName) throws IOException {
-        URLConnection connection = connectToGeocode(address);
-        if (connection != null) {
-            try (InputStream inputStream = getInputStream(connection)) {
-                saveToFile(inputStream, fileName + ".json");
-            }
-        }
-
-    }
-
-    public void clearFile(String fileName) {
-        String filePath = "src/main/resources/" + fileName + ".json";
-
-        try (FileWriter writer = new FileWriter(filePath)) {
-            // Writing an empty string effectively clears the file
-            writer.write("");
-        } catch (IOException e) {
-            System.err.println("Error clearing the file: " + e.getMessage());
-        }
-    }
-    public String getJsonString() {
-        return JSONString;
-    }
-
-    public void saveToString(InputStream inputStream) throws IOException {
+    public String saveToString(InputStream inputStream) throws IOException {
             StringBuilder textBuilder = new StringBuilder();
             try (Reader reader = new BufferedReader(new InputStreamReader
                     (inputStream, StandardCharsets.UTF_8))) {
@@ -158,7 +120,7 @@ public class AccessAPI {
                     textBuilder.append((char) c);
                 }
             }
-            JSONString = textBuilder.toString();
+            return textBuilder.toString();
     }
 
 }
