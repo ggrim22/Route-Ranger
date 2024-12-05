@@ -1,14 +1,9 @@
 package edu.bsu.cs222;
 
-import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
