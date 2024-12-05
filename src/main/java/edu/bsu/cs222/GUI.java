@@ -216,7 +216,7 @@ public class GUI extends Application {
         String key = textBox.getResult();
 
         decoder.analyzeKeyWord(key);
-        decoder.decode();
+        decoder.setAPIKey(decoder.decode(decoder.readFromAdminFile()));
     }
     private void configureInputBoxes(){
         Font font = createFont(12, FontPosture.REGULAR);
