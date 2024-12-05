@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -315,6 +316,7 @@ public class GUI extends Application {
     private void configureGetDistanceButton() {
         getDistanceButton.setOnAction(event -> {
             try {
+                new GUIHelper().configureErrorHandling(new JsonMapMaker().getJsonMap(), inputFirstAddress.getText(), inputSecondAddress.getText());
                 updateDistanceOutput(new GeoCalculator().unitConverter(unitOfMeasureSelector.getValue(), getDistance()));
                 configureStaticMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
                 configureStaticMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);
@@ -395,11 +397,9 @@ public class GUI extends Application {
     private void setAddressGeo(TextField input, Label latLabel, Label lonLabel) {
         GeoCalculator geoCalculator = new GeoCalculator();
         JsonMapMaker mapMaker = new JsonMapMaker();
-        Map<String, Object> map;
+        Map<String, Object> map = mapMaker.getJsonMap();
         try {
-            map = mapMaker.getMapFromConnection(input.getText());
-            new GUIHelper().configureErrorHandling(map, inputFirstAddress.getText(), inputSecondAddress.getText());
-
+            mapMaker.getMapFromConnection(input.getText());
             setAddressToCompleteAddress(map, input);
 
             String lat = (String)map.get("lat");
