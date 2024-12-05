@@ -16,7 +16,7 @@ public class ErrorTypeHandler {
     }
 
     public boolean noAddressFoundError(Map<String, Object> map)  {
-        return map.get("lat") != null;
+        return map.get("lat") == null;
     }
 
     public boolean noAPIKey(){

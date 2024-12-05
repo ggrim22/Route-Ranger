@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ErrorTypeHandlerTest {
@@ -30,15 +31,13 @@ public class ErrorTypeHandlerTest {
     @Test
     public void testNoAddressFound() throws InterruptedException, IOException {
         ErrorTypeHandler errorHandler = new ErrorTypeHandler();
-        AccessAPI api = new AccessAPI();
-        InputStream testInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
-        String jsonString = api.saveToString(testInputStream);
 
-        Map<String, Object> resultMap = jsonMapMaker.parseResultsJson(jsonString);
+        Map<String, Object> testMap = new HashMap<>();
+        testMap.put("lat", null);
 
         boolean result = true;
         Thread.sleep(1000);
-        Assertions.assertEquals(result,errorHandler.noAddressFoundError(resultMap));
+        Assertions.assertEquals(result,errorHandler.noAddressFoundError(testMap));
     }
 
 }
