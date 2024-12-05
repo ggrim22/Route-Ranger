@@ -10,8 +10,11 @@ import java.util.Map;
 public class JsonMapMaker {
     private static Map<String, Object> JsonMap;
 
+
     protected void parseResultsJson(String json) {
-        JsonMap.clear();
+        if (JsonMap != null) {
+            JsonMap.clear();
+        }
         JSONObject jsonObject = new JSONObject(json);
         Map<String, Object> resultMap = new HashMap<>();
 

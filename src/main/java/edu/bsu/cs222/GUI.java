@@ -331,6 +331,7 @@ public class GUI extends Application {
 
         address1MapButton.setOnAction(event -> {
             try {
+                new GUIHelper().configureErrorHandling(inputFirstAddress.getText());
                 setAddressGeo(inputFirstAddress, latLabelAddress1, lonLabelAddress1);
                 configureTimeForFirstAddress();
                 configureStaticMapImage(firstAddressImage,latLabelAddress1,lonLabelAddress1);
@@ -344,6 +345,7 @@ public class GUI extends Application {
 
         address2MapButton.setOnAction(event -> {
             try {
+                new GUIHelper().configureErrorHandling(inputSecondAddress.getText());
                 setAddressGeo(inputSecondAddress, latLabelAddress2, lonLabelAddress2);
                 configureTimeForSecondAddress();
                 configureStaticMapImage(secondAddressImage,latLabelAddress2,lonLabelAddress2);

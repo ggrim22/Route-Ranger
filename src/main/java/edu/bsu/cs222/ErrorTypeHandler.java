@@ -11,6 +11,11 @@ public class ErrorTypeHandler {
         return (address1.trim().isEmpty() && address2.trim().isEmpty()); // Trim and check
     }
 
+    public boolean noInputFoundError(String address) {
+        if (address == null) return true; // Null check
+        return (address.trim().isEmpty()); // Trim and check
+    }
+
     public boolean networkConnectionError() {
         AccessAPI access = new AccessAPI();
         return access.connectToGeocode("146 Nursery Rd Anderson IN") == null;

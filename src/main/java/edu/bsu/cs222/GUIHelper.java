@@ -4,7 +4,6 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.util.Map;
 
 public class GUIHelper {
@@ -28,7 +27,7 @@ public class GUIHelper {
         return vBox;
     }
 
-    protected void configureErrorHandling(Map<String, Object> geocodeMap) throws IOException {
+    protected void configureErrorHandling(Map<String, Object> geocodeMap)  {
         ErrorModalBox errorModalBox = new ErrorModalBox();
         errorModalBox.checkValidAddress(geocodeMap);
     }
@@ -37,6 +36,12 @@ public class GUIHelper {
         ErrorModalBox errorModalBox = new ErrorModalBox();
         errorModalBox.assertAPIConnectionError(address1,address2);
     }
+
+    protected void configureErrorHandling(String address){
+        ErrorModalBox errorModalBox = new ErrorModalBox();
+        errorModalBox.assertAPIConnectionError(address);
+    }
+
 
 }
 

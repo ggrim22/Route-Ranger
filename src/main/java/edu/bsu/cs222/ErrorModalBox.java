@@ -15,7 +15,20 @@ public class ErrorModalBox {
             noAPIKeyFoundPopUp();
         }else if(errorHandler.networkConnectionError()){
             networkConnectionPopUp();
-        }else if (errorHandler.noInputFoundError(address1) || errorHandler.noInputFoundError(address2)) {
+        }else if (errorHandler.noInputFoundError(address1, address2)) {
+            noInputFoundPopUp();
+        }
+
+    }
+
+    public void assertAPIConnectionError(String address) {
+        ErrorTypeHandler errorHandler = new ErrorTypeHandler();
+
+        if (errorHandler.noAPIKey()){
+            noAPIKeyFoundPopUp();
+        }else if(errorHandler.networkConnectionError()){
+            networkConnectionPopUp();
+        }else if (errorHandler.noInputFoundError(address)) {
             noInputFoundPopUp();
         }
 
