@@ -8,12 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JsonMapMaker {
-    private Map<String, Object> JsonMap;
+    private static Map<String, Object> JsonMap;
 
     protected void parseResultsJson(String json) {
         JsonMap.clear();
         JSONObject jsonObject = new JSONObject(json);
         Map<String, Object> resultMap = new HashMap<>();
+
         JSONArray resultsArray = jsonObject.getJSONArray("results");
         if (!resultsArray.isEmpty()) {
             JSONObject resultObject = resultsArray.getJSONObject(0);
@@ -34,7 +35,8 @@ public class JsonMapMaker {
         parseResultsJson(access.saveToString(access.getInputStream(access.connectToGeocode(address))));
 
     }
-    public Map<String, Object> getJsonMap(){
+
+    public Map<String, Object> getJsonMap() {
         return JsonMap;
     }
 

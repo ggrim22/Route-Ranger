@@ -3,6 +3,8 @@ package edu.bsu.cs222;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 import java.util.Map;
 
 public class GUIHelper {
@@ -26,9 +28,14 @@ public class GUIHelper {
         return vBox;
     }
 
-    protected void configureErrorHandling(Map<String, Object> geocodeMap, String address1, String address2) {
+    protected void configureErrorHandling(Map<String, Object> geocodeMap) throws IOException {
         ErrorModalBox errorModalBox = new ErrorModalBox();
-        errorModalBox.assertErrorType(geocodeMap, address1, address2);
+        errorModalBox.checkValidAddress(geocodeMap);
+    }
+
+    protected void configureErrorHandling(String address1, String address2){
+        ErrorModalBox errorModalBox = new ErrorModalBox();
+        errorModalBox.assertAPIConnectionError(address1,address2);
     }
 
 }
