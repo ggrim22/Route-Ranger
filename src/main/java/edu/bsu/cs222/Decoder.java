@@ -15,14 +15,16 @@ public class Decoder {
     public String getAPIKey() {
         return APIKey;
     }
+    public void setAPIKey(String apiKey) {
+        APIKey = apiKey;
+    }
     public void analyzeKeyWord(String keyWord){
         letters = keyWord.length();
         oddEven = letters % 2;
         this.keyWord = keyWord;
     }
 
-    public void decode() throws IOException {
-        String encryptedKey = readFromAdminFile();
+    public String decode(String encryptedKey) {
         StringBuilder result = new StringBuilder();
         for(int i = 0; i < encryptedKey.length(); i++) {
             if(oddEven == 0) {
@@ -32,7 +34,7 @@ public class Decoder {
                 result.append((char)(encryptedKey.charAt(i) - letters));
             }
         }
-        APIKey = result.toString().trim();
+        return result.toString().trim();
     }
 
     public String readFromAdminFile() throws IOException {
@@ -48,11 +50,4 @@ public class Decoder {
 
         return "";
     }
-
-    //enter one word password
-    //check if odd or even
-    //check how many letters are in the word
-    //read api key and decrypt it and assign it to instance variable
-
-
 }

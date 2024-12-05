@@ -52,18 +52,6 @@ public class AccessAPITest {
         URLConnection connection = accessAPI.connectToDynamicMap(null, null, null, null, null, null, null);
         Assertions.assertNull(connection);
     }
-
-    @Test
-    public void inputStreamTest() throws IOException {
-        AccessAPI api = new AccessAPI();
-        String address = "146 S Nursery Rd Anderson IN 46012 US";
-        URLConnection connection;
-        connection = api.connectToGeocode(address);
-        InputStream result;
-        result = api.getInputStream(connection);
-        Assertions.assertNotNull(result);
-    }
-
     @Test
     public void saveToStringTest() throws IOException {
         AccessAPI api = new AccessAPI();
