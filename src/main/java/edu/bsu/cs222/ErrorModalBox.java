@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ErrorModalBox {
 
-    public void assertErrorType(Map<String, Object> geocodeMap, String address1, String address2) {
+    public void assertAPIConnectionError(String address1, String address2) {
         ErrorTypeHandler errorHandler = new ErrorTypeHandler();
 
         if (errorHandler.noAPIKey()){
@@ -17,10 +17,16 @@ public class ErrorModalBox {
             networkConnectionPopUp();
         }else if (errorHandler.noInputFoundError(address1) || errorHandler.noInputFoundError(address2)) {
             noInputFoundPopUp();
-        } else if (errorHandler.noAddressFoundError(geocodeMap) || errorHandler.noAddressFoundError(geocodeMap)) {
-            noAddressFoundPopUp();
         }
 
+    }
+
+    public void checkValidAddress(Map<String, Object> geocodeMap){
+        ErrorTypeHandler errorHandler = new ErrorTypeHandler();
+
+        if (errorHandler.noAddressFoundError(geocodeMap) || errorHandler.noAddressFoundError(geocodeMap)) {
+            noAddressFoundPopUp();
+        }
     }
 
     private Dialog<String> configureErrorModalBox(){

@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JsonMapMaker {
+    private static Map<String, Object> JsonMap;
 
-    protected Map<String, Object> parseResultsJson(String json) {
+    protected void parseResultsJson(String json) {
+        JsonMap.clear();
         JSONObject jsonObject = new JSONObject(json);
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -18,7 +20,7 @@ public class JsonMapMaker {
             JSONObject resultObject = resultsArray.getJSONObject(0);
             extractResultData(resultObject, resultMap);
         }
-        return resultMap;
+        JsonMap = resultMap;
     }
 
     private void extractResultData(JSONObject resultObject, Map<String, Object> resultMap) {
@@ -28,10 +30,14 @@ public class JsonMapMaker {
 
     }
 
-    public Map<String, Object> getMapFromConnection(String address) throws IOException {
+    public void getMapFromConnection(String address) throws IOException {
         AccessAPI access = new AccessAPI();
-        return parseResultsJson(access.saveToString(access.getInputStream(access.connectToGeocode(address))));
+        parseResultsJson(access.saveToString(access.getInputStream(access.connectToGeocode(address))));
 
+    }
+
+    public Map<String, Object> getJsonMap() {
+        return JsonMap;
     }
 
 

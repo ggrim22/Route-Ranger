@@ -28,9 +28,14 @@ public class GUIHelper {
         return vBox;
     }
 
-    protected void configureErrorHandling(Map<String, Object> geocodeMap, String address1, String address2) throws IOException {
+    protected void configureErrorHandling(Map<String, Object> geocodeMap) throws IOException {
         ErrorModalBox errorModalBox = new ErrorModalBox();
-        errorModalBox.assertErrorType(geocodeMap, address1, address2);
+        errorModalBox.checkValidAddress(geocodeMap);
+    }
+
+    protected void configureErrorHandling(String address1, String address2){
+        ErrorModalBox errorModalBox = new ErrorModalBox();
+        errorModalBox.assertAPIConnectionError(address1,address2);
     }
 
 }

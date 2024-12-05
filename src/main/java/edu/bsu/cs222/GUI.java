@@ -368,6 +368,8 @@ public class GUI extends Application {
     public double getDistance() throws IOException{
         GeoCalculator geoCalculator = new GeoCalculator();
 
+        new GUIHelper().configureErrorHandling(inputFirstAddress.getText(), inputSecondAddress.getText());
+
         setAddressGeo(inputFirstAddress, latLabelAddress1,lonLabelAddress1);
         setAddressGeo(inputSecondAddress, latLabelAddress2, lonLabelAddress2);
         try {
@@ -397,8 +399,10 @@ public class GUI extends Application {
         JsonMapMaker mapMaker = new JsonMapMaker();
         Map<String, Object> map;
         try {
-            map = mapMaker.getMapFromConnection(input.getText());
-            new GUIHelper().configureErrorHandling(map, inputFirstAddress.getText(), inputSecondAddress.getText());
+            mapMaker.getMapFromConnection(input.getText());
+            map = mapMaker.getJsonMap();
+
+            new GUIHelper().configureErrorHandling(map);
 
             setAddressToCompleteAddress(map, input);
 
