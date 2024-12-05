@@ -11,10 +11,8 @@ public class ErrorModalBox {
     public void assertAPIConnectionError(String address1, String address2) {
         ErrorTypeHandler errorHandler = new ErrorTypeHandler();
 
-        if (errorHandler.noAPIKey() || errorHandler.emptyAPIKey()){
-            noAPIKeyFoundPopUp();
-        } else if(errorHandler.networkConnectionError()){
-            networkConnectionPopUp();
+        if(errorHandler.networkConnectionError()){
+            ConnectionErrorPopUp();
         }else if (errorHandler.noInputFoundError(address1, address2)) {
             noInputFoundPopUp();
         }
@@ -24,10 +22,8 @@ public class ErrorModalBox {
     public void assertAPIConnectionError(String address) {
         ErrorTypeHandler errorHandler = new ErrorTypeHandler();
 
-        if (errorHandler.noAPIKey()){
-            noAPIKeyFoundPopUp();
-        }else if(errorHandler.networkConnectionError()){
-            networkConnectionPopUp();
+        if(errorHandler.networkConnectionError()){
+            ConnectionErrorPopUp();
         }else if (errorHandler.noInputFoundError(address)) {
             noInputFoundPopUp();
         }
@@ -50,7 +46,7 @@ public class ErrorModalBox {
         return errorBox;
     }
 
-    private void networkConnectionPopUp() {
+    private void ConnectionErrorPopUp() {
         createErrorPopUp("There has been a connection error. Please try again later.");
     }
     private void noInputFoundPopUp() {
@@ -61,9 +57,6 @@ public class ErrorModalBox {
         createErrorPopUp("There has been an error, please enter a valid address");
     }
 
-    private void noAPIKeyFoundPopUp(){
-        createErrorPopUp("There has been an error, if you would like to use this application, contact us or visit the API website to get an API key.");
-    }
 
     private void createErrorPopUp(String errorMessage){
         Dialog<String> errorBox = configureErrorModalBox();
