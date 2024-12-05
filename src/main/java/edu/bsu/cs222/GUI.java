@@ -113,6 +113,9 @@ public class GUI extends Application {
 
         HBox outPutFieldHBox = helper.configureHBox(50);
 
+        VBox staticMap1VBox = helper.configureVBox(100);
+        VBox staticMap2VBox = helper.configureVBox(100);
+        VBox dynamicMapVBox = helper.configureVBox(300);
         HBox mapsHBox = helper.configureHBox(100);
 
 
@@ -162,11 +165,16 @@ public class GUI extends Application {
 
         );
 
+        staticMap1VBox.getChildren().add(firstAddressImage);
+        staticMap2VBox.getChildren().add(secondAddressImage);
+        dynamicMapVBox.getChildren().add(dynamicMapImage);
+
         mapsHBox.getChildren().addAll(
-                firstAddressImage,
-                dynamicMapImage,
-                secondAddressImage
+                staticMap1VBox,
+                dynamicMapVBox,
+                staticMap2VBox
         );
+
         root.getChildren().addAll(userInputHBox, latLonAndButtonsHBox, outPutFieldHBox, mapsHBox);
     }
 
