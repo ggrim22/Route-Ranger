@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -15,9 +15,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -56,6 +53,7 @@ public class GUI extends Application {
         configureComboBox();
         configure(stage);
         configureGetDistanceButton();
+        configureEnterKeyword();
 
         configureFirstStaticMapButton();
         configureSecondStaticMapButton();
@@ -201,6 +199,16 @@ public class GUI extends Application {
         latLabelAddress2.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         lonLabelAddress1.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         lonLabelAddress2.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+    private void configureEnterKeyword() throws IOException {
+        Decoder decoder = new Decoder();
+        TextInputDialog textBox = new TextInputDialog();
+        textBox.setHeaderText("Enter API Password");
+        textBox.showAndWait();
+        String key = textBox.getResult();
+
+        decoder.analyzeKeyWord(key);
+        decoder.decode();
     }
     private void configureInputBoxes(){
         Font font = createFont(12, FontPosture.REGULAR);

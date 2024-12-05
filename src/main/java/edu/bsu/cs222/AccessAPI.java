@@ -4,8 +4,6 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
-
 public class AccessAPI {
     public URLConnection connectToGeocode(String address) {
         assert !address.isEmpty();
@@ -13,12 +11,11 @@ public class AccessAPI {
         try {
             String encodedURLString = "https://api.geoapify.com/v1/geocode/search?" +
                     "text=" + URLEncoder.encode(address, Charset.defaultCharset()) + "&format=json&" +
-                    "apiKey=" + readFromAdminFile();
+                    "apiKey=" + new Decoder().getAPIKey();
             resultConnection = createURL(encodedURLString);
         } catch (Exception e) {
             return null;
         }
-
         return resultConnection;
     }
 
@@ -35,7 +32,7 @@ public class AccessAPI {
                     "marker=lonlat:" + URLEncoder.encode(lon, Charset.defaultCharset()) +
                     "," + URLEncoder.encode(lat, Charset.defaultCharset()) +
                     ";color:%23ff0000;size:small&" +
-                    "apiKey=" + readFromAdminFile();
+                    "apiKey=" + new Decoder().getAPIKey();
             resultConnection = createURL(encodedURLString);
         } catch (Exception e) {
             return null;
@@ -68,7 +65,7 @@ public class AccessAPI {
                     URLEncoder.encode(address2Lat, Charset.defaultCharset()) +
                     ";color:%23ff0000;" +
                     "size:medium&" +
-                    "apiKey=" + readFromAdminFile();
+                    "apiKey=" + new Decoder().getAPIKey();
             resultConnection = createURL(encodedURLString);
         } catch (Exception e) {
             return null;
@@ -81,19 +78,6 @@ public class AccessAPI {
         return connection.getInputStream();
     }
 
-    public String readFromAdminFile() throws IOException {
-
-        try (InputStream inputStream = AccessAPI.class.getClassLoader().getResourceAsStream("APIToken.txt")) {
-            assert inputStream != null;
-            try (Scanner scanner = new Scanner(inputStream)) {
-                if (scanner.hasNextLine()) {
-                    return scanner.nextLine();
-                }
-            }
-        }
-
-        return "";
-    }
 
     private URLConnection createURL(String encodedURL) throws IOException {
 
