@@ -24,19 +24,14 @@ public class Decoder {
     public void decode() throws IOException {
         String encryptedKey = readFromAdminFile();
         StringBuilder result = new StringBuilder();
-        int count = 0;
         for(int i = 0; i < encryptedKey.length(); i++) {
             if(oddEven == 0) {
-                result.append((char)(encryptedKey.charAt(i) + letters + keyWord.charAt(i) + count));
+                result.append((char)(encryptedKey.charAt(i) + letters));
             }
             else{
                 result.append((char)(encryptedKey.charAt(i) - letters));
             }
-            if(i >= keyWord.length()) {
-                count++;
-            }
         }
-        System.out.println(result);
         APIKey = result.toString().trim();
     }
 
