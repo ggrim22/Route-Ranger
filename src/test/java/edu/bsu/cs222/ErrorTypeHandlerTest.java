@@ -34,9 +34,5 @@ public class ErrorTypeHandlerTest {
         Assertions.assertEquals(result,errorHandler.noAddressFoundError(testMap));
     }
 
-    @Test
-    public void testEmptyApiKey() {
-        Assertions.assertFalse(new ErrorTypeHandler().emptyAPIKey());
-    }
 
 }

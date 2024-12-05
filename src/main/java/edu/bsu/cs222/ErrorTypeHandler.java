@@ -1,9 +1,6 @@
 package edu.bsu.cs222;
 
-
-import java.io.InputStream;
 import java.util.Map;
-import java.util.Scanner;
 
 public class ErrorTypeHandler {
 
@@ -24,21 +21,5 @@ public class ErrorTypeHandler {
 
     public boolean noAddressFoundError(Map<String, Object> map)  {
         return map.get("lat") == null;
-    }
-
-    public boolean noAPIKey(){
-        InputStream inputStream = AccessAPI.class.getClassLoader().getResourceAsStream("APIToken.txt");
-
-        return inputStream == null;
-    }
-    public boolean emptyAPIKey(){
-        InputStream inputStream = AccessAPI.class.getClassLoader().getResourceAsStream("APIToken.txt");
-        assert inputStream != null;
-        try (Scanner scanner = new Scanner(inputStream)) {
-            return !scanner.hasNextLine();
-        }
-    }
-    public boolean wrongAPIKey(){
-        return true;
     }
 }
