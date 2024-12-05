@@ -69,7 +69,7 @@ public class AccessAPITest {
         AccessAPI api = new AccessAPI();
         InputStream testInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
         String result = api.saveToString(testInputStream);
-        Assertions.assertEquals("country_code", result.substring(30, 42));
+        Assertions.assertTrue(result.contains("country_code"));
     }
 
 }

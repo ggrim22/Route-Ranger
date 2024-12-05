@@ -3,6 +3,7 @@ package edu.bsu.cs222;
 
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ErrorTypeHandler {
 
@@ -29,5 +30,15 @@ public class ErrorTypeHandler {
         InputStream inputStream = AccessAPI.class.getClassLoader().getResourceAsStream("APIToken.txt");
 
         return inputStream == null;
+    }
+    public boolean emptyAPIKey(){
+        InputStream inputStream = AccessAPI.class.getClassLoader().getResourceAsStream("APIToken.txt");
+        assert inputStream != null;
+        try (Scanner scanner = new Scanner(inputStream)) {
+            return !scanner.hasNextLine();
+        }
+    }
+    public boolean wrongAPIKey(){
+        return true;
     }
 }

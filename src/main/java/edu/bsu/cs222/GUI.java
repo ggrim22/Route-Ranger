@@ -450,7 +450,7 @@ public class GUI extends Application {
     protected void configureTimeForSecondAddress() throws IOException {
         Timezone timezone = new Timezone();
 
-        try{
+        try {
             String address2LatText = latLabelAddress2.getText();
             String address2Lat = address2LatText.split(" ")[1];
             double latitude = Double.parseDouble(address2Lat);

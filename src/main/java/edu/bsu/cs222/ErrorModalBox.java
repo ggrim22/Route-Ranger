@@ -11,9 +11,9 @@ public class ErrorModalBox {
     public void assertAPIConnectionError(String address1, String address2) {
         ErrorTypeHandler errorHandler = new ErrorTypeHandler();
 
-        if (errorHandler.noAPIKey()){
+        if (errorHandler.noAPIKey() || errorHandler.emptyAPIKey()){
             noAPIKeyFoundPopUp();
-        }else if(errorHandler.networkConnectionError()){
+        } else if(errorHandler.networkConnectionError()){
             networkConnectionPopUp();
         }else if (errorHandler.noInputFoundError(address1, address2)) {
             noInputFoundPopUp();
